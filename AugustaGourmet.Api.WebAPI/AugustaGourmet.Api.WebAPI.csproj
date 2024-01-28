@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AugustaGourmet.Api.Application\AugustaGourmet.Api.Application.csproj" />
+    <ProjectReference Include="..\AugustaGourmet.Api.Infrastructure\AugustaGourmet.Api.Infrastructure.csproj" />
+    <ProjectReference Include="..\AugustaGourmet.Api.Persistence\AugustaGourmet.Api.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>
