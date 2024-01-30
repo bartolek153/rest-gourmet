@@ -4,9 +4,9 @@ using AugustaGourmet.Api.Persistence.Context;
 
 namespace AugustaGourmet.Api.Persistence.Repositories;
 
-public class InvoiceRepository : GenericRepository<Invoice>, IInvoiceRepository
+public class ReceiptRepository : GenericRepository<Receipt>, IReceiptRepository
 {
-    public InvoiceRepository(ApplicationContext context) : base(context)
+    public ReceiptRepository(ApplicationContext context) : base(context)
     {
     }
 }

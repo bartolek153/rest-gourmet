@@ -26,6 +26,7 @@
   * Add Unit of Work ❌
   * Add domain events ❌
   * Dynamic ordering and filtering ❌
+  * Add caching ❌
 * Code Documentations
   * Generate API docs ❌
   * Generate code docs ❌
