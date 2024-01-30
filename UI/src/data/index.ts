@@ -3,8 +3,8 @@ import { QueryClient } from "react-query";
 import { stringify } from "query-string";
 
 
-let apiUrl = 'https://webapiaugustagourmet.azurewebsites.net/api';
-apiUrl = 'http://localhost:5274/api';
+let apiUrl = 'https://augustagourmetrest.azurewebsites.net/api';
+// apiUrl = 'http://localhost:5274/api';
 
 const httpClient = fetchUtils.fetchJson;
 
