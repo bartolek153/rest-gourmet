@@ -14,7 +14,7 @@ public class InventoryHandlingProfiles : Profile
         CreateMap<Supplier, SupplierDto>();
 
         // Invoice
-        CreateMap<Invoice, InvoiceDto>()
+        CreateMap<Receipt, ReceiptDto>()
             .ForMember(d => d.Supplier, opt => opt.MapFrom(s => s.Supplier.Name));
     }
 }

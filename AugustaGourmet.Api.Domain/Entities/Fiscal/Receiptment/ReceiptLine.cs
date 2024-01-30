@@ -1,8 +1,8 @@
 ﻿
-namespace AugustaGourmet.Api.Domain.Entities.Invoicing;
+namespace AugustaGourmet.Api.Domain.Entities.Fiscal.Receiptment;
 
 [Table("TCAD_NOTA_FISCAL_LINHA")]
-public class InvoiceLine : BaseEntity
+public class ReceiptLine : BaseEntity
 {
     [Column("Capa_Id")]
     public int InvoiceHeaderId { get; set; }
