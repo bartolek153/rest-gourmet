@@ -1,5 +1,7 @@
 ﻿using System.Data.Entity;
+using System.Linq.Expressions;
 
+using AugustaGourmet.Api.Application.Contracts.Common;
 using AugustaGourmet.Api.Application.Contracts.Persistence;
 using AugustaGourmet.Api.Domain.Common;
 using AugustaGourmet.Api.Persistence.Context;
@@ -35,6 +37,39 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         return await _context.Set<T>()
             .AsNoTracking()
             .ToListAsync();
+    }
+
+    public virtual async Task<PagedList<T>> GetAllFilteredAsync(
+        Expression<Func<T, bool>>? filter = null,
+        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+        int page = 1,
+        int perPage = 10,
+        string includeProperties = "")
+    {
+        IQueryable<T> query = _context.Set<T>();
+        orderBy ??= i => i.OrderBy(e => e.Id);
+
+        if (filter != null)
+            query = query.Where(filter);
+
+        int startIndex = (page - 1) * perPage;
+        int total = await query.CountAsync();
+
+        query = orderBy(query)
+            .Skip(startIndex)
+            .Take(perPage);
+
+        foreach (var includeProperty in includeProperties.Split
+            (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+        {
+            query = query.Include(includeProperty);
+        }
+
+        return new PagedList<T>(
+            await query.AsNoTracking().ToListAsync(),
+            total,
+            page,
+            perPage);
     }
 
     public virtual async Task<T> GetByIdAsync(int id)

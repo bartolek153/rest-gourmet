@@ -13,10 +13,9 @@ public class PagedQuery<TResult> : IRequest<PagedList<TResult>>
     public bool? OrderByDescending { get; set; }
     public string? Filter { get; set; }
 
-    public PagedQuery(int page = 1, int pageSize = 10, string? filter = null)
+    public PagedQuery(int page = 1, int pageSize = 10)
     {
         Page = page;
         PageSize = pageSize;
-        Filter = filter;
     }
 };
