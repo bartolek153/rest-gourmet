@@ -7,7 +7,7 @@ namespace WebAPI.Models
 {
     public class TCAD_BASE_INVENTARIO
     {
-        public TCAD_FORNECEDOR CODIGO_FORNECEDOR { get; set; }
+        public Supplier CODIGO_FORNECEDOR { get; set; }
         public int CODIGO_FORNECEDORId { get; set; }
         public Product CODIGO_PRODUTO { get; set; }
         public int CODIGO_PRODUTOId { get; set; }

@@ -1,6 +1,8 @@
 ﻿using System.Data.Entity;
 
 using AugustaGourmet.Api.Domain.Common;
+using AugustaGourmet.Api.Domain.Entities.InventoryHandling;
+using AugustaGourmet.Api.Domain.Entities.Invoicing;
 using AugustaGourmet.Api.Domain.Entities.Products;
 
 namespace AugustaGourmet.Api.Persistence.Context;
@@ -13,6 +15,8 @@ public class ApplicationContext : DbContext
     public DbSet<ProductGroup> ProductGroups { get; set; }
     public DbSet<ProductFamily> ProductFamilies { get; set; }
     public DbSet<ProductCategory> ProductCategories { get; set; }
+    public DbSet<Invoice> Invoices { get; set; }
+    public DbSet<Supplier> Suppliers { get; set; }
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {

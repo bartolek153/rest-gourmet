@@ -8,7 +8,7 @@ namespace WebAPI.Models
     {
         public Int64 Id { get; set; }
         public TCAD_EMPRESA CODIGO_EMPRESA { get; set; }
-        public TCAD_FORNECEDOR CODIGO_FORNECEDOR { get; set; }
+        public Supplier CODIGO_FORNECEDOR { get; set; }
         public DateTime DATA_INVENTARIO { get; set; }
         public TCAD_STATUS_INVENTARIO STATUS { get; set; }
         public int PEDIDO_ENVIADO { get; set; }
