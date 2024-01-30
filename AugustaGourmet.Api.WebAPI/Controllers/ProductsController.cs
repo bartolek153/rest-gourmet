@@ -1,5 +1,4 @@
-﻿using AugustaGourmet.Api.Application.Contracts.Common;
-using AugustaGourmet.Api.Application.Features.ProductGroups.CreateProductGroup;
+﻿using AugustaGourmet.Api.Application.Features.ProductGroups.CreateProductGroup;
 using AugustaGourmet.Api.Application.Features.ProductGroups.GetProductGroupDetails;
 using AugustaGourmet.Api.Application.Features.Products.DeleteProduct;
 using AugustaGourmet.Api.Application.Features.Products.GetAllProducts;
@@ -24,13 +23,13 @@ namespace AugustaGourmet.Api.WebAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<PagedList<ProductDto>> Get(int page = 1, int pageSize = 10, string? filter = null)
+        public async Task<IReadOnlyList<ProductDto>> Get(int page = 1, int pageSize = 10, string? q = null)
         {
-            var result = await _mediator.Send(new GetProductsQuery(page, pageSize, filter));
+            var result = await _mediator.Send(new GetProductsQuery(page, pageSize, q));
 
             Response.AddPaginationHeader("products", result.Page, result.PageSize, result.TotalCount);
 
-            return result;
+            return result.Items;
         }
 
         [HttpGet("{id}")]

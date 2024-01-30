@@ -36,7 +36,11 @@ public class ProductProfiles : Profile
         CreateMap<UpdateProductGroupCommand, ProductGroup>();
 
         // Product
-        CreateMap<Product, ProductDto>();
+        CreateMap<Product, ProductDto>()
+            .ForMember(dest => dest.Group, opt => opt.MapFrom(src => src.Group.Description))
+            .ForMember(dest => dest.UnitMeasure, opt => opt.MapFrom(src => src.ProductUnit.DESCRICAO))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.DESCRICAO))
+            .ForMember(dest => dest.PurchaseUnit, opt => opt.MapFrom(src => src.PurchaseUnit.DESCRICAO));
         CreateMap<CreateProductCommand, Product>();
         CreateMap<UpdateProductCommand, Product>();
     }

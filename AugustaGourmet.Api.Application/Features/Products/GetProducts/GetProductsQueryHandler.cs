@@ -21,12 +21,15 @@ public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, PagedLi
     public async Task<PagedList<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
         // Query the database
-        var products = await _productRepository.GetPagedProductListAsync(
+        var products = await _productRepository.GetAllFilteredAsync(
+            request.Description is not null ?
+                i => i.Description.ToLower().Contains(request.Description) :
+                null,
+            i => i.OrderBy(i => i.Description),
             request.Page,
             request.PageSize,
-            request.OrderByColumn,
-            request.OrderByDescending,
-            request.Filter);
+            "Group,ProductUnit,Status,PurchaseUnit"
+        );
 
         // Return list of converted DTOs objects
         return new PagedList<ProductDto>(
