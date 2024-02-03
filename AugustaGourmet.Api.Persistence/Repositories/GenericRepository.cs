@@ -39,7 +39,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
             .ToListAsync();
     }
 
-    public virtual async Task<PagedList<T>> GetAllFilteredAsync(
+    public virtual async Task<PagedList<T>> GetAllWithPaginationAsync(
         Expression<Func<T, bool>>? filter = null,
         Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
         int page = 1,
@@ -77,6 +77,17 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         return await _context.Set<T>()
             .AsNoTracking()
             .FirstOrDefaultAsync(e => e.Id == id);
+    }
+
+    public Task<T> GetByIdAsync(int id, string includeProperties = "")
+    {
+        var query = _context.Set<T>().AsNoTracking();
+
+        foreach (var includeProperty in includeProperties.Split
+            (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            query = query.Include(includeProperty);
+
+        return query.FirstOrDefaultAsync(e => e.Id == id);
     }
 
     public async Task UpdateAsync(T entity)

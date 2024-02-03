@@ -11,8 +11,10 @@ public interface IGenericRepository<T> where T : BaseEntity
     Task DeleteAsync(T entity);
     Task<IReadOnlyList<T>> GetAllAsync();
     Task<T> GetByIdAsync(int id);
+    Task<T> GetByIdAsync(int id, string includeProperties = "");
     Task UpdateAsync(T entity);
-    Task<PagedList<T>> GetAllFilteredAsync(
+
+    Task<PagedList<T>> GetAllWithPaginationAsync(
         Expression<Func<T, bool>>? filter = null,
         Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
         int startPage = 1,
