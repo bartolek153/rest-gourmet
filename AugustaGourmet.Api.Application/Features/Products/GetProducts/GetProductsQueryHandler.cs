@@ -1,5 +1,8 @@
-﻿using AugustaGourmet.Api.Application.Contracts.Common;
+﻿using System.Linq.Expressions;
+
+using AugustaGourmet.Api.Application.Contracts.Common;
 using AugustaGourmet.Api.Application.Contracts.Persistence;
+using AugustaGourmet.Api.Domain.Entities.Products;
 
 using AutoMapper;
 
@@ -20,11 +23,16 @@ public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, PagedLi
 
     public async Task<PagedList<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
+        // Filters include:
+        // - Description: if not null or empty, filter by description
+        // - Ids: if not null, filter by Ids
+        Expression<Func<Product, bool>>? filter = p =>
+            (string.IsNullOrEmpty(request.Description) || p.Description.ToLower().Contains(request.Description)) &&
+            (!request.Ids.Any() || request.Ids.Contains(p.Id));
+
         // Query the database
-        var products = await _productRepository.GetAllFilteredAsync(
-            request.Description is not null ?
-                i => i.Description.ToLower().Contains(request.Description) :
-                null,
+        var products = await _productRepository.GetAllWithPaginationAsync(
+            filter,
             i => i.OrderBy(i => i.Description),
             request.Page,
             request.PageSize,

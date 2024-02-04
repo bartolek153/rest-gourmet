@@ -13,6 +13,10 @@ public static partial class Errors
                 code: "Product.DuplicateProduct",
                 description: "Um produto com esta descrição já foi cadastrado.");
 
+            public static Error DuplicateProductWithDescription(string description) => Error.Failure(
+                code: "Product.DuplicateProduct",
+                description: $"Um produto com a descrição '{description}' já foi criado.");
+
             public static Error FamilyWithCategory => Error.Conflict(
                 code: "Product.Conflicts.FamilyWithCategory",
                 description: "Não é possível excluir esta categoria pois existem famílias de produtos associadas a ela.");

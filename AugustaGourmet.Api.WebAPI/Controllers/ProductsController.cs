@@ -1,7 +1,7 @@
 ﻿using AugustaGourmet.Api.Application.Features.ProductGroups.CreateProductGroup;
-using AugustaGourmet.Api.Application.Features.ProductGroups.GetProductGroupDetails;
 using AugustaGourmet.Api.Application.Features.Products.DeleteProduct;
 using AugustaGourmet.Api.Application.Features.Products.GetAllProducts;
+using AugustaGourmet.Api.Application.Features.Products.GetProductDetails;
 using AugustaGourmet.Api.Application.Features.Products.UpdateProduct;
 using AugustaGourmet.Api.WebAPI.Extensions;
 
@@ -23,9 +23,12 @@ namespace AugustaGourmet.Api.WebAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IReadOnlyList<ProductDto>> Get(int page = 1, int pageSize = 10, string? q = null)
+        public async Task<IReadOnlyList<ProductDto>> Get(int page = 1,
+                                                         int perPage = 10,
+                                                         string? q = null,
+                                                         [FromQuery] int[]? id = null)
         {
-            var result = await _mediator.Send(new GetProductsQuery(page, pageSize, q));
+            var result = await _mediator.Send(new GetProductsQuery(page, perPage, q, id));
 
             Response.AddPaginationHeader("products", result.Page, result.PageSize, result.TotalCount);
 
@@ -37,10 +40,8 @@ namespace AugustaGourmet.Api.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(int id)
         {
-            var result = await _mediator.Send(new GetProductGroupDetailsQuery(id));
-            return result.Match(
-                result => Ok(result),
-                error => Problem(error));
+            var result = await _mediator.Send(new GetProductDetailsQuery(id));
+            return result.Match(Ok, Problem);
         }
 
         [HttpPost]
@@ -49,9 +50,7 @@ namespace AugustaGourmet.Api.WebAPI.Controllers
         public async Task<IActionResult> Post(CreateProductGroupCommand category)
         {
             var result = await _mediator.Send(category);
-            return result.Match(
-                result => CreatedAtAction(nameof(Get), new { id = result }),
-                error => Problem(error));
+            return result.Match(result => CreatedAtAction(nameof(Get), new { id = result }), Problem);
         }
 
         [HttpPut("{id}")]
@@ -61,9 +60,7 @@ namespace AugustaGourmet.Api.WebAPI.Controllers
         public async Task<IActionResult> Put([FromBody] UpdateProductCommand category)
         {
             var result = await _mediator.Send(category);
-            return result.Match(
-                result => NoContent(),
-                error => Problem(error));
+            return result.Match(result => NoContent(), Problem);
         }
 
         [HttpDelete("{id}")]
@@ -73,9 +70,7 @@ namespace AugustaGourmet.Api.WebAPI.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _mediator.Send(new DeleteProductCommand(id));
-            return result.Match(
-                result => NoContent(),
-                error => Problem(error));
+            return result.Match(result => NoContent(), Problem);
         }
     }
 }
