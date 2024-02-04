@@ -13,11 +13,13 @@ public class DeleteProductGroupCommandHandler : IRequestHandler<DeleteProductGro
 {
     private readonly IProductGroupRepository _productGroupRepository;
     private readonly IProductRepository _productRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteProductGroupCommandHandler(IProductGroupRepository productGroupRepository, IProductRepository productRepository)
+    public DeleteProductGroupCommandHandler(IProductGroupRepository productGroupRepository, IProductRepository productRepository, IUnitOfWork unitOfWork)
     {
         _productGroupRepository = productGroupRepository;
         _productRepository = productRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<Unit>> Handle(DeleteProductGroupCommand request, CancellationToken cancellationToken)
@@ -30,7 +32,9 @@ public class DeleteProductGroupCommandHandler : IRequestHandler<DeleteProductGro
         if (await _productRepository.AnyProductWithGroupAsync(request.Id))
             return Errors.Product.Conflicts.ProductWithGroup;
 
-        await _productGroupRepository.DeleteAsync(productGroup);
+        _productGroupRepository.Delete(productGroup);
+
+        await _unitOfWork.CommitAsync();
 
         return Unit.Value;
     }

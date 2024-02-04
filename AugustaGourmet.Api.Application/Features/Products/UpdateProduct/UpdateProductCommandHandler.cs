@@ -13,11 +13,13 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
 {
     private readonly IProductRepository _productRepository;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateProductCommandHandler(IProductRepository productRepository, IMapper mapper)
+    public UpdateProductCommandHandler(IProductRepository productRepository, IMapper mapper, IUnitOfWork unitOfWork)
     {
         _productRepository = productRepository;
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<Unit>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
@@ -28,7 +30,8 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
         var product = _mapper.Map<Product>(request);
 
         // Save to database
-        await _productRepository.UpdateAsync(product);
+        _productRepository.Update(product);
+        await _unitOfWork.CommitAsync();
 
         // Return Unit value
         return Unit.Value;

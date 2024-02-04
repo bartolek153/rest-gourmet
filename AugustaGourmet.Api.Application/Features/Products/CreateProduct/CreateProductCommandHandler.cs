@@ -14,23 +14,26 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
 {
     private readonly IProductRepository _productRepository;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateProductCommandHandler(IProductRepository productRepository, IMapper mapper)
+    public CreateProductCommandHandler(IProductRepository productRepository, IMapper mapper, IUnitOfWork unitOfWork)
     {
         _productRepository = productRepository;
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<int>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
-        if (!await _productRepository.IsUnique(request.Description))
+        if (!await _productRepository.IsUniqueAsync(request.Description))
             return Errors.Product.Conflicts.DuplicateProduct;
 
         // Convert to domain entity
         var product = _mapper.Map<Product>(request);
 
         // Save to database
-        await _productRepository.CreateAsync(product);
+        _productRepository.Create(product);
+        await _unitOfWork.CommitAsync();
 
         // Return the ID of the new product
         return product.Id;

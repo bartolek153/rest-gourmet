@@ -20,7 +20,7 @@ public class GetSuppliersQueryHandler : IRequestHandler<GetSuppliersQuery, Paged
 
     public async Task<PagedList<SupplierDto>> Handle(GetSuppliersQuery request, CancellationToken cancellationToken)
     {
-        var suppliers = await _supplierRepository.GetAllFilteredAsync(
+        var suppliers = await _supplierRepository.GetAllWithPaginationAsync(
             request.Name is not null ? s => s.Name.ToLower().Contains(request.Name) : null,
             i => i.OrderBy(i => i.Name),
             request.Page,

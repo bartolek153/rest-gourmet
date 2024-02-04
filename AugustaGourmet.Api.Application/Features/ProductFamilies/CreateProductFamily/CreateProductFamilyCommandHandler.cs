@@ -12,17 +12,22 @@ public class CreateProductFamilyCommandHandler : IRequestHandler<CreateProductFa
 {
     private readonly IProductFamilyRepository _productFamilyRepository;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateProductFamilyCommandHandler(IProductFamilyRepository productFamilyRepository, IMapper mapper)
+    public CreateProductFamilyCommandHandler(IProductFamilyRepository productFamilyRepository, IMapper mapper, IUnitOfWork unitOfWork)
     {
         _productFamilyRepository = productFamilyRepository;
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<int>> Handle(CreateProductFamilyCommand request, CancellationToken cancellationToken)
     {
         var productFamily = _mapper.Map<Domain.Entities.Products.ProductFamily>(request);
-        productFamily = await _productFamilyRepository.CreateAsync(productFamily);
+        productFamily = _productFamilyRepository.Create(productFamily);
+
+        await _unitOfWork.CommitAsync();
+
         return productFamily.Id;
     }
 }

@@ -14,18 +14,21 @@ public class UpdateProductFamilyCommandHandler : IRequestHandler<UpdateProductFa
 {
     private readonly IProductFamilyRepository _productFamilyRepository;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateProductFamilyCommandHandler(IProductFamilyRepository productFamilyRepository, IMapper mapper)
+    public UpdateProductFamilyCommandHandler(IProductFamilyRepository productFamilyRepository, IMapper mapper, IUnitOfWork unitOfWork)
     {
         _productFamilyRepository = productFamilyRepository;
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<Unit>> Handle(UpdateProductFamilyCommand request, CancellationToken cancellationToken)
     {
         var productFamily = _mapper.Map<ProductFamily>(request);
 
-        await _productFamilyRepository.UpdateAsync(productFamily);
+        _productFamilyRepository.Update(productFamily);
+        await _unitOfWork.CommitAsync();
 
         return Unit.Value;
     }

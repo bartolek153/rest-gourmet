@@ -14,17 +14,21 @@ namespace AugustaGourmet.Api.Application.Features.ProductGroups.CreateProductGro
     {
         private readonly IProductGroupRepository _productGroupRepository;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateProductGroupCommandHandler(IProductGroupRepository productGroupRepository, IMapper mapper)
+        public CreateProductGroupCommandHandler(IProductGroupRepository productGroupRepository, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _productGroupRepository = productGroupRepository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<ErrorOr<int>> Handle(CreateProductGroupCommand request, CancellationToken cancellationToken)
         {
             var productGroup = _mapper.Map<ProductGroup>(request);
-            var createdProductGroup = await _productGroupRepository.CreateAsync(productGroup);
+            var createdProductGroup = _productGroupRepository.Create(productGroup);
+
+            await _unitOfWork.CommitAsync();
 
             return createdProductGroup.Id;
         }

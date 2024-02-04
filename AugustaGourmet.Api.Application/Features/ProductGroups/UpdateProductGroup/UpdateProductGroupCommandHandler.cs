@@ -13,18 +13,21 @@ public class UpdateProductGroupCommandHandler : IRequestHandler<UpdateProductGro
 {
     private readonly IProductGroupRepository _productGroupRepository;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateProductGroupCommandHandler(IProductGroupRepository productGroupRepository, IMapper mapper)
+    public UpdateProductGroupCommandHandler(IProductGroupRepository productGroupRepository, IMapper mapper, IUnitOfWork unitOfWork)
     {
         _productGroupRepository = productGroupRepository;
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<Unit>> Handle(UpdateProductGroupCommand request, CancellationToken cancellationToken)
     {
         var productGroup = _mapper.Map<ProductGroup>(request);
 
-        await _productGroupRepository.UpdateAsync(productGroup);
+        _productGroupRepository.Update(productGroup);
+        await _unitOfWork.CommitAsync();
 
         return Unit.Value;
     }

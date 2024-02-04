@@ -13,17 +13,21 @@ public class CreateProductCategoryCommandHandler : IRequestHandler<CreateProduct
 {
     private readonly IProductCategoryRepository _productCategoryRepository;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateProductCategoryCommandHandler(IMapper mapper, IProductCategoryRepository productCategoryRepository)
+    public CreateProductCategoryCommandHandler(IMapper mapper, IProductCategoryRepository productCategoryRepository, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _productCategoryRepository = productCategoryRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<int>> Handle(CreateProductCategoryCommand request, CancellationToken cancellationToken)
     {
         var productCategory = _mapper.Map<ProductCategory>(request);
-        productCategory = await _productCategoryRepository.CreateAsync(productCategory);
+        productCategory = _productCategoryRepository.Create(productCategory);
+
+        await _unitOfWork.CommitAsync();
 
         return productCategory.Id;
     }

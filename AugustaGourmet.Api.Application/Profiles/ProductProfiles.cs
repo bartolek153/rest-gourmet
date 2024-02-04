@@ -9,6 +9,7 @@ using AugustaGourmet.Api.Application.Features.ProductGroups.CreateProductGroup;
 using AugustaGourmet.Api.Application.Features.ProductGroups.UpdateProductGroup;
 using AugustaGourmet.Api.Application.Features.Products.CreateProduct;
 using AugustaGourmet.Api.Application.Features.Products.GetAllProducts;
+using AugustaGourmet.Api.Application.Features.Products.GetProductDetails;
 using AugustaGourmet.Api.Application.Features.Products.UpdateProduct;
 using AugustaGourmet.Api.Domain.Entities.Products;
 
@@ -41,6 +42,7 @@ public class ProductProfiles : Profile
             .ForMember(dest => dest.UnitMeasure, opt => opt.MapFrom(src => src.ProductUnit.DESCRICAO))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.DESCRICAO))
             .ForMember(dest => dest.PurchaseUnit, opt => opt.MapFrom(src => src.PurchaseUnit.DESCRICAO));
+        CreateMap<Product, ProductDetailsDto>();
         CreateMap<CreateProductCommand, Product>();
         CreateMap<UpdateProductCommand, Product>();
     }

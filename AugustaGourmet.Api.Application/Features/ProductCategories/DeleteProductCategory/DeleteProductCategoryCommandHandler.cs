@@ -12,11 +12,13 @@ public class DeleteProductCategoryCommandHandler : IRequestHandler<DeleteProduct
 {
     private readonly IProductCategoryRepository _productCategoryRepository;
     private readonly IProductFamilyRepository _productFamilyRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteProductCategoryCommandHandler(IProductCategoryRepository productCategoryRepository, IProductFamilyRepository productFamilyRepository)
+    public DeleteProductCategoryCommandHandler(IProductCategoryRepository productCategoryRepository, IProductFamilyRepository productFamilyRepository, IUnitOfWork unitOfWork)
     {
         _productCategoryRepository = productCategoryRepository;
         _productFamilyRepository = productFamilyRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<Unit>> Handle(DeleteProductCategoryCommand request, CancellationToken cancellationToken)
@@ -29,7 +31,8 @@ public class DeleteProductCategoryCommandHandler : IRequestHandler<DeleteProduct
         if (await _productFamilyRepository.AnyFamilyWithCategoryAsync(categoryToDelete.Id))
             return Errors.Product.Conflicts.FamilyWithCategory;
 
-        await _productCategoryRepository.DeleteAsync(categoryToDelete);
+        _productCategoryRepository.Delete(categoryToDelete);
+        await _unitOfWork.CommitAsync();
 
         return Unit.Value;
     }

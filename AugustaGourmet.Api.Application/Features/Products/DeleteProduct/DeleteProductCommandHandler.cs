@@ -11,10 +11,12 @@ namespace AugustaGourmet.Api.Application.Features.Products.DeleteProduct;
 public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, ErrorOr<Unit>>
 {
     private readonly IProductRepository _productRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteProductCommandHandler(IProductRepository productRepository)
+    public DeleteProductCommandHandler(IProductRepository productRepository, IUnitOfWork unitOfWork)
     {
         _productRepository = productRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<Unit>> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
@@ -27,7 +29,8 @@ public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand,
         // validate relationships
 
         // Delete from database
-        await _productRepository.DeleteAsync(productToDelete);
+        _productRepository.Delete(productToDelete);
+        await _unitOfWork.CommitAsync();
 
         // Return Unit value
         return Unit.Value;
