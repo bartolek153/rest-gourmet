@@ -7,12 +7,12 @@ namespace AugustaGourmet.Api.Application.Contracts.Persistence;
 
 public interface IGenericRepository<T> where T : BaseEntity
 {
-    Task<T> CreateAsync(T entity);
-    Task DeleteAsync(T entity);
+    T Create(T entity);
+    void Delete(T entity);
     Task<IReadOnlyList<T>> GetAllAsync();
     Task<T> GetByIdAsync(int id);
     Task<T> GetByIdAsync(int id, string includeProperties = "");
-    Task UpdateAsync(T entity);
+    void Update(T entity);
 
     Task<PagedList<T>> GetAllWithPaginationAsync(
         Expression<Func<T, bool>>? filter = null,
