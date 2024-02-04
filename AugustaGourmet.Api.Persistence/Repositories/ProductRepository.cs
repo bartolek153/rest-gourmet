@@ -18,8 +18,8 @@ public class ProductRepository : GenericRepository<Product>, IProductRepository
             .AnyAsync(p => p.GroupId == groupId);
     }
 
-    public async Task<bool> IsUnique(string description)
+    public async Task<bool> IsUniqueAsync(string description)
     {
-        return await _context.Products.AnyAsync(p => p.Description == description);
+        return !await _context.Products.AnyAsync(p => p.Description == description);
     }
 }

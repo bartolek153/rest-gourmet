@@ -1,4 +1,4 @@
-using AugustaGourmet.Api.Application.Contracts.Persistence;
+﻿using AugustaGourmet.Api.Application.Contracts.Persistence;
 using AugustaGourmet.Api.Persistence.Context;
 using AugustaGourmet.Api.Persistence.Repositories;
 
@@ -11,7 +11,8 @@ public static class PersistenceServiceRegistration
 {
     public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        var connectionString = configuration.GetConnectionString("DevConnectionLocalDB");
+
         if (connectionString is null)
             connectionString = Environment.GetEnvironmentVariable("CONNSTR");
 
@@ -21,6 +22,7 @@ public static class PersistenceServiceRegistration
         services.AddScoped<ApplicationContext>(_ =>
                 new ApplicationContext(connectionString));
 
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
