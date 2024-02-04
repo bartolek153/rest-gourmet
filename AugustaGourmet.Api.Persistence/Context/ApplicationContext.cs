@@ -1,4 +1,4 @@
-﻿using System.Data.Entity;
+using System.Data.Entity;
 
 using AugustaGourmet.Api.Domain.Common;
 using AugustaGourmet.Api.Domain.Entities.InventoryHandling;
@@ -17,6 +17,7 @@ public class ApplicationContext : DbContext
     public DbSet<ProductCategory> ProductCategories { get; set; }
     public DbSet<Invoice> Invoices { get; set; }
     public DbSet<Supplier> Suppliers { get; set; }
+    public DbSet<PartnerProduct> PartnerProducts { get; set; }
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
