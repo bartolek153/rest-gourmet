@@ -10,10 +10,10 @@ public class CustomProblemDetailsFactory : ProblemDetailsFactory
 {
     public override ProblemDetails CreateProblemDetails(HttpContext httpContext, int? statusCode = null, string? title = null, string? type = null, string? detail = null, string? instance = null)
     {
-        var problemDetails = new ProblemDetails
+        var problemDetails = new CustomProblemDetails
         {
             Status = statusCode,
-            Title = title,
+            Message = title,
             Type = type,
             Detail = detail,
             Instance = instance,
