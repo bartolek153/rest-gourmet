@@ -1,7 +1,5 @@
+using MediatR;
 
 namespace AugustaGourmet.Api.Application.Features.Receipts.GetReceiptLines;
 
-public class GetReceiptLinesQuery : IRequest<List<ReceiptLineDto>>
-{
-    public int ReceiptId { get; set; }
-}
+public record GetReceiptLinesQuery(int ReceiptId) : IRequest<List<ReceiptLineDto>>;

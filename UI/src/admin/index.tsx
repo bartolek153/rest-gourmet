@@ -12,20 +12,15 @@ const App = () => (
   <Admin
     dataProvider={dataProvider}
     i18nProvider={i18nProvider}
+    // theme={lightTheme}
+    // darkTheme={darkTheme}
+    {...layoutProps}
     disableTelemetry={true}
   >
     <Resource name="products" options={{ label: "Produtos" }} {...products} />
-    {/* <Resource
-      name="employees"
-      options={{ label: "Funcionários" }}
-      {...employees}
-    />
-    <Resource
-      name="suppliers"
-      options={{ label: "Fornecedores" }}
-      {...suppliers}
-    /> */}
-    <Resource name="invoices" options={{ label: "Notas Fiscais" }} {...invoices} />
+    <Resource name="receipts" options={{ label: "Notas Fiscais" }} {...receipts} >
+      <Route path=":id/mapping" element={<ReceiptProductMapping />} />
+    </Resource>
   </Admin>
 );
 

@@ -5,14 +5,16 @@ namespace AugustaGourmet.Api.Domain.Entities.Fiscal.Receiptment;
 public class ReceiptLine : BaseEntity
 {
     [Column("Capa_Id")]
-    public int InvoiceHeaderId { get; set; }
+    public int ReceiptId { get; set; }
+    [ForeignKey("ReceiptId")]
+    public Receipt ReceiptHeader { get; set; } = null!;
     // public Invoice InvoiceHeader { get; set; } = null!;
 
     [Column("CodigoProduto")]
-    public string PartnerProductId { get; set; } = string.Empty;
+    public string ProductId { get; set; } = string.Empty;
 
     [Column("DescricaoProduto")]
-    public string PartnerProductDescription { get; set; } = string.Empty;
+    public string ProductDescription { get; set; } = string.Empty;
     // public Product Produto { get; set; }
 
     [Column("UnidadeCompra")]

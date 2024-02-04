@@ -1,8 +1,15 @@
+using AugustaGourmet.Api.Application.Contracts.Persistence;
+
+using AutoMapper;
+
+
+using MediatR;
+
 namespace AugustaGourmet.Api.Application.Features.Receipts.GetReceiptLines;
 
 public class GetReceiptLinesQueryHandler : IRequestHandler<GetReceiptLinesQuery, List<ReceiptLineDto>>
 {
-    private readonly IGenericRepository<ReceiptLine> _receiptRepository;
+    private readonly IReceiptRepository _receiptRepository;
     private readonly IMapper _mapper;
 
     public GetReceiptLinesQueryHandler(IReceiptRepository receiptRepository, IMapper mapper)
@@ -13,8 +20,8 @@ public class GetReceiptLinesQueryHandler : IRequestHandler<GetReceiptLinesQuery,
 
     public async Task<List<ReceiptLineDto>> Handle(GetReceiptLinesQuery request, CancellationToken cancellationToken)
     {
-        var receiptLines = await _receiptRepository.GetByIdAsync(request.ReceiptId);
+        var receipt = await _receiptRepository.GetReceiptLinesAsync(request.ReceiptId);
 
-        return _mapper.Map<List<ReceiptLineDto>>(receiptLines.Items);
+        return _mapper.Map<List<ReceiptLineDto>>(receipt);
     }
 }

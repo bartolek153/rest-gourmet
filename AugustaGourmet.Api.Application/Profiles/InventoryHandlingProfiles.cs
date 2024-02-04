@@ -1,6 +1,8 @@
-﻿using AugustaGourmet.Api.Application.Features.Suppliers.GetSuppliersQuery;
+﻿using AugustaGourmet.Api.Application.Features.Receipts.GetReceiptLines;
+using AugustaGourmet.Api.Application.Features.Receipts.GetReceipts;
+using AugustaGourmet.Api.Application.Features.Suppliers.GetSuppliersQuery;
+using AugustaGourmet.Api.Domain.Entities.Fiscal.Receiptment;
 using AugustaGourmet.Api.Domain.Entities.InventoryHandling;
-using AugustaGourmet.Api.Domain.Entities.Invoicing;
 
 using AutoMapper;
 
@@ -13,8 +15,11 @@ public class InventoryHandlingProfiles : Profile
         // Supplier
         CreateMap<Supplier, SupplierDto>();
 
-        // Invoice
+        // Receipt
         CreateMap<Receipt, ReceiptDto>()
             .ForMember(d => d.Supplier, opt => opt.MapFrom(s => s.Supplier.Name));
+
+        CreateMap<ReceiptLine, ReceiptLineDto>()
+            .ForMember(d => d.ReceiptId, opt => opt.MapFrom(s => s.Id));
     }
 }

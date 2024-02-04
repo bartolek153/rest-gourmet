@@ -23,10 +23,12 @@ public class Receipt : BaseEntity
     [Column("ValorLiquido")]
     public double NetAmount { get; set; }
 
+    [Column("NotaFiscal")]
     public int DocumentNumber { get; set; }
+    [Column("Serie")]
     public int Serie { get; set; }
+    [Column("Chave")]
     public string NfeId { get; set; } = string.Empty;
 
-    // invoice lines
-    // public ICollection<InvoiceLine> InvoiceLines { get; set; }
+    public ICollection<ReceiptLine> Lines { get; set; }
 }
