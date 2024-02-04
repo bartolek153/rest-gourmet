@@ -4,7 +4,7 @@
 
 ## Usage
 
-## TODO
+## Backend TODO
 
 * Tools
   * Migrate from .NET Framework 4.6 to .NET Core 8 ✔️
@@ -21,12 +21,14 @@
   * Substitute integer boolean values by bool type ❌
   * Multi-tenant environment (database, branches, ...) ❌
   * Add some method of storing configuration + credentials ❌
-  * Add loging and messaging with Telegram/SMTP(?) ❌
+  * Add logging and messaging with Telegram/SMTP(?) ❌
   * Add database indexes with EF ❌
   * Add Unit of Work ❌
   * Add domain events ❌
   * Dynamic ordering and filtering ❌
   * Add caching ❌
+* Business Rules
+  * On receipt insert, update PartnerProduct descriptions according to the latest inserts
 * Code Documentations
   * Generate API docs ❌
   * Generate code docs ❌
@@ -34,3 +36,7 @@
   * Implement Azure/Github pipelines ❌
   * Tagging and versioning ❌
   * Dockerize ❌
+
+## UI TODO
+
+* On form error, show the error again after multiple clicks on save button (or use helperText) -> ReceiptProductsMapping.tsx
