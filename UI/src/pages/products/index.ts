@@ -1,4 +1,4 @@
-import ProductIcon from '@mui/icons-material/DescriptionTwoTone';
+import ProductIcon from '@mui/icons-material/LocalGroceryStoreTwoTone';
 import ProductList from "./ProductList";
 import { ProductEdit, ProductCreate } from "./ProductForm";
 

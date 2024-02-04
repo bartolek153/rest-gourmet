@@ -2,11 +2,23 @@ import { Admin, Resource } from "react-admin";
 
 import { dataProvider } from "../data";
 import { i18nProvider } from "../i18n";
+import { Route } from 'react-router-dom';
 
 import products from "../pages/products";
-import suppliers from "../pages/suppliers";
-import employees from "../pages/employees";
-import invoices from "../pages/invoices";
+import receipts from "../pages/receipts";
+import ReceiptProductMapping from "../pages/receipts/ReceiptProductsMapping";
+import layoutProps from "../layout";
+
+// icons
+// - products: grocery
+// - inventory: shelf
+// - suppliers: truck
+// - employees: Assignment Ind
+// - attendance: schedule
+// - company: store
+
+// const lightTheme = defaultTheme;
+// const darkTheme = { ...defaultTheme, palette: { mode: 'dark' } };
 
 const App = () => (
   <Admin

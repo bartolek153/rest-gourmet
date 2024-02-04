@@ -1,62 +1,43 @@
 import { DataProvider, fetchUtils } from "react-admin";
-import { QueryClient } from "react-query";
 import { stringify } from "query-string";
 
 
-let apiUrl = 'https://augustagourmetrest.azurewebsites.net/api';
-// apiUrl = 'http://localhost:5274/api';
+let apiUrl = import.meta.env.API_URL || 'http://localhost:5274/api';
+// let apiUrl = "https://augustagourmetrest.azurewebsites.net/api"
 
 const httpClient = fetchUtils.fetchJson;
 
 export const dataProvider: DataProvider = {
-    getList: (resource, params) => {
+    getList: async (resource, params) => {
+
         const { page, perPage } = params.pagination;
-        // const { field, order } = params.sort;
-        
-        params.filter.page = page;
-        params.filter.perPage = perPage;
-        
-        
-        const query = {
-            // sort: JSON.stringify([field, order]),
 
-            page: page,
-            perPage: perPage,
-
-            q: params.filter.q,
-            group: params.filter.group,
-        };
+        params.filter = {
+            ...params.filter,
+            page, 
+            perPage
+        }
 
         const objString = new URLSearchParams(params.filter).toString();
-
-        // const url = `${apiUrl}/${resource}?${stringify(query)}`;
         const url = `${apiUrl}/${resource}?${objString}`;
+        console.log(url);
 
-        console.info(url)
-
-
-        return httpClient(url).then(({ headers, json }) => ({
+        return await httpClient(url).then(({ headers, json }) => ({
             data: json,
-            // data: json.map(resource => ({ ...resource, id: resource.Id }) ),
-
             total: parseInt((headers.get('content-range') || "0").split('/').pop() || '0', 10),
         }));
     },
 
-    getOne: (resource, params) =>
-        httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => ({
+    getOne: async (resource, params) =>
+        await httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => ({
             data: json,
-            // data: { ...json, id: json.Id },
         })),
 
-    getMany: (resource, params) => {
-        const query = {
-            filter: JSON.stringify({ id: params.ids }),
-        };
-        const url = `${apiUrl}/${resource}?${stringify(query)}`;
-        return httpClient(url).then(({ json }) => ({ 
-            data: json 
-            // data: json.map(resource => ({ ...resource, id: resource.Id }) ),
+    getMany: async (resource, params) => {
+        const queryString = params.ids.map(value => `id=${value}`).join('&');
+        const url = `${apiUrl}/${resource}?${queryString}`;
+        return await httpClient(url).then(({ json }) => ({
+            data: json
         }));
     },
 
@@ -71,11 +52,10 @@ export const dataProvider: DataProvider = {
                 [params.target]: params.id,
             }),
         };
-        const url = `${apiUrl}/${resource}?${stringify(query)}`;
+        const url = `${apiUrl}/${resource}?${stringify(query)}`;        
 
         return httpClient(url).then(({ headers, json }) => ({
             data: json,
-            // data: json.map(resource => ({ ...resource, id: resource.Id }) ),
             total: parseInt((headers.get('content-range') || "0").split('/').pop() || '0', 10),
         }));
     },
@@ -84,14 +64,13 @@ export const dataProvider: DataProvider = {
         httpClient(`${apiUrl}/${resource}/${params.id}`, {
             method: 'PUT',
             body: JSON.stringify(params.data),
-        }).then(({ json }) => ({ 
-            data: json 
-            // data: { ...json, id: json.Id },
-    })),
+        }).then(({ json }) => ({
+            data: json
+        })),
 
     updateMany: (resource, params) => {
         const query = {
-            filter: JSON.stringify({ id: params.ids}),
+            filter: JSON.stringify({ id: params.ids }),
         };
         return httpClient(`${apiUrl}/${resource}?${stringify(query)}`, {
             method: 'PUT',
@@ -105,34 +84,21 @@ export const dataProvider: DataProvider = {
             body: JSON.stringify(params.data),
         }).then(({ json }) => ({
             data: { ...params.data, id: json.id } as any,
-            // data: { ...params.data, id: json.Id } as any,
         })),
 
     delete: (resource, params) =>
         httpClient(`${apiUrl}/${resource}/${params.id}`, {
             method: 'DELETE',
-        }).then(({ json }) => ({ 
-            data: json 
-            // data: { ...json, id: json.Id },
+        }).then(({ json }) => ({
+            data: json
         })),
 
     deleteMany: (resource, params) => {
         const query = {
-            filter: JSON.stringify({ id: params.ids}),
+            filter: JSON.stringify({ id: params.ids }),
         };
         return httpClient(`${apiUrl}/${resource}?${stringify(query)}`, {
             method: 'DELETE',
         }).then(({ json }) => ({ data: json }));
     }
 };
-
-
-// const queryClient = new QueryClient({
-//         defaultOptions: {
-//             queries: {
-//                 staleTime: 5 * 60 * 1000, // 5 minutes
-//             },
-//         },
-//     });
-
-
