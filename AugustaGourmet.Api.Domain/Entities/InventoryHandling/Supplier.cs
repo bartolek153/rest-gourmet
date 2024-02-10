@@ -1,4 +1,4 @@
-﻿using AugustaGourmet.Api.Domain.Entities.Company;
+﻿using AugustaGourmet.Api.Domain.Entities.Companies;
 using AugustaGourmet.Api.Domain.Entities.Others;
 using AugustaGourmet.Api.Domain.Enums;
 
@@ -17,7 +17,7 @@ public class Supplier : BaseEntity
     public string EMAIL { get; set; }
     public string EMAIL_FISCAL { get; set; }
     public string NOME_CONTATO { get; set; }
-    public TCAD_EMPRESA CODIGO_EMPRESA { get; set; }
+    public Companies.Company CODIGO_EMPRESA { get; set; }
     public TCAD_STATUS_GERAL CODIGO_STATUS { get; set; }
     public TCAD_FREQUENCIA FREQUENCIA { get; set; }
     public TCAD_DIA_SEMANA DIA_SEMANA { get; set; }

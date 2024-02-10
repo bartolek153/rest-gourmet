@@ -1,4 +1,4 @@
-﻿using AugustaGourmet.Api.Domain.Entities.Company;
+﻿using AugustaGourmet.Api.Domain.Entities.Companies;
 
 namespace AugustaGourmet.Api.Domain.Entities.Products;
 
@@ -8,7 +8,7 @@ public class ProductFamily : BaseEntity
     [Column("EMPRESA_Id")]
     public int? CompanyId { get; set; }
     [ForeignKey("CompanyId")]
-    public TCAD_EMPRESA Company { get; set; } = null!;
+    public Companies.Company Company { get; set; } = null!;
 
     [Column("DESCRICAO")]
     public string Description { get; set; } = string.Empty;

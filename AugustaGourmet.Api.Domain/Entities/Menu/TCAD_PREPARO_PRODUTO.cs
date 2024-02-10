@@ -1,4 +1,4 @@
-﻿using AugustaGourmet.Api.Domain.Entities.Company;
+﻿using AugustaGourmet.Api.Domain.Entities.Companies;
 
 namespace WebAPI.Models
 {
@@ -6,7 +6,7 @@ namespace WebAPI.Models
     {
         public Int32 Id { get; set; }
         public TCAD_RECEITA RECEITA { get; set; }
-        public TCAD_EMPRESA EMPRESA { get; set; }
+        public Company EMPRESA { get; set; }
         public string DESCRICAO { get; set; }
     }
 }

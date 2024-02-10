@@ -1,4 +1,4 @@
-﻿using AugustaGourmet.Api.Domain.Entities.Company;
+﻿using AugustaGourmet.Api.Domain.Entities.Companies;
 
 namespace WebAPI.Models
 {
@@ -10,7 +10,7 @@ namespace WebAPI.Models
         public DateTime DATA { get; set; }
         public Int32 NUMERO_COMANDA { get; set; }
         public decimal VALOR { get; set; }
-        public TCAD_EMPRESA EMPRESA { get; set; }
+        public Company EMPRESA { get; set; }
         public DateTime DATA_VALIDADE { get; set; }
         public TFIN_SOLICITACAO_QRCODE ID_QRCODE { get; set; }
         public int QUANTIDADE_PONTUACAO { get; set; }

@@ -1,4 +1,4 @@
-﻿using AugustaGourmet.Api.Domain.Entities.Company;
+﻿using AugustaGourmet.Api.Domain.Entities.Companies;
 using AugustaGourmet.Api.Domain.Entities.InventoryHandling;
 using AugustaGourmet.Api.Domain.Entities.Products;
 using AugustaGourmet.Api.Domain.Entities.Units;
@@ -15,7 +15,7 @@ namespace WebAPI.Models
         public decimal ESTOQUE_MAXIMO { get; set; }
         public TCAD_UNIDADE UNIDADE_EST_MINIMO { get; set; }
         public TCAD_UNIDADE UNIDADE_EST_MAXIMO { get; set; }
-        public TCAD_EMPRESA CODIGO_EMPRESA { get; set; }
+        public Company CODIGO_EMPRESA { get; set; }
         public int CODIGO_EMPRESAId { get; set; }
         public int CONTAGEM_OBRIGATORIA { get; set; }
         [NotMapped]
