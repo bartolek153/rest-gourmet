@@ -83,7 +83,7 @@ public class ReceiptsService : IReceiptsService
                 if (suppMail is null)
                     continue;
 
-                var xmlAtt = email.Attachments!.SingleOrDefault(a => a.Name!.Contains(".xml"));
+                var xmlAtt = email.Attachments!.SingleOrDefault(a => a!.Name!.Contains(".xml"));
 
                 using var memStream = (MemoryStream)xmlAtt!.ContentStream;
                 XDocument xdoc = XDocument.Load(new MemoryStream(memStream.ToArray()));
