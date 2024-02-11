@@ -24,15 +24,17 @@ public class LoggerAdapter<T> : IAppLogger<T>
         _logger.LogError(message, args);
     }
 
-    public void LogError(Exception ex)
+    public void LogError(Exception ex, string message)
     {
-        string message =
-            $"Error: {ex.Message}\n" +
+        _logger.LogError(
+            $"Message: {message}\n" +
+            "Error: {ex.Message}\n" +
             (ex.InnerException?.Message != null ? $"Inner Details: {ex.InnerException?.Message}\n" : "") +
-            $"Source: {ex.Source}\n";
-
-        _logger.LogError(message);
+            $"Source: {ex.Source}\n"
+        );
     }
+
+
 
     public void LogInformation(string message, params object[] args)
     {
