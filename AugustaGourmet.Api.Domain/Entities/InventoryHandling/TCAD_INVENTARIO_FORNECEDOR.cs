@@ -1,4 +1,5 @@
 ﻿using AugustaGourmet.Api.Domain.Entities.Companies;
+using AugustaGourmet.Api.Domain.Entities.Employees;
 using AugustaGourmet.Api.Domain.Entities.InventoryHandling;
 using AugustaGourmet.Api.Domain.Entities.Others;
 
@@ -15,7 +16,7 @@ namespace WebAPI.Models
         public Int32 QUANTIDADE_ITENS { get; set; }
         public decimal VALOR_TOTAL_ITENS { get; set; }
         public DateTime? DATA_REALIZADO { get; set; }
-        public TCAD_FUNCIONARIO FUNCIONARIO { get; set; }
+        public Employee FUNCIONARIO { get; set; }
         public TCAD_DIA_SEMANA DIA_SEMANA { get; set; }
     }
 }

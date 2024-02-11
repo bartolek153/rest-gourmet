@@ -8,7 +8,7 @@ public class Company : BaseEntity
     public string RAZAO_SOCIAL { get; set; } = string.Empty;
 
     [Column("NOME_FANTASIA")]
-    public string TradingName { get; set; } = string.Empty;  
+    public string TradingName { get; set; } = string.Empty;
 
     [Column("INSCRICAO_ESTADUAL")]
     public string StateRegistration { get; set; } = string.Empty;

@@ -1,7 +1,7 @@
 ﻿namespace AugustaGourmet.Api.Domain.Entities.Employees;
 
 [Table("TCAD_FOLGA_FUNCIONARIO")]
-public class TCAD_FOLGA_FUNCIONARIO
+public class EmployeeIncidentsLog : BaseEntity
 {
     [Column("DataInicio")]
     public DateTime FromDate { get; set; }
@@ -13,7 +13,7 @@ public class TCAD_FOLGA_FUNCIONARIO
     public Employee Employee { get; set; } = null!;
 
     [Column("MOTIVO_OCORRENCIA")]
-    public TCAD_MOTIVO_OCORRENCIA Reason { get; set; }
+    public EmployeeIncidentReason Reason { get; set; } = null!;
 
     [Column("Observacao")]
     public string Note { get; set; } = string.Empty;

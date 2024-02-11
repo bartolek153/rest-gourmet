@@ -1,8 +1,8 @@
-﻿namespace WebAPI.Models
+﻿namespace AugustaGourmet.Api.Domain.Entities.Activities;
+
+[Table("TCAD_STATUS_PLANO_ATIVIDADES")]
+public class ActivityPlanStatus : BaseEntity
 {
-    public class TCAD_STATUS_PLANO_ATIVIDADES
-    {
-        public int Id { get; set; }
-        public string DESCRICAO { get; set; }
-    }
+    [Column("DESCRICAO")]
+    public string Description { get; set; } = string.Empty;
 }

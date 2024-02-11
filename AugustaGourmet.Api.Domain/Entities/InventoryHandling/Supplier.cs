@@ -1,4 +1,5 @@
-﻿using AugustaGourmet.Api.Domain.Entities.Others;
+﻿using AugustaGourmet.Api.Domain.Entities.Companies;
+using AugustaGourmet.Api.Domain.Entities.Others;
 
 namespace AugustaGourmet.Api.Domain.Entities.InventoryHandling;
 
@@ -17,7 +18,7 @@ public class Supplier : BaseEntity
     [Column("EMAIL_FISCAL")]
     public string FiscalEmail { get; set; } = string.Empty;
     public string NOME_CONTATO { get; set; }
-    public Companies.Company CODIGO_EMPRESA { get; set; }
+    public Company CODIGO_EMPRESA { get; set; }
 
     [Column("CODIGO_STATUS_Id")]
     public int Status { get; set; }

@@ -8,7 +8,7 @@ public class ProductFamily : BaseEntity
     [Column("EMPRESA_Id")]
     public int? CompanyId { get; set; }
     [ForeignKey("CompanyId")]
-    public Companies.Company Company { get; set; } = null!;
+    public Company Company { get; set; } = null!;
 
     [Column("DESCRICAO")]
     public string Description { get; set; } = string.Empty;

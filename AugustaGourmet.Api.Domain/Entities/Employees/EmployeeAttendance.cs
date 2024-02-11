@@ -19,10 +19,10 @@ public class EmployeeAttendance : BaseEntity
     public double DelayMinutes { get; set; }
 
     [Column("STATUS")]
-    public TCAD_STATUS_APT_FUNCIONARIO Status { get; set; }
+    public EmployeeStatus Status { get; set; } = null!;
 
     [Column("TIPO_ATRASO")]
-    public EmployeeDelayType TIPO_ATRASO { get; set; }
+    public EmployeeDelayType DelayType { get; set; } = null!;
 
     [Column("EXTRA")]
     public double OvertimeMinutes { get; set; }
