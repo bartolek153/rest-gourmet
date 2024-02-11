@@ -28,6 +28,9 @@
   * Dynamic ordering ❌
   * Dynamic filtering ✔️
   * Add caching ❌
+  * Implement Polly (error handling policy lib) ❌
+  * Decouple email reader/sender to be server agnostic ❌
+  * Implement Cancellation tokens ❌
 * Business Rules
   * On receipt insert, update PartnerProduct descriptions according to the latest inserts
 * Code Documentations
