@@ -8,6 +8,7 @@ namespace AugustaGourmet.Api.Application.Contracts.Persistence;
 public interface IGenericRepository<T> where T : BaseEntity
 {
     T Create(T entity);
+    void CreateRange(IEnumerable<T> entities);
     void Delete(T entity);
     Task<IReadOnlyList<T>> GetAllAsync();
     Task<T> GetByIdAsync(int id);

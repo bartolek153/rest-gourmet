@@ -2,7 +2,8 @@
 using System.Reflection;
 
 using AugustaGourmet.Api.Application.Behaviors;
-
+using AugustaGourmet.Api.Application.Contracts.Services;
+using AugustaGourmet.Api.Application.Services;
 using FluentValidation;
 
 using MediatR;
@@ -21,6 +22,8 @@ public static class ApplicationServiceRegistration
 
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+        services.AddScoped<IReceiptsService, ReceiptsService>();
 
         return services;
     }

@@ -86,4 +86,18 @@ public class ReceiptRepository : GenericRepository<Receipt>, IReceiptRepository
 
         return result > 0;
     }
+
+    public async Task<bool> ReceiptExistsAsync(string nfeId)
+    {
+        return await _context.Receipts
+            .AnyAsync(x => x.NfeId == nfeId);
+    }
+
+    public async Task<string[]> ReceiptRangeExistsAsync(string[] nfeIds)
+    {
+        return await _context.Receipts
+            .Where(x => nfeIds.Contains(x.NfeId))
+            .Select(x => x.NfeId)
+            .ToArrayAsync();
+    }
 }

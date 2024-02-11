@@ -23,6 +23,11 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         return entity;
     }
 
+    public void CreateRange(IEnumerable<T> entities)
+    {
+        _context.Set<T>().AddRange(entities);
+    }
+
     public void Delete(T entity)
     {
         _context.Set<T>().Attach(entity);

@@ -2,6 +2,7 @@ using AugustaGourmet.Api.Application.DTOs.Receipts;
 using AugustaGourmet.Api.Application.Features.Receipts.GetMappedReceiptProducts;
 using AugustaGourmet.Api.Application.Features.Receipts.GetReceiptLines;
 using AugustaGourmet.Api.Application.Features.Receipts.GetReceipts;
+using AugustaGourmet.Api.Application.Features.Receipts.ImportReceiptsFromEmail;
 using AugustaGourmet.Api.Application.Features.Receipts.MapReceiptProducts;
 using AugustaGourmet.Api.WebAPI.Extensions;
 
@@ -52,6 +53,15 @@ public class ReceiptsController : ApiController
     {
         return await _mediator.Send(new GetReceiptLinesQuery(id));
 
+    }
+
+    [HttpPost("import")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> ImportReceipts()
+    {
+        var result = await _mediator.Send(new ImportReceiptsFromEmailCommand());
+        return result.Match(result => Ok(), Problem);
     }
 
     [HttpGet("mapping/{id}")]
