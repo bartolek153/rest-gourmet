@@ -1,4 +1,5 @@
-﻿using AugustaGourmet.Api.Application.Features.ProductGroups.CreateProductGroup;
+﻿using AugustaGourmet.Api.Application.DTOs.Products;
+using AugustaGourmet.Api.Application.Features.ProductGroups.CreateProductGroup;
 using AugustaGourmet.Api.Application.Features.Products.DeleteProduct;
 using AugustaGourmet.Api.Application.Features.Products.GetAllProducts;
 using AugustaGourmet.Api.Application.Features.Products.GetProductDetails;

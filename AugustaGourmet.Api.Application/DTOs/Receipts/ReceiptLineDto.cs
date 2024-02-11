@@ -1,4 +1,4 @@
-namespace AugustaGourmet.Api.Application.Features.Receipts.GetReceiptLines;
+namespace AugustaGourmet.Api.Application.DTOs.Receipts;
 
 public class ReceiptLineDto
 {

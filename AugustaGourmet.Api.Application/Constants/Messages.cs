@@ -10,5 +10,6 @@ public static partial class Constants
         public const string InvalidUnitMeasureId = "O campo unidade de medida é obrigatório.";
         public const string InvalidOriginId = "O campo origem é obrigatório.";
         public const string InvalidStatusId = "O campo status é obrigatório.";
+        public const string DescriptionLengthExceeded = "O campo descrição deve ter no máximo 60 caracteres.";
     }
 }

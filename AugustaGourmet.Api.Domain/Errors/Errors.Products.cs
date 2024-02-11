@@ -1,10 +1,10 @@
-﻿using ErrorOr;
+using ErrorOr;
 
 namespace AugustaGourmet.Api.Domain.Errors;
 
 public static partial class Errors
 {
-    public static class Product
+    public static class Products
     {
 
         public static class Conflicts

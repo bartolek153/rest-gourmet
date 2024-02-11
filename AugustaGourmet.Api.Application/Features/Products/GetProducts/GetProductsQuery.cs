@@ -1,4 +1,5 @@
 ﻿using AugustaGourmet.Api.Application.Common;
+using AugustaGourmet.Api.Application.DTOs.Products;
 
 namespace AugustaGourmet.Api.Application.Features.Products.GetAllProducts;
 

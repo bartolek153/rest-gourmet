@@ -1,5 +1,5 @@
+using AugustaGourmet.Api.Application.DTOs.Products;
 using AugustaGourmet.Api.Application.Features.ProductFamilies.DeleteProductFamily;
-using AugustaGourmet.Api.Application.Features.ProductGroups;
 using AugustaGourmet.Api.Application.Features.ProductGroups.CreateProductGroup;
 using AugustaGourmet.Api.Application.Features.ProductGroups.GetProductGroupDetails;
 using AugustaGourmet.Api.Application.Features.ProductGroups.GetProductGroups;

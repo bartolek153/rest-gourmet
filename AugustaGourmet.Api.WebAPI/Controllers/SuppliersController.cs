@@ -1,6 +1,8 @@
 using AugustaGourmet.Api.Application.Features.Suppliers.GetSuppliersQuery;
 using AugustaGourmet.Api.WebAPI.Extensions;
+
 using MediatR;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace AugustaGourmet.Api.WebAPI.Controllers;

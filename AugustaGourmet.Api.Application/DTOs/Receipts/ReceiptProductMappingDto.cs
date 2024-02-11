@@ -1,4 +1,4 @@
-namespace AugustaGourmet.Api.Application.Features.Receipts;
+namespace AugustaGourmet.Api.Application.DTOs.Receipts;
 
 public class ReceiptProductMappingDto
 {

@@ -8,28 +8,23 @@ namespace AugustaGourmet.Api.Application.Features.Products.UpdateProduct
         public UpdateProductCommandValidator()
         {
             RuleFor(p => p.Id)
-                .GreaterThan(0)
-                .WithMessage(Constants.Messages.IdMustBeGreaterThanZero);
+                .GreaterThan(0).WithMessage(Constants.Messages.IdMustBeGreaterThanZero);
 
             RuleFor(p => p.Description)
-                .NotEmpty()
-                .WithMessage(Constants.Messages.DescriptionIsRequired);
+                .NotEmpty().WithMessage(Constants.Messages.DescriptionIsRequired)
+                .MaximumLength(60).WithMessage(Constants.Messages.DescriptionLengthExceeded);
 
             RuleFor(p => p.CompanyId)
-                .GreaterThan(0)
-                .WithMessage(Constants.Messages.InvalidCompanyId);
+                .GreaterThan(0).WithMessage(Constants.Messages.InvalidCompanyId);
 
             RuleFor(p => p.OriginId)
-                .GreaterThan(0)
-                .WithMessage(Constants.Messages.InvalidOriginId);
+                .GreaterThan(0).WithMessage(Constants.Messages.InvalidOriginId);
 
             RuleFor(p => p.UnitMeasureId)
-                .GreaterThan(0)
-                .WithMessage(Constants.Messages.InvalidUnitMeasureId);
+                .GreaterThan(0).WithMessage(Constants.Messages.InvalidUnitMeasureId);
 
             RuleFor(p => p.StatusId)
-                .GreaterThan(0)
-                .WithMessage(Constants.Messages.InvalidStatusId);
+                .GreaterThan(0).WithMessage(Constants.Messages.InvalidStatusId);
         }
     }
 }

@@ -31,7 +31,7 @@ public class MapReceiptProductsCommandHandler : IRequestHandler<MapReceiptProduc
     public async Task<ErrorOr<Unit>> Handle(MapReceiptProductsCommand request, CancellationToken cancellationToken)
     {
         if (request.Mappings.Count == 0)
-            return Errors.Receipt.EmptyMappings;
+            return Errors.Receipts.EmptyMappings;
 
         var receipt = await _receiptRepository.GetByIdAsync(request.Id, "Lines");
 
@@ -52,12 +52,12 @@ public class MapReceiptProductsCommandHandler : IRequestHandler<MapReceiptProduc
                 ReceiptLine? receiptLine = receipt.Lines.FirstOrDefault(l => l.Id == map.Id);
 
                 if (!await _productRepository.IsUniqueAsync(map.PartnerProductDescription))
-                    return Errors.Product.Conflicts.DuplicateProductWithDescription(map.PartnerProductDescription);
+                    return Errors.Products.Conflicts.DuplicateProductWithDescription(map.PartnerProductDescription);
 
                 Product createdProduct = _productRepository.Create(new Product
                 {
                     CompanyId = 1,
-                    Description = map.PartnerProductDescription,
+                    Description = map.PartnerProductDescription.Substring(0, Math.Min(map.PartnerProductDescription.Length, 60)),
                     GroupId = 31, //make nullable
                     OriginId = 1,
                     ProductUnitId = 1, //search by short description, else make nullable

@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using AugustaGourmet.Api.Application.DTOs.Products;
+
+using MediatR;
 
 namespace AugustaGourmet.Api.Application.Features.ProductCategories.GetProductCategories;
 

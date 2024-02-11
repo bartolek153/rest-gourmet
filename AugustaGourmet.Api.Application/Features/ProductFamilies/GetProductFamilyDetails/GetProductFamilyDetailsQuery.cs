@@ -1,3 +1,5 @@
+using AugustaGourmet.Api.Application.DTOs.Products;
+
 using ErrorOr;
 
 using MediatR;

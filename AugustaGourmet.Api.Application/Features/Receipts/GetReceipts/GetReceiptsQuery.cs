@@ -1,4 +1,5 @@
 using AugustaGourmet.Api.Application.Common;
+using AugustaGourmet.Api.Application.DTOs.Receipts;
 
 namespace AugustaGourmet.Api.Application.Features.Receipts.GetReceipts;
 

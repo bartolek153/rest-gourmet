@@ -1,15 +1,11 @@
-﻿using AugustaGourmet.Api.Application.Features.ProductCategories;
+﻿using AugustaGourmet.Api.Application.DTOs.Products;
 using AugustaGourmet.Api.Application.Features.ProductCategories.CreateProductCategory;
 using AugustaGourmet.Api.Application.Features.ProductCategories.UpdateProductCategory;
-using AugustaGourmet.Api.Application.Features.ProductFamilies;
 using AugustaGourmet.Api.Application.Features.ProductFamilies.CreateProductFamily;
 using AugustaGourmet.Api.Application.Features.ProductFamilies.UpdateProductFamily;
-using AugustaGourmet.Api.Application.Features.ProductGroups;
 using AugustaGourmet.Api.Application.Features.ProductGroups.CreateProductGroup;
 using AugustaGourmet.Api.Application.Features.ProductGroups.UpdateProductGroup;
 using AugustaGourmet.Api.Application.Features.Products.CreateProduct;
-using AugustaGourmet.Api.Application.Features.Products.GetAllProducts;
-using AugustaGourmet.Api.Application.Features.Products.GetProductDetails;
 using AugustaGourmet.Api.Application.Features.Products.UpdateProduct;
 using AugustaGourmet.Api.Domain.Entities.Products;
 

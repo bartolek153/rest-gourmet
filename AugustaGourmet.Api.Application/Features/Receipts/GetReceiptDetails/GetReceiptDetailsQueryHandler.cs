@@ -1,4 +1,5 @@
 using AugustaGourmet.Api.Application.Contracts.Persistence;
+using AugustaGourmet.Api.Application.DTOs.Receipts;
 using AugustaGourmet.Api.Domain.Entities.Fiscal.Receiptment;
 using AugustaGourmet.Api.Domain.Errors;
 

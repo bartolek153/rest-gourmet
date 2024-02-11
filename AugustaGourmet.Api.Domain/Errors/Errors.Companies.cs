@@ -4,7 +4,7 @@ public static partial class Errors
 {
 
 
-    public static class Company
+    public static class Companies
     {
     }
 }

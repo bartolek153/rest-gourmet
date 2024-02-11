@@ -1,4 +1,5 @@
 using AugustaGourmet.Api.Application.Contracts.Persistence;
+using AugustaGourmet.Api.Application.DTOs.Receipts;
 
 using AutoMapper;
 

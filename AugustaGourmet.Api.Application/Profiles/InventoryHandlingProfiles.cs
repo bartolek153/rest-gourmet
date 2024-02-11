@@ -1,5 +1,4 @@
-﻿using AugustaGourmet.Api.Application.Features.Receipts.GetReceiptLines;
-using AugustaGourmet.Api.Application.Features.Receipts.GetReceipts;
+﻿using AugustaGourmet.Api.Application.DTOs.Receipts;
 using AugustaGourmet.Api.Application.Features.Suppliers.GetSuppliersQuery;
 using AugustaGourmet.Api.Domain.Entities.Fiscal.Receiptment;
 using AugustaGourmet.Api.Domain.Entities.InventoryHandling;

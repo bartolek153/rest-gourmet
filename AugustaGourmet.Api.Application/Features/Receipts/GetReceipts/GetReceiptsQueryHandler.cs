@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 
 using AugustaGourmet.Api.Application.Contracts.Common;
 using AugustaGourmet.Api.Application.Contracts.Persistence;
+using AugustaGourmet.Api.Application.DTOs.Receipts;
 using AugustaGourmet.Api.Application.Features.Receipts.GetReceipts;
 using AugustaGourmet.Api.Domain.Entities.Fiscal.Receiptment;
 

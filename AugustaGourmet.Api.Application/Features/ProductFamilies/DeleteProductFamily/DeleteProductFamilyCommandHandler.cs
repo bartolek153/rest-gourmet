@@ -29,7 +29,7 @@ public class DeleteProductFamilyCommandHandler : IRequestHandler<DeleteProductFa
             return Errors.CouldNotFind(nameof(ProductFamily), request.Id);
 
         if (await _productGroupRepository.AnyGroupWithFamilyAsync(productFamily.Id))
-            return Errors.Product.Conflicts.GroupWithFamily;
+            return Errors.Products.Conflicts.GroupWithFamily;
 
         _productFamilyRepository.Delete(productFamily);
         await _unitOfWork.CommitAsync();

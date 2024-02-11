@@ -1,3 +1,4 @@
+using AugustaGourmet.Api.Application.DTOs.Receipts;
 using AugustaGourmet.Api.Application.Features.Receipts.GetMappedReceiptProducts;
 using AugustaGourmet.Api.Application.Features.Receipts.GetReceiptLines;
 using AugustaGourmet.Api.Application.Features.Receipts.GetReceipts;

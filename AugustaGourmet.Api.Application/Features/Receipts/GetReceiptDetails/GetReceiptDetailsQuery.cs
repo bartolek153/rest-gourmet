@@ -1,4 +1,6 @@
 
+using AugustaGourmet.Api.Application.DTOs.Receipts;
+
 using ErrorOr;
 
 using MediatR;

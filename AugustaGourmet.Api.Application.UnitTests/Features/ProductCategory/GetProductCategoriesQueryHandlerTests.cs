@@ -1,5 +1,5 @@
 ﻿using AugustaGourmet.Api.Application.Contracts.Persistence;
-using AugustaGourmet.Api.Application.Features.ProductCategories;
+using AugustaGourmet.Api.Application.DTOs.Products;
 using AugustaGourmet.Api.Application.Features.ProductCategories.GetProductCategories;
 using AugustaGourmet.Api.Application.Profiles;
 using AugustaGourmet.Api.Application.UnitTests.Mocks;

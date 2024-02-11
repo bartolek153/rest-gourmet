@@ -1,4 +1,4 @@
-﻿namespace AugustaGourmet.Api.Application.Features.Products.GetAllProducts;
+﻿namespace AugustaGourmet.Api.Application.DTOs.Products;
 
 public class ProductDto
 {

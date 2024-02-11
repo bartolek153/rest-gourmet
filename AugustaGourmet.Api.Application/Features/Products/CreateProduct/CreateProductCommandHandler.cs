@@ -26,7 +26,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
     public async Task<ErrorOr<int>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
         if (!await _productRepository.IsUniqueAsync(request.Description))
-            return Errors.Product.Conflicts.DuplicateProduct;
+            return Errors.Products.Conflicts.DuplicateProduct;
 
         // Convert to domain entity
         var product = _mapper.Map<Product>(request);

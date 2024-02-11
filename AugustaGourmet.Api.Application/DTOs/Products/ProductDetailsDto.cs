@@ -1,4 +1,4 @@
-﻿namespace AugustaGourmet.Api.Application.Features.Products.GetProductDetails;
+﻿namespace AugustaGourmet.Api.Application.DTOs.Products;
 
 public record ProductDetailsDto(
     int Id,

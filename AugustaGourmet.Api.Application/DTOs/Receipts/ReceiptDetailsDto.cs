@@ -1,6 +1,6 @@
 using AugustaGourmet.Api.Domain.Entities.Fiscal.Receiptment;
 
-namespace AugustaGourmet.Api.Application.Features.Receipts.GetReceiptLines;
+namespace AugustaGourmet.Api.Application.DTOs.Receipts;
 
 public class ReceiptDetailsDto
 {

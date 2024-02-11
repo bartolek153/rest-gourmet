@@ -30,7 +30,7 @@ public class DeleteProductGroupCommandHandler : IRequestHandler<DeleteProductGro
             return Errors.CouldNotFind(nameof(ProductGroup), request.Id);
 
         if (await _productRepository.AnyProductWithGroupAsync(request.Id))
-            return Errors.Product.Conflicts.ProductWithGroup;
+            return Errors.Products.Conflicts.ProductWithGroup;
 
         _productGroupRepository.Delete(productGroup);
 
