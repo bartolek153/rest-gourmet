@@ -11,13 +11,7 @@ public static class PersistenceServiceRegistration
 {
     public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("DevConnectionLocalDB");
-
-        if (connectionString is null)
-            connectionString = Environment.GetEnvironmentVariable("CONNSTR");
-
-        if (connectionString is null)
-            throw new ArgumentNullException("Could not find connection string.");
+        var connectionString = configuration.GetConnectionString("DefaultConnection")!;
 
         services.AddScoped<ApplicationContext>(_ =>
                 new ApplicationContext(connectionString));

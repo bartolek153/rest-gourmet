@@ -1,12 +1,23 @@
+using AugustaGourmet.Api.Application.Contracts.TextMessage;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace AugustaGourmet.Api.WebAPI.Controllers;
 
+[Route("api")]
 public class EchoController : ControllerBase
 {
-    [Route("/echo")]
-    public IActionResult Echo(string? message = null)
+    private readonly ITextMessageSender _textMessageSender;
+
+    public EchoController(ITextMessageSender textMessageSender)
     {
-        return Ok(message ?? "Hello, World!");
+        _textMessageSender = textMessageSender;
     }
+
+    [HttpGet("/echo")]
+    public IActionResult Echo(string? message = null) => Ok(message ?? "Hello, World!");
+
+    [HttpGet("/echo/telegram")]
+    public async Task<IActionResult> EchoTelegram(string? message = null) =>
+        Ok(await _textMessageSender.SendMessageToAdminAsync(message ?? "Hello, World!"));
 }
