@@ -1,13 +1,14 @@
 name: build and publish app to azure
 
 env:
-  AZURE_WEBAPP_PACKAGE_PATH: '.'      
+  AZURE_WEBAPP_PACKAGE_PATH: "."
+  DOTNET_VERSION: "8.0.x"
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
   push:
-    branches: 
+    branches:
       - development
   workflow_dispatch:
 
@@ -47,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: dotnet
     environment:
-      name: 'production'
+      name: "production"
       url: ${{ steps.dotnet-webapp-deploy.outputs.webapp-url }}
 
     steps:
@@ -69,7 +70,7 @@ jobs:
   #   runs-on: ubuntu-latest
   #   steps:
   #     - uses: actions/checkout@v3
-      
+
   #     - uses: actions/setup-node@v3
   #       name: Setup TS
   #       with:
