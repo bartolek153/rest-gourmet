@@ -1,0 +1,108 @@
+name: build and publish app to azure
+
+env:
+  AZURE_WEBAPP_PACKAGE_PATH: '.'      
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  push:
+    branches: 
+      - development
+  workflow_dispatch:
+
+jobs:
+  dotnet:
+    name: Build .NET bundle
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Set up dependency caching for faster builds
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Build with dotnet
+        run: dotnet build --configuration Release
+
+      - name: dotnet publish
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: .net-app
+          path: ${{env.DOTNET_ROOT}}/myapp
+
+  deploy-dotnet:
+    runs-on: ubuntu-latest
+    needs: dotnet
+    environment:
+      name: 'production'
+      url: ${{ steps.dotnet-webapp-deploy.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: .net-app
+
+      - name: Deploy to Azure Web App
+        id: dotnet-webapp-deploy
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ secrets.AZURE_API_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_API_PUBLISH_PROFILE }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+  # ts:
+  #   name: Build TS bundle
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+      
+  #     - uses: actions/setup-node@v3
+  #       name: Setup TS
+  #       with:
+  #         node-version: '18.x'
+
+  #     - name: Install dependencies, build, and test
+  #       run: |
+  #         yarn
+  #         yarn vite build
+
+  #     - name: Upload artifact for deployment job
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: node-app
+  #         path: ui/dist
+
+  # deploy-ts:
+  #   runs-on: ubuntu-latest
+  #   needs: ts
+  #   environment:
+  #     name: 'Production'
+  #     url: ${{ steps.ts-webapp-deploy.outputs.webapp-url }}
+
+  #   steps:
+  #     - name: Download artifact from build job
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: node-app
+
+  #     - name: Deploy to Azure Web App
+  #       uses: azure/webapps-deploy@v2
+  #       id: ts-webapp-deploy
+  #       with:
+  #         app-name: ${{ secrets.AZURE_WEBUI_WEBAPP_NAME }}
+  #         publish-profile: ${{ secrets.AZURE_WEBUI_PUBLISH_PROFILE }}
+  #         package: .
