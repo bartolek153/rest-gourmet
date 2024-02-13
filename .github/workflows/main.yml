@@ -105,10 +105,10 @@ jobs:
           yarn vite build
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: ui/dist
+          path: UI/dist
 
   deploy-ts:
     name: Deploy UI app to Azure
@@ -120,7 +120,7 @@ jobs:
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: node-app
 
