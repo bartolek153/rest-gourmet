@@ -58,6 +58,8 @@ jobs:
   deploy-dotnet:
     runs-on: ubuntu-latest
     needs: dotnet
+    outputs:
+      api-url: ${{ steps.dotnet-webapp-deploy.outputs.webapp-url }}
     environment:
       name: "production"
       url: ${{ steps.dotnet-webapp-deploy.outputs.webapp-url }}
@@ -76,45 +78,53 @@ jobs:
           publish-profile: ${{ secrets.AZURE_API_PUBLISH_PROFILE }}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
-  # ts:
-  #   name: Build TS bundle
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
+      - name: Extract API URL
+        id: step1
+        run: |
+          echo "::set-output name=api_url::${api_url}"
 
-  #     - uses: actions/setup-node@v3
-  #       name: Setup TS
-  #       with:
-  #         node-version: '18.x'
+  ts:
+    name: Build TS bundle
+    runs-on: ubuntu-latest
+    needs: deploy-dotnet
+    env:
+      VITE_API_URL: ${{ needs.deploy-dotnet.outputs.api-url }}
+    steps:
+      - uses: actions/checkout@v3
 
-  #     - name: Install dependencies, build, and test
-  #       run: |
-  #         yarn
-  #         yarn vite build
+      - uses: actions/setup-node@v3
+        name: Setup TS
+        with:
+          node-version: "18.x"
 
-  #     - name: Upload artifact for deployment job
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: node-app
-  #         path: ui/dist
+      - name: Install dependencies, build, and test
+        run: |
+          yarn install
+          yarn vite build
 
-  # deploy-ts:
-  #   runs-on: ubuntu-latest
-  #   needs: ts
-  #   environment:
-  #     name: 'Production'
-  #     url: ${{ steps.ts-webapp-deploy.outputs.webapp-url }}
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: node-app
+          path: ui/dist
 
-  #   steps:
-  #     - name: Download artifact from build job
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         name: node-app
+  deploy-ts:
+    runs-on: ubuntu-latest
+    needs: ts
+    environment:
+      name: "Production"
+      url: ${{ steps.ts-webapp-deploy.outputs.webapp-url }}
 
-  #     - name: Deploy to Azure Web App
-  #       uses: azure/webapps-deploy@v2
-  #       id: ts-webapp-deploy
-  #       with:
-  #         app-name: ${{ secrets.AZURE_WEBUI_WEBAPP_NAME }}
-  #         publish-profile: ${{ secrets.AZURE_WEBUI_PUBLISH_PROFILE }}
-  #         package: .
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: node-app
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        id: ts-webapp-deploy
+        with:
+          app-name: ${{ secrets.AZURE_WEBUI_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBUI_PUBLISH_PROFILE }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}

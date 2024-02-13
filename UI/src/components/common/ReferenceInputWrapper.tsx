@@ -5,7 +5,7 @@ interface ReferenceInputWrapperProps {
   reference: string;
   label?: string;
   optionTextField: string;
-  filter?: any;
+  filter?: object;
 }
 
 export const ReferenceInputWrapper = (props: ReferenceInputWrapperProps) => {

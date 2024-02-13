@@ -2,7 +2,6 @@ import {
   Create,
   Edit,
   NumberInput,
-  PasswordInput,
   SimpleForm,
   TextInput,
 } from "react-admin";

@@ -1,15 +1,9 @@
-import React, { useMemo, CSSProperties } from "react";
-import { useGetList } from "react-admin";
 
 import { PieChart } from "@mui/x-charts/PieChart";
 
 import { useMediaQuery, Theme } from "@mui/material";
-import { subDays, startOfDay } from "date-fns";
-import CardWithIcon from "./CardWithIcon";
 
-import DollarIcon from "@mui/icons-material/AttachMoney";
-
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 
 // interface AttendanceStats {
 //   total: number;
@@ -57,14 +51,14 @@ const styles = {
 };
 
 const Spacer = () => <span style={{ width: "1em" }} />;
-const VerticalSpacer = () => <span style={{ height: "1em" }} />;
+// const VerticalSpacer = () => <span style={{ height: "1em" }} />;
 
 const Dashboard = () => {
   const isXSmall = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down("sm")
   );
   const isSmall = useMediaQuery((theme: Theme) => theme.breakpoints.down("lg"));
-  const aMonthAgo = useMemo(() => subDays(startOfDay(new Date()), 30), []);
+  // const aMonthAgo = useMemo(() => subDays(startOfDay(new Date()), 30), []);
 
   // const { data: orders } = useGetList<Order>("commands", {
   //   filter: { date_gte: aMonthAgo.toISOString() },
@@ -135,12 +129,12 @@ const Dashboard = () => {
       <div style={styles.flex}>
         <div style={styles.leftCol}>
           <div style={styles.flex}>
-            <CardWithIcon
+            {/* <CardWithIcon
               to="/commands"
               icon={DollarIcon}
               title="Teste"
               subtitle={"123"}
-            />
+            /> */}
             <Spacer />
             <PieChart
               series={[
@@ -167,17 +161,17 @@ const Dashboard = () => {
             {/* <OrderChart orders={recentOrders} /> */}
           </div>
           <div style={styles.singleCol}>
-            <CardWithIcon
+            {/* <CardWithIcon
               to="/commands"
               icon={DollarIcon}
               title="Teste"
               subtitle={"123"}
-            />
+            /> */}
           </div>
         </div>
         <div style={styles.rightCol}>
           <div style={styles.flex}>
-            <CardWithIcon
+            {/* <CardWithIcon
               to="/commands"
               icon={DollarIcon}
               title="Teste"
@@ -189,7 +183,7 @@ const Dashboard = () => {
               icon={DollarIcon}
               title="Teste"
               subtitle={"123"}
-            />
+            /> */}
           </div>
         </div>
       </div>

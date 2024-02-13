@@ -16,7 +16,7 @@ import {
 import { MoneyField } from "../../components/common/MoneyField";
 
 
-import { Box, Button, Divider, Stack } from "@mui/material";
+import { Button, Divider, Stack } from "@mui/material";
 
 const MapButton = () => {
   const receipt = useRecordContext();

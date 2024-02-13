@@ -1,10 +1,9 @@
-import { Route } from "react-router-dom";
-import LessonEditPage from "./LessonEditPage";
+// import { Route } from "react-router-dom";
 
-export default [
-  <Route
-    exact
-    path="/course-plan/:plan_id/plan-lesson/:id"
-    component={LessonEditPage}
-  />,
-];
+// export default [
+//   <Route
+//     exact
+//     path="/course-plan/:plan_id/plan-lesson/:id"
+//     component={LessonEditPage}
+//   />,
+// ];

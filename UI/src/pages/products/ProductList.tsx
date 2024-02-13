@@ -3,7 +3,6 @@ import {
   Datagrid,
   TextField,
   NumberField,
-  EditButton,
   TextInput,
   ReferenceInput,
   AutocompleteInput,

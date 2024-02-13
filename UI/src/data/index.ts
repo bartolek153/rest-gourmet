@@ -2,8 +2,7 @@ import { DataProvider, fetchUtils } from "react-admin";
 import { stringify } from "query-string";
 
 
-let apiUrl = import.meta.env.API_URL || 'http://localhost:5274/api';
-// let apiUrl = "https://augustagourmetrest.azurewebsites.net/api"
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const httpClient = fetchUtils.fetchJson;
 
@@ -20,7 +19,7 @@ export const dataProvider: DataProvider = {
 
         const objString = new URLSearchParams(params.filter).toString();
         const url = `${apiUrl}/${resource}?${objString}`;
-        console.log(url);
+        // console.log(url);
 
         return await httpClient(url).then(({ headers, json }) => ({
             data: json,
