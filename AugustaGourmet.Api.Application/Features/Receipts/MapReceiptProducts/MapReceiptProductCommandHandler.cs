@@ -15,17 +15,17 @@ public class MapReceiptProductsCommandHandler : IRequestHandler<MapReceiptProduc
     private readonly IUnitOfWork _unitOfWork;
     private readonly IReceiptRepository _receiptRepository;
     private readonly IProductRepository _productRepository;
-    private readonly IPartnerProductRepository _partnerProductRepository;
+    private readonly IInventoryParameterRepository _inventoryParameterRepository;
 
     public MapReceiptProductsCommandHandler(IReceiptRepository receiptRepository,
                                             IProductRepository productRepository,
-                                            IPartnerProductRepository partnerProductRepository,
-                                            IUnitOfWork unitOfWork)
+                                            IUnitOfWork unitOfWork,
+                                            IInventoryParameterRepository inventoryParameterRepository)
     {
         _receiptRepository = receiptRepository;
         _productRepository = productRepository;
-        _partnerProductRepository = partnerProductRepository;
         _unitOfWork = unitOfWork;
+        _inventoryParameterRepository = inventoryParameterRepository;
     }
 
     public async Task<ErrorOr<Unit>> Handle(MapReceiptProductsCommand request, CancellationToken cancellationToken)
@@ -37,7 +37,6 @@ public class MapReceiptProductsCommandHandler : IRequestHandler<MapReceiptProduc
 
         if (receipt == null)
             return Errors.CouldNotFind(nameof(Receipt), request.Id);
-
 
         foreach (var map in request.Mappings)
         {
@@ -66,52 +65,75 @@ public class MapReceiptProductsCommandHandler : IRequestHandler<MapReceiptProduc
                     StatusId = 1 //active enum
                 });
 
-                _partnerProductRepository.Create(new PartnerProduct
+                _inventoryParameterRepository.Create(new InventoryParameter
                 {
-                    PartnerId = receipt.SupplierId,
-                    PartnerProductId = map.PartnerProductId,
-                    PartnerProductDescription = createdProduct.Description,
-                    InventoryProduct = createdProduct
+                    CompanyId = 1,
+                    SupplierId = receipt.SupplierId,
+                    InventoryProduct = createdProduct,
+                    SupplierProductId = map.PartnerProductId,
+                    MinStockQuantity = 0,
+                    MinStockUnitId = 1,
+                    MaxStockQuantity = 0,
+                    MaxStockUnitId = 1,
+                    CountIsMandatory = 0,
                 });
             }
-            else if (map.InventoryProductId.HasValue)
+            else if (map.InventoryProductId.HasValue)  // TODO: review these conditions
             {
-                // check if the product is already mapped to a partner
-                var pProduct = await _partnerProductRepository.GetMappedProductAsync(receipt.SupplierId, map.InventoryProductId.Value);
-                if (pProduct == null)
+                // check if partner product is already 
+                // mapped to a inventory product
+                var existingSupProductMap = await _inventoryParameterRepository.GetByPartnerProductIdAsync(1, receipt.SupplierId, map.PartnerProductId);
+                var existingInvProductMap = await _inventoryParameterRepository.GetByIdAsync(1, receipt.SupplierId, map.InventoryProductId.Value);
+
+                if (existingSupProductMap is not null
+                    && existingInvProductMap is not null
+                    && existingSupProductMap.InventoryProductId != map.InventoryProductId.Value)
                 {
-                    _partnerProductRepository.Create(new PartnerProduct
+                    existingSupProductMap.SupplierProductId = null;
+                    existingInvProductMap.SupplierProductId = map.PartnerProductId;
+                    _inventoryParameterRepository.Update(existingSupProductMap);
+                    _inventoryParameterRepository.Update(existingInvProductMap);
+                    // return Errors.Inventory.ExistingMapping;
+                }
+
+                else if (existingSupProductMap is null && existingInvProductMap is null)
+                {
+                    _inventoryParameterRepository.Create(new InventoryParameter
                     {
-                        PartnerId = receipt.SupplierId,
-                        PartnerProductId = map.PartnerProductId,
-                        PartnerProductDescription = map.PartnerProductDescription,
-                        InventoryProductId = map.InventoryProductId.Value
+                        CompanyId = 1,
+                        SupplierId = receipt.SupplierId,
+                        InventoryProductId = map.InventoryProductId.Value,
+                        SupplierProductId = map.PartnerProductId,
+                        MinStockQuantity = 0,
+                        MinStockUnitId = 1,
+                        MaxStockQuantity = 0,
+                        MaxStockUnitId = 1,
+                        CountIsMandatory = 0,
                     });
                 }
-                else
+                else if (existingSupProductMap is null && existingInvProductMap is not null)
                 {
-                    // update the mapped inventory product
-                    if (pProduct.InventoryProductId != map.InventoryProductId.Value)
-                    {
-                        pProduct.InventoryProductId = map.InventoryProductId.Value;
-                        _partnerProductRepository.Update(pProduct);
-                    }
-
-                    // update the description
-                    if (pProduct.PartnerProductDescription != map.PartnerProductDescription)
-                    {
-                        pProduct.PartnerProductDescription = map.PartnerProductDescription;
-                        _partnerProductRepository.Update(pProduct);
-                    }
-
-                    // update the partner product id
-                    if (pProduct.PartnerProductId != map.PartnerProductId)
-                    {
-                        pProduct.PartnerProductId = map.PartnerProductId;
-                        _partnerProductRepository.Update(pProduct);
-                    }
+                    existingInvProductMap.SupplierProductId = map.PartnerProductId;
+                    _inventoryParameterRepository.Update(existingInvProductMap);
                 }
 
+                else if (existingSupProductMap is not null && existingInvProductMap is null)
+                {
+                    existingSupProductMap.SupplierProductId = null;
+                    _inventoryParameterRepository.Update(existingSupProductMap);
+                    _inventoryParameterRepository.Create(new InventoryParameter
+                    {
+                        CompanyId = 1,
+                        SupplierId = receipt.SupplierId,
+                        InventoryProductId = map.InventoryProductId.Value,
+                        SupplierProductId = map.PartnerProductId,
+                        MinStockQuantity = 0,
+                        MinStockUnitId = 1,
+                        MaxStockQuantity = 0,
+                        MaxStockUnitId = 1,
+                        CountIsMandatory = 0,
+                    });
+                }
             }
         }
 

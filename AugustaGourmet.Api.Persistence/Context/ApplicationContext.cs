@@ -1,4 +1,4 @@
-using System.Data.Entity;
+﻿using System.Data.Entity;
 
 using AugustaGourmet.Api.Domain.Common;
 using AugustaGourmet.Api.Domain.Entities.Companies;
@@ -14,6 +14,7 @@ public class ApplicationContext : DbContext
     public ApplicationContext(string connectionString) : base(connectionString) { }
 
     public DbSet<Company> Companies { get; set; }
+    public DbSet<InventoryParameter> InventoryParameters { get; set; }
     public DbSet<PartnerProduct> PartnerProducts { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductCategory> ProductCategories { get; set; }
@@ -27,7 +28,15 @@ public class ApplicationContext : DbContext
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<InventoryParameter>()
+            .Ignore(ip => ip.Id)
+            .HasKey(ip => new { ip.CompanyId, ip.SupplierId, ip.InventoryProductId });
+
+        // TODO: Create following indexes
+        // - clustered unique:
+        //   * InventoryParameter: CompanyId, SupplierId, InventoryProductId
+        //
+        // - Non-Unique
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

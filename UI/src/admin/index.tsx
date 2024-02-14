@@ -5,8 +5,12 @@ import { i18nProvider } from "../i18n";
 import { Route } from 'react-router-dom';
 
 import products from "../pages/products";
+
+import inventory from "../pages/inventory";
+
 import receipts from "../pages/receipts";
 import ReceiptProductMapping from "../pages/receipts/ReceiptProductsMapping";
+
 import layoutProps from "../layout";
 
 // icons
@@ -33,6 +37,7 @@ const App = () => (
     <Resource name="receipts" options={{ label: "Notas Fiscais" }} {...receipts} >
       <Route path=":id/mapping" element={<ReceiptProductMapping />} />
     </Resource>
+    <Resource name="inventory/parameters" options={{ label: "Parâmetros de Inventário" }} {...inventory.parameters} />
   </Admin>
 );
 
