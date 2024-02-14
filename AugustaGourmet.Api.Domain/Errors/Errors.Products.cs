@@ -28,6 +28,10 @@ public static partial class Errors
             public static Error ProductWithGroup => Error.Conflict(
                 code: "Product.Conflicts.ProductWithGroup",
                 description: "Não é possível excluir este grupo pois existem produtos associados a ele.");
+
+            public static Error WithInventoryParameters => Error.Conflict(
+                code: "Product.Conflicts.ProductWithInventoryParameters",
+                description: "Não é possível excluir este produto pois existem parâmetros de inventário associados a ele.");
         }
     }
 }

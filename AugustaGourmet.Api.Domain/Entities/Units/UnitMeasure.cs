@@ -1,17 +1,26 @@
-﻿using AugustaGourmet.Api.Domain.Enums;
+﻿namespace AugustaGourmet.Api.Domain.Entities.Units;
 
-namespace AugustaGourmet.Api.Domain.Entities.Units;
-
-public class TCAD_UNIDADE : BaseEntity
+[Table("TCAD_UNIDADE")]
+public class UnitMeasure : BaseEntity
 {
-    public string DESCRICAO { get; set; } = string.Empty;  // Description!
-    public string DESCRICAO_RESUMIDA { get; set; } = string.Empty;  // ShortDescription?
+    [Column("DESCRICAO")]
+    public string Description { get; set; } = string.Empty;
 
-    public TCAD_UNIDADE_MEDIDA UNIDADE_BASE { get; set; }  // BaseMeasure!
-    public decimal FATOR_CONVERSAO { get; set; } // = 1;  ConversionFactor
-    public decimal FATOR_CONVERSAO_KILO { get; set; } = 1;  // KilogramConversionFactor?
+    [Column("DESCRICAO_RESUMIDA")]
+    public string ShortDescription { get; set; } = string.Empty;
 
-    public int UNIDADE_USO { get; set; }  // ?
+    [Column("UNIDADE_BASE_Id")]
+    public int BaseUnitId { get; set; }
 
-    public TCAD_STATUS_GERAL STATUS { get; set; }
+    [Column("FATOR_CONVERSAO")]
+    public decimal ConversionFactor { get; set; }
+
+    [Column("FATOR_CONVERSAO_KILO")]
+    public decimal KilogramConversionFactor { get; set; } = 1;
+
+    [Column("UNIDADE_USO")]  // TODO: change to bool
+    public int UnitInUse { get; set; }
+
+    [Column("STATUS_Id")]
+    public int Status { get; set; }
 }

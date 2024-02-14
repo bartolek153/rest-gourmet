@@ -13,7 +13,7 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
         RuleFor(p => p.CompanyId)
             .GreaterThan(0).WithMessage(Constants.Messages.InvalidCompanyId);
 
-        RuleFor(p => p.UnitMeasureId)
+        RuleFor(p => p.ProductUnitId)
             .GreaterThan(0).WithMessage(Constants.Messages.InvalidUnitMeasureId);
 
         RuleFor(p => p.OriginId)

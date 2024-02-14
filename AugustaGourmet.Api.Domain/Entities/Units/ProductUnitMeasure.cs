@@ -8,5 +8,5 @@ public class TCAD_UNIDADE_PRODUTO
     public int CODIGO_UNIDADE { get; set; }
 
     public Product PRODUTO { get; set; }
-    public TCAD_UNIDADE UNIDADE { get; set; }
+    public UnitMeasure UNIDADE { get; set; }
 }

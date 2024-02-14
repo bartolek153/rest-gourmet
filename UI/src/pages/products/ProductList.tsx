@@ -6,6 +6,7 @@ import {
   TextInput,
   ReferenceInput,
   AutocompleteInput,
+  EditButton,
 } from "react-admin";
 
 const productFilters = [
@@ -17,7 +18,7 @@ const productFilters = [
 
 const ProductList = () => (
   <List filters={productFilters} sort={{ field: 'description', order: 'ASC' }}>
-    <Datagrid // rowClick="edit"
+    <Datagrid rowClick="edit"
     >
       <NumberField source="id" />
       <TextField source="description" label="Descrição" />
@@ -30,7 +31,7 @@ const ProductList = () => (
         label="Preço"
         options={{ style: "currency", currency: "BRL" }}
       />
-      {/* <EditButton /> */}
+      <EditButton />
     </Datagrid>
   </List>
 );

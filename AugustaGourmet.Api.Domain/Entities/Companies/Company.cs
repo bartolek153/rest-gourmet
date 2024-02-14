@@ -4,11 +4,11 @@
 public class Company : BaseEntity
 {
     // Identification
-    [Column("RAZAO_SOCIAL")]
-    public string RAZAO_SOCIAL { get; set; } = string.Empty;
-
     [Column("NOME_FANTASIA")]
-    public string TradingName { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
+
+    [Column("RAZAO_SOCIAL")]
+    public string CorporativeName { get; set; } = string.Empty;
 
     [Column("INSCRICAO_ESTADUAL")]
     public string StateRegistration { get; set; } = string.Empty;

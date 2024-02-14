@@ -1,9 +1,12 @@
-﻿using AugustaGourmet.Api.Application.DTOs.Products;
-using AugustaGourmet.Api.Application.Features.ProductGroups.CreateProductGroup;
+﻿using AugustaGourmet.Api.Application.Contracts.Services;
+using AugustaGourmet.Api.Application.DTOs.Products;
+using AugustaGourmet.Api.Application.Features.Products.CreateProduct;
 using AugustaGourmet.Api.Application.Features.Products.DeleteProduct;
 using AugustaGourmet.Api.Application.Features.Products.GetAllProducts;
 using AugustaGourmet.Api.Application.Features.Products.GetProductDetails;
 using AugustaGourmet.Api.Application.Features.Products.UpdateProduct;
+using AugustaGourmet.Api.Domain.Entities.Companies;
+using AugustaGourmet.Api.Domain.Entities.Products;
 using AugustaGourmet.Api.WebAPI.Extensions;
 
 using MediatR;
@@ -16,10 +19,12 @@ namespace AugustaGourmet.Api.WebAPI.Controllers
     public class ProductController : ApiController
     {
         private readonly ISender _mediator;
+        private readonly IProductService _productService;
 
-        public ProductController(IMediator mediator)
+        public ProductController(IMediator mediator, IProductService productService)
         {
             _mediator = mediator;
+            _productService = productService;
         }
 
         [HttpGet]
@@ -48,9 +53,9 @@ namespace AugustaGourmet.Api.WebAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Post(CreateProductGroupCommand category)
+        public async Task<IActionResult> Post(CreateProductCommand product)
         {
-            var result = await _mediator.Send(category);
+            var result = await _mediator.Send(product);
             return result.Match(result => CreatedAtAction(nameof(Get), new { id = result }), Problem);
         }
 
@@ -58,10 +63,10 @@ namespace AugustaGourmet.Api.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Put([FromBody] UpdateProductCommand category)
+        public async Task<IActionResult> Put([FromBody] UpdateProductCommand product)
         {
-            var result = await _mediator.Send(category);
-            return result.Match(result => NoContent(), Problem);
+            var result = await _mediator.Send(product);
+            return result.Match(result => Ok(product), Problem);
         }
 
         [HttpDelete("{id}")]
@@ -72,6 +77,20 @@ namespace AugustaGourmet.Api.WebAPI.Controllers
         {
             var result = await _mediator.Send(new DeleteProductCommand(id));
             return result.Match(result => NoContent(), Problem);
+        }
+
+        [HttpGet("origins")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IReadOnlyList<ProductOrigin>> GetOrigins()
+        {
+            return await _productService.GetProductOriginsAsync();
+        }
+
+        [HttpGet("companies")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IReadOnlyList<Company>> GetCompanies()
+        {
+            return await _productService.GetCompaniesAsync();
         }
     }
 }

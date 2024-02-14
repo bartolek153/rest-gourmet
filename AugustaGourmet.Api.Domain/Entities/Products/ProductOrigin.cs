@@ -1,6 +1,8 @@
 ﻿namespace AugustaGourmet.Api.Domain.Entities.Products;
 
-public class TCAD_PROCEDENCIA_PRODUTO : BaseEntity
+[Table("TCAD_PROCEDENCIA_PRODUTO")]
+public class ProductOrigin : BaseEntity
 {
-    public string DESCRICAO { get; set; } = string.Empty;  // Description
+    [Column("DESCRICAO")]
+    public string Description { get; set; } = string.Empty;
 }

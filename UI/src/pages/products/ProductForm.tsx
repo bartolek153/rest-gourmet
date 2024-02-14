@@ -1,6 +1,5 @@
-import { Create, Edit, NumberInput, SimpleForm, TextInput } from "react-admin";
+import { AutocompleteInput, Create, Edit, NumberInput, ReferenceInput, SelectInput, SimpleForm, TextInput } from "react-admin";
 import { Box, Typography } from "@mui/material";
-import { ReferenceInputWrapper } from "../../components/common/ReferenceInputWrapper";
 
 const ProductForm = () => {
   return (
@@ -18,19 +17,23 @@ const ProductForm = () => {
             fullWidth
           />
         </Box>
-        <ReferenceInputWrapper
-          source="groupId"
-          reference="products/groups"
-          optionTextField="description"
-          label="Grupo"
-        />
-        <Box flex={1} ml={{ xs: 0, sm: "0.5em" }}>
-          <ReferenceInputWrapper
-            source="companyId"
-            reference="companies"
-            optionTextField="tradingName"
-            label="Empresa"
+
+        <ReferenceInput source="groupId" reference="products/groups" perPage={30}>
+          <AutocompleteInput
+            optionText="description"
+            label="Grupo"
+            sx={{ width: 300 }}
           />
+        </ReferenceInput>
+
+        <Box flex={1} ml={{ xs: 0, sm: "0.5em" }}>
+          <ReferenceInput source="companyId" reference="products/companies" perPage={30}>
+            <SelectInput
+              optionText="name"
+              label="Empresa"
+              sx={{ width: 300 }}
+            />
+          </ReferenceInput>
         </Box>
       </Box>
 
@@ -43,21 +46,23 @@ const ProductForm = () => {
       <Box display={{ xs: "block", sm: "flex" }}>
         <Box flex={1} mr={{ xs: 0, sm: "0.5em" }}>
           <NumberInput source="purchasePrice" label="Preço de Compra" />
-          <ReferenceInputWrapper
-            source="originId"
-            reference="products/origins"
-            optionTextField="description"
-            label="Procedência"
-          />
+          <ReferenceInput source="originId" reference="products/origins" perPage={30}>
+            <SelectInput
+              optionText="description"
+              label="Procedência"
+              sx={{ width: 300 }}
+            />
+          </ReferenceInput>
         </Box>
 
         <Box flex={2}>
-          <ReferenceInputWrapper
-            source="purchaseUnitId"
-            reference="units/products/purchase"
-            optionTextField="description"
-            label="Unidade de Compra"
-          />
+          <ReferenceInput source="purchaseUnitId" reference="units" perPage={30}>
+            <AutocompleteInput
+              optionText="description"
+              label="Unidade de compra"
+              sx={{ width: 300 }}
+            />
+          </ReferenceInput>
         </Box>
       </Box>
 
@@ -69,20 +74,18 @@ const ProductForm = () => {
 
       <Box display={{ xs: "block", sm: "flex" }}>
         <Box flex={1} mr={{ xs: 0, sm: "0.5em" }}>
-          <ReferenceInputWrapper
-            source="unitMeasureId"
-            reference="units/products"
-            optionTextField="description"
-            label="Unidade de Medida"
-          />
+          <SelectInput source="productUnitId" label="Unidade base" choices={[
+            { id: 1, name: 'Kg' },
+            { id: 2, name: 'L' },
+            { id: 3, name: 'm' },
+            { id: 4, name: 'Unid.' },
+          ]} />
         </Box>
         <Box flex={1} ml={{ xs: 0, sm: "0.5em" }}>
-          <ReferenceInputWrapper
-            source="statusId"
-            reference="products/statuses"
-            optionTextField="description"
-            label="Status"
-          />
+          <SelectInput source="statusId" choices={[
+            { id: 1, name: 'ATIVO' },
+            { id: 2, name: 'BLOQUEADO' },
+          ]} />
         </Box>
       </Box>
     </SimpleForm>
@@ -92,7 +95,7 @@ const ProductForm = () => {
 const Separator = () => <Box pt="1em" />;
 
 export const ProductEdit = (props: any) => (
-  <Edit {...props}>
+  <Edit {...props} mutationMode="pessimistic">
     <ProductForm />
   </Edit>
 );

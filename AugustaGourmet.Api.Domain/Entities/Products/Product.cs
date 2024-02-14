@@ -19,17 +19,17 @@ public class Product : BaseEntity
     [Column("PROCEDENCIA_Id")]
     public int OriginId { get; set; }
     [ForeignKey("OriginId")]
-    public TCAD_PROCEDENCIA_PRODUTO Origin { get; set; } = null!;
+    public ProductOrigin Origin { get; set; } = null!;
 
     [Column("UNIDADE_PRODUTO_Id")]
     public int ProductUnitId { get; set; }
     [ForeignKey("ProductUnitId")]
-    public TCAD_UNIDADE ProductUnit { get; set; } = null!;
+    public BaseUnit ProductUnit { get; set; } = null!;
 
     [Column("UNIDADE_COMPRA_Id")]
     public int PurchaseUnitId { get; set; }
     [ForeignKey("PurchaseUnitId")]
-    public TCAD_UNIDADE PurchaseUnit { get; set; } = null!;
+    public UnitMeasure PurchaseUnit { get; set; } = null!;
 
     [Column("PRECO_COMPRA")]
     public decimal PurchasePrice { get; set; }
@@ -37,5 +37,5 @@ public class Product : BaseEntity
     [Column("STATUS_Id")]
     public int StatusId { get; set; }
     [ForeignKey("StatusId")]
-    public TCAD_STATUS_PRODUTO Status { get; set; } = null!;
+    public ProductStatus Status { get; set; } = null!;
 }

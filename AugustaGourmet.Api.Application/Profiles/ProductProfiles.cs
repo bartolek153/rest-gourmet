@@ -1,4 +1,5 @@
 ﻿using AugustaGourmet.Api.Application.DTOs.Products;
+using AugustaGourmet.Api.Application.DTOs.Units;
 using AugustaGourmet.Api.Application.Features.ProductCategories.CreateProductCategory;
 using AugustaGourmet.Api.Application.Features.ProductCategories.UpdateProductCategory;
 using AugustaGourmet.Api.Application.Features.ProductFamilies.CreateProductFamily;
@@ -8,6 +9,7 @@ using AugustaGourmet.Api.Application.Features.ProductGroups.UpdateProductGroup;
 using AugustaGourmet.Api.Application.Features.Products.CreateProduct;
 using AugustaGourmet.Api.Application.Features.Products.UpdateProduct;
 using AugustaGourmet.Api.Domain.Entities.Products;
+using AugustaGourmet.Api.Domain.Entities.Units;
 
 using AutoMapper;
 
@@ -35,11 +37,14 @@ public class ProductProfiles : Profile
         // Product
         CreateMap<Product, ProductDto>()
             .ForMember(dest => dest.Group, opt => opt.MapFrom(src => src.Group.Description))
-            .ForMember(dest => dest.UnitMeasure, opt => opt.MapFrom(src => src.ProductUnit.DESCRICAO))
-            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.DESCRICAO))
-            .ForMember(dest => dest.PurchaseUnit, opt => opt.MapFrom(src => src.PurchaseUnit.DESCRICAO));
+            .ForMember(dest => dest.UnitMeasure, opt => opt.MapFrom(src => src.ProductUnit.Description))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.Description))
+            .ForMember(dest => dest.PurchaseUnit, opt => opt.MapFrom(src => src.PurchaseUnit.Description));
         CreateMap<Product, ProductDetailsDto>();
         CreateMap<CreateProductCommand, Product>();
         CreateMap<UpdateProductCommand, Product>();
+
+        // Units
+        CreateMap<UnitMeasure, UnitMeasureDto>();
     }
 }

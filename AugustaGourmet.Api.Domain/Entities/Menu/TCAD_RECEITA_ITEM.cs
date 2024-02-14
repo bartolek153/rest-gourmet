@@ -11,6 +11,6 @@ namespace WebAPI.Models
         public string DESCRICAO { get; set; }
         public Product PRODUTO_INGREDIENTE { get; set; }
         public Int32 QUANTIDADE_INGREDIENTE { get; set; }
-        public TCAD_UNIDADE UNIDADE_INGREDIENTE { get; set; }
+        public UnitMeasure UNIDADE_INGREDIENTE { get; set; }
     }
 }

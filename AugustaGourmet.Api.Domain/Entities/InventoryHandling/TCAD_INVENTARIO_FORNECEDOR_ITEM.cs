@@ -11,10 +11,10 @@ namespace WebAPI.Models
         public TCAD_INVENTARIO_FORNECEDOR CODIGO_INVENTARIO { get; set; }
         public Product PRODUTO { get; set; }
         public Company CODIGO_EMPRESA { get; set; }
-        public TCAD_UNIDADE UNIDADE_ESTOQUE_MIN { get; set; }
+        public UnitMeasure UNIDADE_ESTOQUE_MIN { get; set; }
         public decimal QUANTIDADE { get; set; }
         public decimal QUANTIDADE_CALCULADO { get; set; }
-        public TCAD_UNIDADE UNIDADE_ESTOQUE_CAL { get; set; }
+        public UnitMeasure UNIDADE_ESTOQUE_CAL { get; set; }
         public decimal QUANTIDADE_MINIMA { get; set; }
         public Decimal VALOR_TOTAL_ITEM { get; set; }
         public decimal PRECO_UNITARIO { get; set; }

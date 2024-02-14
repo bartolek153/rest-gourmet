@@ -9,7 +9,7 @@ public record CreateProductCommand(
     int CompanyId,
     int StatusId,
     int GroupId,
-    int UnitMeasureId,
+    int ProductUnitId,
     int PurchaseUnitId,
     decimal PurchasePrice,
     int OriginId) : IRequest<ErrorOr<int>>;

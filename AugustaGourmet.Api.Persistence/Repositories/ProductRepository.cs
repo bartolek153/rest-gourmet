@@ -22,4 +22,11 @@ public class ProductRepository : GenericRepository<Product>, IProductRepository
     {
         return !await _context.Products.AnyAsync(p => p.Description == description);
     }
+
+    public async Task<IReadOnlyList<ProductOrigin>> GetProductOriginsAsync()
+    {
+        return await _context.ProductOrigins
+            .AsNoTracking()
+            .ToListAsync();
+    }
 }
