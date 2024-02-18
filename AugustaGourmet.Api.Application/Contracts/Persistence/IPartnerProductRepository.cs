@@ -4,5 +4,7 @@ namespace AugustaGourmet.Api.Application.Contracts.Persistence;
 
 public interface IPartnerProductRepository : IGenericRepository<PartnerProduct>
 {
-    Task<PartnerProduct> GetMappedProductAsync(int supplierId, int productId);
+    Task<bool> AnyWithInventoryProductIdAsync(int supplierId, int productId);
+    Task<bool> AnyWithPartnerProductIdAsync(int partnerId, string productId);
+    Task<PartnerProduct?> GetByPartnerProductIdAsync(int supplierId, string partnerProductId);
 }

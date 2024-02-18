@@ -1,10 +1,8 @@
 using ErrorOr;
 
-using MediatR;
-
 namespace AugustaGourmet.Api.Application.Contracts.Services;
 
-public interface IReceiptsService
+public interface IReceiptService
 {
-    Task<ErrorOr<Unit>> IntegrateReceiptsFromEmailAsync(DateTime fromDate);
+    Task<ErrorOr<int>> IntegrateReceiptsFromEmailAsync(DateTime fromDate);
 }

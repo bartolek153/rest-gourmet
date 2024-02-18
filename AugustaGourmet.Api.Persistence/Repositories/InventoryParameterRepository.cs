@@ -32,9 +32,17 @@ public class InventoryParameterRepository : GenericRepository<InventoryParameter
                 p.SupplierProductId == supplierProductId);
     }
 
-    public Task<bool> ProductIsMapped(int productId)
+    public async Task<bool> AnyWithProduct(int productId)
     {
-        return _context.InventoryParameters
+        return await _context.InventoryParameters
             .AnyAsync(p => p.InventoryProductId == productId);
+    }
+
+    public async Task<bool> AnyWithSupplierAndProduct(int supplierId, int productId)
+    {
+        return await _context.InventoryParameters
+            .AnyAsync(p =>
+                p.SupplierId == supplierId &&
+                p.InventoryProductId == productId);
     }
 }

@@ -12,22 +12,20 @@ using AugustaGourmet.Functions.Models;
 
 using ErrorOr;
 
-using MediatR;
-
 namespace AugustaGourmet.Api.Application.Services;
 
-public class ReceiptsService : IReceiptsService
+public class ReceiptService : IReceiptService
 {
     private readonly ISupplierRepository _supplierRepository;
     private readonly IReceiptRepository _receiptRepository;
     private readonly IEmailReader _emailReader;
-    private readonly IAppLogger<ReceiptsService> _logger;
+    private readonly IAppLogger<ReceiptService> _logger;
     private readonly ITextMessageSender _telegramMessageSender;
     private readonly IUnitOfWork _unitOfWork;
 
-    public ReceiptsService(ISupplierRepository supplierRepository,
+    public ReceiptService(ISupplierRepository supplierRepository,
                            IEmailReader emailReader,
-                           IAppLogger<ReceiptsService> logger,
+                           IAppLogger<ReceiptService> logger,
                            ITextMessageSender telegramMessageSender,
                            IReceiptRepository receiptRepository,
                            IUnitOfWork unitOfWork)
@@ -40,7 +38,7 @@ public class ReceiptsService : IReceiptsService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<ErrorOr<Unit>> IntegrateReceiptsFromEmailAsync(DateTime fromDate)
+    public async Task<ErrorOr<int>> IntegrateReceiptsFromEmailAsync(DateTime fromDate)
     {
         // get supplier emails that can be searched for in the email inbox
         var suppliersMails = await _supplierRepository.GetSuppliersReceiptMailsAsync();
@@ -147,10 +145,10 @@ public class ReceiptsService : IReceiptsService
         if (!string.IsNullOrEmpty(localErrors))
             await _telegramMessageSender.SendMessageToAdminAsync(localErrors);
 
-        return Unit.Value;
+        return nfeList.Count;
     }
 
-    public Receipt ConvertNfeProcToReceipt(NfeProc xml, int supplierId)
+    private Receipt ConvertNfeProcToReceipt(NfeProc xml, int supplierId)
     {
         Receipt rec = new Receipt
         {

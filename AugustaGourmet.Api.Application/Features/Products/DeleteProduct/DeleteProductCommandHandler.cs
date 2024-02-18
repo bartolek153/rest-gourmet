@@ -29,7 +29,7 @@ public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand,
             return Errors.CouldNotFind(nameof(Product), request.Id);
 
         // validate relationships
-        if (await _inventoryParameterRepository.ProductIsMapped(request.Id))
+        if (await _inventoryParameterRepository.AnyWithProduct(request.Id))
             return Errors.Products.Conflicts.WithInventoryParameters;
 
         // Delete from database

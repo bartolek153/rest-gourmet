@@ -4,6 +4,6 @@ using MediatR;
 
 namespace AugustaGourmet.Api.Application.Features.Receipts.ImportReceiptsFromEmail;
 
-public class ImportReceiptsFromEmailCommand : IRequest<ErrorOr<Unit>>
+public class ImportReceiptsFromEmailCommand : IRequest<ErrorOr<int>>
 {
 }

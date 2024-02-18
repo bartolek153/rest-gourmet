@@ -61,7 +61,7 @@ public class ReceiptsController : ApiController
     public async Task<IActionResult> ImportReceipts()
     {
         var result = await _mediator.Send(new ImportReceiptsFromEmailCommand());
-        return result.Match(result => Ok(), Problem);
+        return result.Match(result => Ok(result), Problem);
     }
 
     [HttpGet("mapping/{id}")]

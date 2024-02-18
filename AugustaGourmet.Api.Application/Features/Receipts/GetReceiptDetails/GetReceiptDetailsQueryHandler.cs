@@ -29,7 +29,7 @@ public class GetReceiptDetailsQueryHandler : IRequestHandler<GetReceiptDetailsQu
         if (receiptDetails is null)
             return Errors.CouldNotFind(nameof(Receipt), request.ReceiptId);
 
-        bool hasUnmapped = await _receiptRepository.HasUnmappedProductsAsync(request.ReceiptId);
+        bool hasUnmapped = await _receiptRepository.AnyUnmappedProductsAsync(request.ReceiptId);
 
         return new ReceiptDetailsDto(receiptDetails, hasUnmapped);
     }

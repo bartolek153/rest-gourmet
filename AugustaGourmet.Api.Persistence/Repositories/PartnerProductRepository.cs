@@ -12,11 +12,27 @@ public class PartnerProductRepository : GenericRepository<PartnerProduct>, IPart
     {
     }
 
-    public async Task<PartnerProduct> GetMappedProductAsync(int supplierId, int productId)
+    public async Task<bool> AnyWithInventoryProductIdAsync(int supplierId, int productId)
     {
         return await _context.PartnerProducts
             .Where(pp => pp.PartnerId == supplierId && pp.InventoryProductId == productId)
             .AsNoTracking()
-            .SingleOrDefaultAsync();
+            .AnyAsync();
+    }
+
+    public async Task<bool> AnyWithPartnerProductIdAsync(int partnerId, string productId)
+    {
+        return await _context.PartnerProducts
+            .Where(pp => pp.PartnerId == partnerId && pp.PartnerProductId == productId)
+            .AsNoTracking()
+            .AnyAsync();
+    }
+
+    public async Task<PartnerProduct?> GetByPartnerProductIdAsync(int supplierId, string partnerProductId)
+    {
+        return await _context.PartnerProducts
+            .Where(pp => pp.PartnerId == supplierId && pp.PartnerProductId == partnerProductId)
+            .AsNoTracking()
+            .FirstOrDefaultAsync();
     }
 }

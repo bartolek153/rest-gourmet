@@ -16,16 +16,16 @@ public class ReceiptRepository : GenericRepository<Receipt>, IReceiptRepository
     public async Task<IReadOnlyList<ReceiptProductMappingDto>> GetMappedReceiptProductsAsync(int receiptId)
     {
         string query = string.Format(@"
-            select 
-            b.[Id],
+        select 
+	        b.[Id],
             b.[CodigoProduto] as PartnerProductId,
             b.[DescricaoProduto] as PartnerProductDescription,
-            c.CODIGO_PRODUTOId as InventoryProductId
-            from TCAD_NOTA_FISCAL_CAPA a
-            join TCAD_NOTA_FISCAL_LINHA b on a.Id = b.Capa_Id
-            left join TCAD_BASE_INVENTARIO c 
-            on c.CODIGO_FORNECEDORId = a.Fornecedor_Id and c.CODIGO_PRODUTO_FORNECEDOR = b.CodigoProduto
-            where a.Id = {0}", receiptId);
+            c.[Product_Id] as InventoryProductId
+        from TCAD_NOTA_FISCAL_CAPA a
+        join TCAD_NOTA_FISCAL_LINHA b on a.Id = b.Capa_Id
+        left join PartnerProducts c 
+          on c.Supplier_Id = a.Fornecedor_Id and c.SupplierProductId = b.CodigoProduto
+        where a.Id = {0}", receiptId);
 
         var result = await _context.Database
             .SqlQuery<ReceiptProductMappingDto>(query)
@@ -64,7 +64,7 @@ public class ReceiptRepository : GenericRepository<Receipt>, IReceiptRepository
         return result;
     }
 
-    public async Task<bool> HasUnmappedProductsAsync(int receiptId)
+    public async Task<bool> AnyUnmappedProductsAsync(int receiptId)
     {
         string query = string.Format(@"
         SELECT 
