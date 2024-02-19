@@ -2,6 +2,7 @@
 
 using AugustaGourmet.Api.Domain.Common;
 using AugustaGourmet.Api.Domain.Entities.Companies;
+using AugustaGourmet.Api.Domain.Entities.Employees;
 using AugustaGourmet.Api.Domain.Entities.Fiscal.Receiptment;
 using AugustaGourmet.Api.Domain.Entities.InventoryHandling;
 using AugustaGourmet.Api.Domain.Entities.Products;
@@ -25,6 +26,8 @@ public class ApplicationContext : DbContext
     public DbSet<ReceiptLine> ReceiptLines { get; set; }
     public DbSet<Supplier> Suppliers { get; set; }
     public DbSet<UnitMeasure> UnitMeasures { get; set; }
+    public DbSet<Employee> Employees { get; set; }
+    public DbSet<EmployeeAttendance> EmployeeAttendances { get; set; }
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {

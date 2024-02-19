@@ -3,8 +3,10 @@
 [Table("TCAD_CONTROLE_FUNCIONARIO")]
 public class EmployeeAttendance : BaseEntity
 {
-    [Column("FUNCIONARIO")]
+    [ForeignKey("EmployeeId")]
     public Employee Employee { get; set; } = null!;
+    [Column("FUNCIONARIO_Id")]
+    public int EmployeeId { get; set; }
 
     [Column("DATA_APONTAMENTO")]
     public DateTime Date { get; set; }

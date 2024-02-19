@@ -11,6 +11,8 @@ import inventory from "../pages/inventory";
 import receipts from "../pages/receipts";
 import ReceiptProductMapping from "../pages/receipts/ReceiptProductsMapping";
 
+import employeesAttendance from "../pages/employeesAttendance";
+
 import layoutProps from "../layout";
 
 // icons
@@ -38,6 +40,7 @@ const App = () => (
       <Route path=":id/mapping" element={<ReceiptProductMapping />} />
     </Resource>
     <Resource name="inventory/parameters" options={{ label: "Parâmetros de Inventário" }} {...inventory.parameters} />
+    <Resource name="employees/attendance" options={{ label: "Ponto do Funcionário" }} {...employeesAttendance} />
   </Admin>
 );
 
