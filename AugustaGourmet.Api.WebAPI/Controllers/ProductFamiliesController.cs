@@ -1,8 +1,8 @@
 using AugustaGourmet.Api.Application.DTOs.Products;
-using AugustaGourmet.Api.Application.Features.ProductCategories.GetProductCategoryDetails;
 using AugustaGourmet.Api.Application.Features.ProductFamilies.CreateProductFamily;
 using AugustaGourmet.Api.Application.Features.ProductFamilies.DeleteProductFamily;
 using AugustaGourmet.Api.Application.Features.ProductFamilies.GetProductFamilies;
+using AugustaGourmet.Api.Application.Features.ProductFamilies.GetProductFamilyDetails;
 using AugustaGourmet.Api.Application.Features.ProductFamilies.UpdateProductFamily;
 
 using MediatR;
@@ -34,7 +34,7 @@ namespace AugustaGourmet.Api.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(int id)
         {
-            var result = await _mediator.Send(new GetProductCategoryDetailsQuery(id));
+            var result = await _mediator.Send(new GetProductFamilyDetailsQuery(id));
             return result.Match(
                 result => Ok(result),
                 error => Problem(error));

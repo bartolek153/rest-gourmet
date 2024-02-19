@@ -1,5 +1,5 @@
 using AugustaGourmet.Api.Application.DTOs.Products;
-using AugustaGourmet.Api.Application.Features.ProductFamilies.DeleteProductFamily;
+using AugustaGourmet.Api.Application.Features.ProductGroups;
 using AugustaGourmet.Api.Application.Features.ProductGroups.CreateProductGroup;
 using AugustaGourmet.Api.Application.Features.ProductGroups.GetProductGroupDetails;
 using AugustaGourmet.Api.Application.Features.ProductGroups.GetProductGroups;
@@ -35,9 +35,7 @@ namespace AugustaGourmet.Api.WebAPI.Controllers
         public async Task<IActionResult> Get(int id)
         {
             var result = await _mediator.Send(new GetProductGroupDetailsQuery(id));
-            return result.Match(
-                result => Ok(result),
-                error => Problem(error));
+            return result.Match(Ok, Problem);
         }
 
         [HttpPost]
@@ -46,9 +44,7 @@ namespace AugustaGourmet.Api.WebAPI.Controllers
         public async Task<IActionResult> Post(CreateProductGroupCommand category)
         {
             var result = await _mediator.Send(category);
-            return result.Match(
-                result => CreatedAtAction(nameof(Get), new { id = result }),
-                error => Problem(error));
+            return result.Match(result => CreatedAtAction(nameof(Get), new { id = result }), Problem);
         }
 
         [HttpPut("{id}")]
@@ -58,9 +54,7 @@ namespace AugustaGourmet.Api.WebAPI.Controllers
         public async Task<IActionResult> Put([FromBody] UpdateProductGroupCommand category)
         {
             var result = await _mediator.Send(category);
-            return result.Match(
-                result => NoContent(),
-                error => Problem(error));
+            return result.Match(result => NoContent(), Problem);
         }
 
         [HttpDelete("{id}")]
@@ -69,10 +63,8 @@ namespace AugustaGourmet.Api.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _mediator.Send(new DeleteProductFamilyCommand(id));
-            return result.Match(
-                result => NoContent(),
-                error => Problem(error));
+            var result = await _mediator.Send(new DeleteProductGroupCommand(id));
+            return result.Match(result => NoContent(), Problem);
         }
     }
 }

@@ -24,7 +24,7 @@ public static class ApplicationServiceRegistration
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-        services.AddScoped<IReceiptsService, ReceiptsService>();
+        services.AddScoped<IReceiptService, ReceiptService>();
         services.AddScoped<IProductService, ProductService>();
 
         return services;

@@ -17,8 +17,9 @@ public static class InfrastructureServiceRegistration
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
-        services.Configure<TelegramSettings>(configuration.GetSection("TelegramSettings"));
         services.AddTransient<IEmailReader, EmailReader>();
+
+        services.Configure<TelegramSettings>(configuration.GetSection("TelegramSettings"));
         services.AddTransient<ITextMessageSender, TelegramMessageSender>();
 
         services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
