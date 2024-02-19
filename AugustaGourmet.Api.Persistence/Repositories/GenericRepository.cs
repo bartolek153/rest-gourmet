@@ -48,6 +48,9 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         int perPage = 10,
         string includeProperties = "")
     {
+        if (perPage > 100)
+            perPage = 100;
+
         IQueryable<T> query = _context.Set<T>();
         orderBy ??= i => i.OrderBy(e => e.Id);
 
