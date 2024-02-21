@@ -1,10 +1,10 @@
-using System.Data.Entity;
-
 using AugustaGourmet.Api.Application.Contracts.Persistence;
 using AugustaGourmet.Api.Application.DTOs.Employees;
 using AugustaGourmet.Api.Domain.Entities.Employees;
 using AugustaGourmet.Api.Domain.Enums;
 using AugustaGourmet.Api.Persistence.Context;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace AugustaGourmet.Api.Persistence.Repositories;
 
@@ -37,18 +37,18 @@ public class EmployeeRepository : GenericRepository<Employee>, IEmployeeReposito
                 //     .GroupBy(att => att.Date)
                 //     .Count(group => !group.Any()),
 
-                LateArrivalCount = _context.EmployeeAttendances
-                    .Where(att =>
-                        att.EmployeeId == f.Id &&
-                        att.Date >= from &&
-                        att.Date <= to &&
-                        DbFunctions.CreateTime(
-                            att.Date.Hour,
-                            att.Date.Minute,
-                            0) > DbFunctions.CreateTime(f.StartTime.Hour,
-                                                        f.StartTime.Minute,
-                                                        0))
-                    .Count(),
+                // LateArrivalCount = _context.EmployeeAttendances
+                //     .Where(att =>
+                //         att.EmployeeId == f.Id &&
+                //         att.Date >= from &&
+                //         att.Date <= to &&
+                //         DbFunctions.CreateTime(
+                //             att.Date.Hour,
+                //             att.Date.Minute,
+                //             0) > DbFunctions.CreateTime(f.StartTime.Hour,
+                //                                         f.StartTime.Minute,
+                //                                         0))
+                    // .Count(),
 
                 // LateMinutes = _context.EmployeeAttendances
                 //     .Where(att =>

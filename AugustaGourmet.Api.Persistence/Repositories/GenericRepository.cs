@@ -1,10 +1,11 @@
-﻿using System.Data.Entity;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 using AugustaGourmet.Api.Application.Contracts.Common;
 using AugustaGourmet.Api.Application.Contracts.Persistence;
 using AugustaGourmet.Api.Domain.Common;
 using AugustaGourmet.Api.Persistence.Context;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace AugustaGourmet.Api.Persistence.Repositories;
 
@@ -19,8 +20,8 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 
     public T Create(T entity)
     {
-        entity = _context.Set<T>().Add(entity);
-        return entity;
+        var entry = _context.Set<T>().Add(entity);
+        return entry.Entity;
     }
 
     public void CreateRange(IEnumerable<T> entities)
@@ -30,6 +31,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 
     public void Delete(T entity)
     {
+        // TODO: Replace with ExecuteDeleteAsync
         _context.Set<T>().Attach(entity);
         _context.Set<T>().Remove(entity);
     }
@@ -81,7 +83,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
         return await _context.Set<T>()
             .AsNoTracking()
-            .FirstOrDefaultAsync(e => e.Id == id);
+            .FirstAsync(e => e.Id == id);
     }
 
     public Task<T> GetByIdAsync(int id, string includeProperties = "")
@@ -92,7 +94,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
             (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             query = query.Include(includeProperty);
 
-        return query.FirstOrDefaultAsync(e => e.Id == id);
+        return query.FirstAsync(e => e.Id == id);
     }
 
     public void Update(T entity)

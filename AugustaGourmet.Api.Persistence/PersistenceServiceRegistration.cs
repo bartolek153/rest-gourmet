@@ -2,6 +2,8 @@
 using AugustaGourmet.Api.Persistence.Context;
 using AugustaGourmet.Api.Persistence.Repositories;
 
+using Microsoft.EntityFrameworkCore;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,8 +15,8 @@ public static class PersistenceServiceRegistration
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection")!;
 
-        services.AddScoped<ApplicationContext>(_ =>
-                new ApplicationContext(connectionString));
+        services.AddDbContext<ApplicationContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
