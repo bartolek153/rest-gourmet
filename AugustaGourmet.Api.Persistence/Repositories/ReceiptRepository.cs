@@ -1,9 +1,11 @@
-using System.Data.Entity;
+using System.Runtime.CompilerServices;
 
 using AugustaGourmet.Api.Application.Contracts.Persistence;
 using AugustaGourmet.Api.Application.DTOs.Receipts;
 using AugustaGourmet.Api.Domain.Entities.Fiscal.Receiptment;
 using AugustaGourmet.Api.Persistence.Context;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace AugustaGourmet.Api.Persistence.Repositories;
 
@@ -28,7 +30,7 @@ public class ReceiptRepository : GenericRepository<Receipt>, IReceiptRepository
         where a.Id = {0}", receiptId);
 
         var result = await _context.Database
-            .SqlQuery<ReceiptProductMappingDto>(query)
+            .SqlQuery<ReceiptProductMappingDto>(FormattableStringFactory.Create(query))  // TODO: substitute FormattableStringFactory.Create
             .ToListAsync();
 
         return result;
@@ -58,7 +60,7 @@ public class ReceiptRepository : GenericRepository<Receipt>, IReceiptRepository
             pp.Id IS NULL";
 
         var result = await _context.Database
-            .SqlQuery<int>(query)
+            .SqlQuery<int>(FormattableStringFactory.Create(query))
             .ToArrayAsync();
 
         return result;
@@ -81,7 +83,7 @@ public class ReceiptRepository : GenericRepository<Receipt>, IReceiptRepository
             AND pp.Id IS NULL", receiptId);
 
         var result = await _context.Database
-            .SqlQuery<int>(query)
+            .SqlQuery<int>(FormattableStringFactory.Create(query))
             .SingleAsync();
 
         return result > 0;

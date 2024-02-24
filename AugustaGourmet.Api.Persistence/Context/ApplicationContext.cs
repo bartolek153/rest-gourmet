@@ -1,6 +1,4 @@
-﻿using System.Data.Entity;
-
-using AugustaGourmet.Api.Domain.Common;
+﻿using AugustaGourmet.Api.Domain.Common;
 using AugustaGourmet.Api.Domain.Entities.Companies;
 using AugustaGourmet.Api.Domain.Entities.Employees;
 using AugustaGourmet.Api.Domain.Entities.Fiscal.Receiptment;
@@ -8,11 +6,13 @@ using AugustaGourmet.Api.Domain.Entities.InventoryHandling;
 using AugustaGourmet.Api.Domain.Entities.Products;
 using AugustaGourmet.Api.Domain.Entities.Units;
 
+using Microsoft.EntityFrameworkCore;
+
 namespace AugustaGourmet.Api.Persistence.Context;
 
 public class ApplicationContext : DbContext
 {
-    public ApplicationContext(string connectionString) : base(connectionString) { }
+    public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 
     public DbSet<Company> Companies { get; set; }
     public DbSet<InventoryParameter> InventoryParameters { get; set; }
@@ -29,7 +29,7 @@ public class ApplicationContext : DbContext
     public DbSet<Employee> Employees { get; set; }
     public DbSet<EmployeeAttendance> EmployeeAttendances { get; set; }
 
-    protected override void OnModelCreating(DbModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<InventoryParameter>()
             .Ignore(ip => ip.Id)

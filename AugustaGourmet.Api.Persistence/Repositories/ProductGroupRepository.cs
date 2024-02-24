@@ -1,8 +1,8 @@
-using System.Data.Entity;
-
 using AugustaGourmet.Api.Application.Contracts.Persistence;
 using AugustaGourmet.Api.Domain.Entities.Products;
 using AugustaGourmet.Api.Persistence.Context;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace AugustaGourmet.Api.Persistence.Repositories;
 

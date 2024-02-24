@@ -1,10 +1,10 @@
-using System.Data.Entity;
-
 using AugustaGourmet.Api.Application.Contracts.Persistence;
 using AugustaGourmet.Api.Application.DTOs.Suppliers;
 using AugustaGourmet.Api.Domain.Entities.InventoryHandling;
 using AugustaGourmet.Api.Domain.Enums;
 using AugustaGourmet.Api.Persistence.Context;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace AugustaGourmet.Api.Persistence.Repositories;
 

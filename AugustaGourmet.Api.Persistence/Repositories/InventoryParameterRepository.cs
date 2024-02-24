@@ -1,8 +1,8 @@
-using System.Data.Entity;
-
 using AugustaGourmet.Api.Application.Contracts.Persistence;
 using AugustaGourmet.Api.Domain.Entities.InventoryHandling;
 using AugustaGourmet.Api.Persistence.Context;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace AugustaGourmet.Api.Persistence.Repositories;
 
@@ -14,7 +14,7 @@ public class InventoryParameterRepository : GenericRepository<InventoryParameter
 
     public async Task<InventoryParameter> GetByIdAsync(int companyId, int supplierId, int productId)
     {
-        return await _context.InventoryParameters
+        return await _context.InventoryParameters  // TODO: check nullability
             .AsNoTracking()
             .FirstOrDefaultAsync(p =>
                 p.CompanyId == companyId &&
