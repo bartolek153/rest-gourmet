@@ -13,7 +13,8 @@ public class InventoryHandlingProfiles : Profile
     public InventoryHandlingProfiles()
     {
         // Supplier
-        CreateMap<Supplier, SupplierDto>();
+        CreateMap<Supplier, SupplierDto>()
+            .ForMember(d => d.Status, opt => opt.MapFrom(s => s.Status.Description));
 
         // Receipt
         CreateMap<Receipt, ReceiptDto>()
@@ -22,6 +23,7 @@ public class InventoryHandlingProfiles : Profile
         CreateMap<ReceiptLine, ReceiptLineDto>()
             .ForMember(d => d.ReceiptId, opt => opt.MapFrom(s => s.Id));
 
+        // Inventory
         CreateMap<InventoryParameter, InventoryParameterDto>()
             .ForMember(d => d.Product, opt => opt.MapFrom(s => s.InventoryProduct.Description))
             .ForMember(d => d.Supplier, opt => opt.MapFrom(s => s.Supplier.Name))

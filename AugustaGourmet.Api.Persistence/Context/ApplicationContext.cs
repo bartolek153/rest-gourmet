@@ -1,4 +1,4 @@
-using AugustaGourmet.Api.Domain.Common;
+﻿using AugustaGourmet.Api.Domain.Common;
 using AugustaGourmet.Api.Domain.Entities.Companies;
 using AugustaGourmet.Api.Domain.Entities.Employees;
 using AugustaGourmet.Api.Domain.Entities.Fiscal.Receiptment;
@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AugustaGourmet.Api.Persistence.Context;
 
-public class ApplicationContext : DbContext
+public sealed class ApplicationContext : DbContext
 {
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 

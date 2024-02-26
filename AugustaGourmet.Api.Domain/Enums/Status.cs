@@ -1,11 +1,13 @@
 ﻿namespace AugustaGourmet.Api.Domain.Enums;
 
-public class TCAD_STATUS_GERAL : BaseEntity
+[Table("TCAD_STATUS_GERAL")]
+public class Status : BaseEntity
 {
-    public string DESCRICAO { get; set; } = string.Empty;  // Description
+    [Column("DESCRICAO")]
+    public string Description { get; set; } = string.Empty;  // Description
 }
 
-public enum Status
+public enum Statuses
 {
     Active = 1,
     Inactive = 2

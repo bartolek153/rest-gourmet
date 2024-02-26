@@ -8,10 +8,7 @@ import {
 } from "react-admin";
 
 const supplierFilters = [
-  <TextInput source="q" label="Fornecedor" alwaysOn />,
-  // <ReferenceInput source="groupId" reference="products/groups" label="Grupo">
-  //   <AutocompleteInput optionText="description" label="Grupo" />
-  // </ReferenceInput>,
+  <TextInput source="q" label="Nome" alwaysOn />,
 ];
 
 const SupplierList = () => (
@@ -21,11 +18,10 @@ const SupplierList = () => (
     >
       <NumberField source="id" />
       <TextField source="name" label="Nome" />
-      <TextField source="company" label="Empresa" />
-      <TextField source="landlinePhone" label="Telefone fixo" />
-      <TextField source="mobilePhone" label="Telefone celular" />
-      <TextField source="email" label="E-mail" />
-      <TextField source="contact" label="Contato" />
+      <TextField source="landlinePhone" label="Telefone Fixo" />
+      <TextField source="mobilePhone" label="Telefone Celular" />
+      <TextField source="contactEmail" label="E-mail" />
+      <TextField source="contactName" label="Nome do Contato" />
       <TextField source="status" label="Status" />
       <EditButton />
     </Datagrid>

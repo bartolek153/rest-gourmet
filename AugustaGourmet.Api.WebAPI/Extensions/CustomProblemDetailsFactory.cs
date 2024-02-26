@@ -29,10 +29,11 @@ public class CustomProblemDetailsFactory : ProblemDetailsFactory
 
     public override ValidationProblemDetails CreateValidationProblemDetails(HttpContext httpContext, ModelStateDictionary modelStateDictionary, int? statusCode = null, string? title = null, string? type = null, string? detail = null, string? instance = null)
     {
-        var validationproblemdetails = new ValidationProblemDetails
+        var validationproblemdetails = new ValidationProblemDetails(modelStateDictionary)
         {
             Status = statusCode,
         };
+
         return validationproblemdetails;
     }
 }

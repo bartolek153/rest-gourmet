@@ -24,7 +24,8 @@ public class GetSuppliersQueryHandler : IRequestHandler<GetSuppliersQuery, Paged
             request.Name is not null ? s => s.Name.ToLower().Contains(request.Name) : null,
             i => i.OrderBy(i => i.Name),
             request.Page,
-            request.PageSize);
+            request.PageSize,
+            "Status");
 
         return new PagedList<SupplierDto>(
             _mapper.Map<List<SupplierDto>>(suppliers.Items),

@@ -6,4 +6,5 @@ export default {
   list: ReceiptList,
   show: ReceiptShow,
   icon: ReceiptIcon,
+  link: '/receipts',
 };

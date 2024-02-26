@@ -13,14 +13,12 @@ public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand,
     private readonly IProductRepository _productRepository;
     private readonly IInventoryParameterRepository _inventoryParameterRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IPartnerProductRepository _partnerProductRepository;
 
-    public DeleteProductCommandHandler(IProductRepository productRepository, IUnitOfWork unitOfWork, IInventoryParameterRepository inventoryParameterRepository, IPartnerProductRepository partnerProductRepository)
+    public DeleteProductCommandHandler(IProductRepository productRepository, IUnitOfWork unitOfWork, IInventoryParameterRepository inventoryParameterRepository)
     {
         _productRepository = productRepository;
         _unitOfWork = unitOfWork;
         _inventoryParameterRepository = inventoryParameterRepository;
-        _partnerProductRepository = partnerProductRepository;
     }
 
     public async Task<ErrorOr<Unit>> Handle(DeleteProductCommand request, CancellationToken cancellationToken)

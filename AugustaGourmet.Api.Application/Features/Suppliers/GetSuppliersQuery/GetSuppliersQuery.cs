@@ -7,7 +7,7 @@ public class GetSuppliersQuery : PagedQuery<SupplierDto>
 {
     public string? Name { get; set; }
 
-    public GetSuppliersQuery(int page, int pageSize, string? name = null) : base(page, pageSize)
+    public GetSuppliersQuery(int page, int pageSize, string? name) : base(page, pageSize)
     {
         Name = name;
     }
