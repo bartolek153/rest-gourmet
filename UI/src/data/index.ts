@@ -33,7 +33,7 @@ export const dataProvider: DataProvider = {
         })),
 
     getMany: async (resource, params) => {
-        const queryString = params.ids.map(value => `id=${value}`).join('&');
+        const queryString = params.ids.map(value => `id=${value}`).join('&') + '&perPage=100';
         const url = `${apiUrl}/${resource}?${queryString}`;
         return await httpClient(url).then(({ json }) => ({
             data: json

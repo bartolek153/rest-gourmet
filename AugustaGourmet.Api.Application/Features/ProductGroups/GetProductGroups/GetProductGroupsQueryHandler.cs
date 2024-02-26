@@ -20,8 +20,13 @@ public class GetProductGroupsQueryHandler : IRequestHandler<GetProductGroupsQuer
 
     public async Task<List<ProductGroupDto>> Handle(GetProductGroupsQuery request, CancellationToken cancellationToken)
     {
-        var productGroups = await _productGroupRepository.GetAllAsync();
+        var productGroups = await _productGroupRepository.GetAllWithPaginationAsync(
+            p => string.IsNullOrEmpty(request.Description) || p.Description.ToLower().Contains(request.Description),
+            i => i.OrderBy(i => i.Description),
+            1,
+            100
+        );
 
-        return _mapper.Map<List<ProductGroupDto>>(productGroups);
+        return _mapper.Map<List<ProductGroupDto>>(productGroups.Items);
     }
 }

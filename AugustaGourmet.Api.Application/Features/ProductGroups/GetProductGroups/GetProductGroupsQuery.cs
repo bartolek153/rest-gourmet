@@ -4,4 +4,12 @@ using MediatR;
 
 namespace AugustaGourmet.Api.Application.Features.ProductGroups.GetProductGroups;
 
-public record GetProductGroupsQuery : IRequest<List<ProductGroupDto>>;
+public class GetProductGroupsQuery : IRequest<List<ProductGroupDto>>
+{
+    public string? Description { get; set; }
+
+    public GetProductGroupsQuery(string? description)
+    {
+        Description = description;
+    }
+}

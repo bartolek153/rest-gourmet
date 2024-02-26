@@ -12,10 +12,10 @@ public class GetInventoryParametersQuery : PagedQuery<InventoryParameterDto>
 
     public GetInventoryParametersQuery(int page,
                                        int pageSize,
-                                       string? product = null,
-                                       int? supplierId = null,
-                                       int? productFamilyId = null,
-                                       int? productGroupId = null) : base(page, pageSize)
+                                       string? product,
+                                       int? supplierId,
+                                       int? productFamilyId,
+                                       int? productGroupId) : base(page, pageSize)
     {
         Product = product;
         SupplierId = supplierId;

@@ -15,13 +15,14 @@ public class Company : BaseEntity
 
     public string CNPJ { get; set; } = string.Empty;
 
-    [Column("TIPO")]
-    public CompanyType Type { get; set; } = null!;
+    [Column("TIPO_Id")]
+    public int TypeId { get; set; }
 
     // Contact
     [Column("TELEFONE")]
     public string PhoneNumber { get; set; } = string.Empty;
-    // public string? Email { get; set; }
+
+    // TODO: create user adminstrator field
 
     // Extra ???
     public string SENHA_LIBERACAO { get; set; } = string.Empty;

@@ -13,6 +13,6 @@ namespace WebAPI.Models
         public UnitMeasure UNIDADE { get; set; }
         public Int32 QUANTIDADE { get; set; }
         public Int32 TEMPO_PREPARO { get; set; }
-        public TCAD_STATUS_GERAL STATUS { get; set; }
+        public Status STATUS { get; set; }
     }
 }

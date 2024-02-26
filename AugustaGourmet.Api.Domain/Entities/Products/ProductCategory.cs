@@ -1,5 +1,4 @@
-﻿using AugustaGourmet.Api.Domain.Entities.Activities.Equipment;
-using AugustaGourmet.Api.Domain.Entities.Companies;
+﻿using AugustaGourmet.Api.Domain.Entities.Companies;
 
 namespace AugustaGourmet.Api.Domain.Entities.Products;
 
@@ -12,8 +11,10 @@ public class ProductCategory : BaseEntity
     public Company Company { get; set; } = null!;
 
     [Column("DESCRICAO")]
-    public string Description { get; set; } = string.Empty;  // Description!
+    public string Description { get; set; } = string.Empty;
 
-    public TCAD_IMPRESSORA IMPRESSORA { get; set; }  // Printer?
-    public int EXIBIR_CARDAPIO { get; set; }  // ?
+    [Column("IMPRESSORA_Id")]
+    public int? PrinterId { get; set; }
+
+    public int EXIBIR_CARDAPIO { get; set; }  // TODO: check use
 }

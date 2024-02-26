@@ -29,6 +29,7 @@ public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, PagedLi
         // - Ids: if not null, filter by Ids
         Expression<Func<Product, bool>>? filter = p =>
             (string.IsNullOrEmpty(request.Description) || p.Description.ToLower().Contains(request.Description)) &&
+            (request.GroupId == null || p.GroupId == request.GroupId) &&
             (!request.Ids.Any() || request.Ids.Contains(p.Id));
 
         // Query the database

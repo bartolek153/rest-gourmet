@@ -1,7 +1,14 @@
-﻿using AugustaGourmet.Api.Application.DTOs.Products;
-
-using MediatR;
+﻿using AugustaGourmet.Api.Application.Common;
+using AugustaGourmet.Api.Application.DTOs.Products;
 
 namespace AugustaGourmet.Api.Application.Features.ProductCategories.GetProductCategories;
 
-public record GetProductCategoriesQuery : IRequest<List<ProductCategoryDto>>;
+public class GetProductCategoriesQuery : PagedQuery<ProductCategoryDto>
+{
+    public string? Description { get; set; }
+
+    public GetProductCategoriesQuery(string? description)
+    {
+        Description = description;
+    }
+}

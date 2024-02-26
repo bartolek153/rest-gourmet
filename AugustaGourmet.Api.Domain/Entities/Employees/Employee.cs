@@ -1,12 +1,10 @@
-﻿using AugustaGourmet.Api.Domain.Entities.Companies;
-
-namespace AugustaGourmet.Api.Domain.Entities.Employees;
+﻿namespace AugustaGourmet.Api.Domain.Entities.Employees;
 
 [Table("TCAD_FUNCIONARIO")]
 public class Employee : BaseEntity
 {
-    [Column("EMPRESA")]
-    public Company Company { get; set; } = null!;
+    [Column("EMPRESA_Id")]
+    public int CompanyId { get; set; }
 
     [Column("NOME")]
     public string Name { get; set; } = string.Empty;
@@ -38,7 +36,7 @@ public class Employee : BaseEntity
     [Column("TRABALHA_SABADO")]
     public int WorksSaturdays { get; set; }  // TODO: Change to bool
 
-    [Column("HORARIO_ENRADA_SABADO")]
+    [Column("HORARIO_ENTRADA_SABADO")]
     public DateTime? SaturdayStartTime { get; set; }
 
     [Column("HORARIO_SAIDA_SABADO")]
@@ -50,7 +48,9 @@ public class Employee : BaseEntity
     [Column("HORA_EXTRA")]
     public DateTime MaxOvertimeHoursAllowed { get; set; }
 
-    [Column("TIPO_FUNCIONARIO")]
+    [Column("TIPO_FUNCIONARIO_Id")]
+    public int TypeId { get; set; }
+    [ForeignKey("TypeId")]
     public EmployeeType Type { get; set; } = null!;
 }
 

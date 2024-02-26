@@ -15,7 +15,7 @@ namespace WebAPI.Models
         public TCAD_INPUT_PLAN_ATIVIDADE TIPO_ENTRADA { get; set; }
         public string DESCRICAO { get; set; }
         public string TEXTO_INPUT { get; set; }
-        public TCAD_STATUS_GERAL STATUS { get; set; }
+        public Status STATUS { get; set; }
         public decimal? VALOR_MINIMO { get; set; }
         public decimal? VALOR_MAXIMO { get; set; }
 

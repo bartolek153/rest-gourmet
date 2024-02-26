@@ -7,9 +7,9 @@ public class GetReceiptsQuery : PagedQuery<ReceiptDto>
 {
     public GetReceiptsQuery(int page,
                             int pageSize,
-                            int? supplierId = null,
-                            DateTime? issuedSince = null,
-                            bool? unmappedOnly = null) : base(page, pageSize)
+                            int? supplierId,
+                            DateTime? issuedSince,
+                            bool? unmappedOnly) : base(page, pageSize)
     {
         SupplierId = supplierId;
         IssuedSince = issuedSince;

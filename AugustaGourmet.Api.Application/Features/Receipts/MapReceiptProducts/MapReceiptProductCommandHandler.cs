@@ -129,7 +129,7 @@ public class MapReceiptProductsCommandHandler : IRequestHandler<MapReceiptProduc
             ProductUnitId = 1, // search by short description, else be null
             PurchaseUnitId = 1, // the same as above
             PurchasePrice = Convert.ToDecimal(receiptLine.UnitPrice != 0 ? receiptLine.UnitPrice : 0),
-            StatusId = (int)Status.Active
+            StatusId = (int)Statuses.Active
         });
     }
 

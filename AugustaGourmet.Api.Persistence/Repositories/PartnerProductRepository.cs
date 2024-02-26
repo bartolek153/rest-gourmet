@@ -12,7 +12,7 @@ public class PartnerProductRepository : GenericRepository<PartnerProduct>, IPart
     {
     }
 
-    public async Task<bool> AnyWithInventoryProductIdAsync(int supplierId, int productId)
+    public async Task<bool> AnyWithInventoryProductAsync(int supplierId, int productId)
     {
         return await _context.PartnerProducts
             .Where(pp => pp.PartnerId == supplierId && pp.InventoryProductId == productId)
@@ -20,7 +20,7 @@ public class PartnerProductRepository : GenericRepository<PartnerProduct>, IPart
             .AnyAsync();
     }
 
-    public async Task<bool> AnyWithPartnerProductIdAsync(int partnerId, string productId)
+    public async Task<bool> AnyWithPartnerProductAsync(int partnerId, string productId)
     {
         return await _context.PartnerProducts
             .Where(pp => pp.PartnerId == partnerId && pp.PartnerProductId == productId)

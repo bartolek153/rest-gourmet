@@ -7,7 +7,7 @@ public class GetUnitsMeasureQuery : PagedQuery<UnitMeasureDto>
 {
     public string? Description { get; set; }
 
-    public GetUnitsMeasureQuery(int page, int pageSize, string? q = null) : base(page, pageSize)
+    public GetUnitsMeasureQuery(int page, int pageSize, string? q) : base(page, pageSize)
     {
         Description = q;
     }

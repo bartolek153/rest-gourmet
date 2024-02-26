@@ -29,14 +29,15 @@ namespace AugustaGourmet.Api.WebAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IReadOnlyList<ProductDto>> Get(int page = 1,
-                                                         int perPage = 10,
-                                                         string? q = null,
-                                                         [FromQuery] int[]? id = null)
+        public async Task<IReadOnlyList<ProductDto>> Get(string? q,
+                                                         int? groupId,
+                                                         [FromQuery] int[]? id,
+                                                         int page = 1,
+                                                         int perPage = 10)
         {
-            var result = await _mediator.Send(new GetProductsQuery(page, perPage, q, id));
+            var result = await _mediator.Send(new GetProductsQuery(page, perPage, q, groupId, id));
 
-            Response.AddPaginationHeader("products", result.Page, result.PageSize, result.TotalCount);
+            Response.AddPaginationHeader(result.Page, result.PageSize, result.TotalCount);
 
             return result.Items;
         }

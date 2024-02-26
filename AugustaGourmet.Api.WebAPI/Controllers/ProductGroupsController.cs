@@ -23,9 +23,9 @@ namespace AugustaGourmet.Api.WebAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<List<ProductGroupDto>> Get()
+        public async Task<List<ProductGroupDto>> Get(string? q = null)
         {
-            var categories = await _mediator.Send(new GetProductGroupsQuery());
+            var categories = await _mediator.Send(new GetProductGroupsQuery(q));
             return categories;
         }
 

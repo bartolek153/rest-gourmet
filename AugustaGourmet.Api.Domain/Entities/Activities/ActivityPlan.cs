@@ -8,9 +8,9 @@ namespace AugustaGourmet.Api.Domain.Entities.Activities;
 public class ActivityPlan : BaseEntity
 {
     public Local LOCAL { get; set; }
-    public TCAD_STATUS_GERAL STATUS { get; set; }
+    public Status STATUS { get; set; }
     public int QUANTIDADE_REPETICOES { get; set; }
-    public TCAD_FREQUENCIA FREQUENCIA { get; set; }
+    public Frequency FREQUENCIA { get; set; }
     public DateTime HORARIO { get; set; }
     public DateTime HORARIO_FIM { get; set; }
     public TCAD_DIA_SEMANA DIA_SEMANA { get; set; }

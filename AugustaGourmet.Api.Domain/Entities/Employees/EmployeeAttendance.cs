@@ -9,13 +9,13 @@ public class EmployeeAttendance : BaseEntity
     public int EmployeeId { get; set; }
 
     [Column("DATA_APONTAMENTO")]
-    public DateTime Date { get; set; }
+    public DateTime Date { get; set; }  //TODO: DateOnly
 
-    [Column("DATA_ENTRADA")]
+    [Column("DATA_ENTRADA")]  // TODO: TimeSpan nullable 
     public DateTime TimeIn { get; set; }
 
     [Column("DATA_SAIDA")]
-    public DateTime? TimeOut { get; set; }
+    public DateTime? TimeOut { get; set; }  // TODO: TimeSpan nullable 
 
     [Column("ATRASO")]
     public double DelayMinutes { get; set; }
@@ -24,11 +24,11 @@ public class EmployeeAttendance : BaseEntity
     public EmployeeStatus Status { get; set; } = null!;
 
     [Column("TIPO_ATRASO")]
-    public EmployeeDelayType DelayType { get; set; } = null!;
+    public EmployeeDelayType? DelayType { get; set; } = null!;
 
     [Column("EXTRA")]
     public double OvertimeMinutes { get; set; }
 
     [Column("DESCRICAO_ABONO")]
-    public string Note { get; set; } = string.Empty;
+    public string? Note { get; set; } = string.Empty;
 }

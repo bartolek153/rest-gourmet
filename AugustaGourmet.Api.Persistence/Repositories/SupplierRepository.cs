@@ -19,7 +19,7 @@ public class SupplierRepository : GenericRepository<Supplier>, ISupplierReposito
         return await _context.Suppliers
             .Where(s =>
                 !string.IsNullOrEmpty(s.FiscalEmail)
-                && s.Status == (int)Status.Active)
+                && s.StatusId == (int)Statuses.Active)
             .Select(s => new SupplierReceiptMail
             {
                 SupplierId = s.Id,

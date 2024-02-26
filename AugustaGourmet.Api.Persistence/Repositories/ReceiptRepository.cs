@@ -1,10 +1,9 @@
-using System.Runtime.CompilerServices;
-
 using AugustaGourmet.Api.Application.Contracts.Persistence;
 using AugustaGourmet.Api.Application.DTOs.Receipts;
 using AugustaGourmet.Api.Domain.Entities.Fiscal.Receiptment;
 using AugustaGourmet.Api.Persistence.Context;
 
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace AugustaGourmet.Api.Persistence.Repositories;
@@ -17,7 +16,9 @@ public class ReceiptRepository : GenericRepository<Receipt>, IReceiptRepository
 
     public async Task<IReadOnlyList<ReceiptProductMappingDto>> GetMappedReceiptProductsAsync(int receiptId)
     {
-        string query = string.Format(@"
+        var receipt = new SqlParameter("@receiptId", receiptId);
+
+        string query = @"
         select 
 	        b.[Id],
             b.[CodigoProduto] as PartnerProductId,
@@ -27,10 +28,10 @@ public class ReceiptRepository : GenericRepository<Receipt>, IReceiptRepository
         join TCAD_NOTA_FISCAL_LINHA b on a.Id = b.Capa_Id
         left join PartnerProducts c 
           on c.Supplier_Id = a.Fornecedor_Id and c.SupplierProductId = b.CodigoProduto
-        where a.Id = {0}", receiptId);
+        where a.Id = @receiptId";
 
         var result = await _context.Database
-            .SqlQuery<ReceiptProductMappingDto>(FormattableStringFactory.Create(query))  // TODO: substitute FormattableStringFactory.Create
+            .SqlQueryRaw<ReceiptProductMappingDto>(query, receipt)
             .ToListAsync();
 
         return result;
@@ -60,7 +61,7 @@ public class ReceiptRepository : GenericRepository<Receipt>, IReceiptRepository
             pp.Id IS NULL";
 
         var result = await _context.Database
-            .SqlQuery<int>(FormattableStringFactory.Create(query))
+            .SqlQueryRaw<int>(query)
             .ToArrayAsync();
 
         return result;
@@ -68,9 +69,11 @@ public class ReceiptRepository : GenericRepository<Receipt>, IReceiptRepository
 
     public async Task<bool> AnyUnmappedProductsAsync(int receiptId)
     {
-        string query = string.Format(@"
-        SELECT 
-            COUNT(*) 
+        var receipt = new SqlParameter("@receiptId", receiptId);
+
+        //TODO: substitute count(1) for exists
+        string query = @"
+        SELECT COUNT(1) AS Value
         FROM 
             TCAD_NOTA_FISCAL_CAPA capas
         JOIN 
@@ -79,11 +82,11 @@ public class ReceiptRepository : GenericRepository<Receipt>, IReceiptRepository
             PartnerProducts pp ON pp.SupplierProductId = linhas.CodigoProduto
                             AND pp.Supplier_Id = capas.Fornecedor_Id
         WHERE 
-            capas.id = {0}
-            AND pp.Id IS NULL", receiptId);
+            capas.id = @receiptId
+            AND pp.Id IS NULL";
 
         var result = await _context.Database
-            .SqlQuery<int>(FormattableStringFactory.Create(query))
+            .SqlQueryRaw<int>(query, receipt)
             .SingleAsync();
 
         return result > 0;

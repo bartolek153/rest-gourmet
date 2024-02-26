@@ -4,6 +4,7 @@ using AugustaGourmet.Api.Application.Features.ProductCategories.DeleteProductCat
 using AugustaGourmet.Api.Application.Features.ProductCategories.GetProductCategories;
 using AugustaGourmet.Api.Application.Features.ProductCategories.GetProductCategoryDetails;
 using AugustaGourmet.Api.Application.Features.ProductCategories.UpdateProductCategory;
+using AugustaGourmet.Api.WebAPI.Extensions;
 
 using MediatR;
 
@@ -23,10 +24,13 @@ namespace AugustaGourmet.Api.WebAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<List<ProductCategoryDto>> Get()
+        public async Task<IReadOnlyList<ProductCategoryDto>> Get(string? q)
         {
-            var categories = await _mediator.Send(new GetProductCategoriesQuery());
-            return categories;
+            var result = await _mediator.Send(new GetProductCategoriesQuery(q));
+
+            Response.AddPaginationHeader(result.Page, result.PageSize, result.TotalCount);
+
+            return result.Items;
         }
 
         [HttpGet("{id}")]
