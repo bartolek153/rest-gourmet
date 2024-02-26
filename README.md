@@ -8,9 +8,8 @@
 
 * Tools
   * Migrate from .NET Framework 4.6 to .NET Core 8 ✔️
-  * Migrate from EF6 to EF Core ❌
+  * Migrate from EF6 to EF Core ✔️
   * Implement JWT ❌
-  * Search tools to enhance UI code quality and deployment ❌
 * Code Refactor
   * Change database objects naming conventions ❌
   * Review database data types schemas (nullable, datetimes, inheritances, ...) ❌
@@ -32,6 +31,9 @@
   * Implement Polly (error handling policy lib) ❌
   * Decouple email reader/sender to be server agnostic ❌
   * Implement Cancellation tokens ❌
+  * Query necessary fields only ❌
+  * Parametrize data and options ❌
+  * Add multiple inheritance for paged queries (IRequest `<T>,`IPagedQuery)
 * Business Rules
 * Code Documentations
   * Generate API docs ❌
