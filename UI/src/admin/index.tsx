@@ -1,4 +1,4 @@
-import { Admin, Resource } from "react-admin";
+import { Admin, Resource, defaultLightTheme } from "react-admin";
 
 import { dataProvider } from "../data";
 import { i18nProvider } from "../i18n";
@@ -20,14 +20,12 @@ import suppliers from "../pages/suppliers";
 // - employees: Assignment Ind
 // - company: store
 
-// const lightTheme = defaultTheme;
-// const darkTheme = { ...defaultTheme, palette: { mode: 'dark' } };
-
 const App = () => (
   <Admin
     dataProvider={dataProvider}
     i18nProvider={i18nProvider}
     darkTheme={{ palette: { mode: 'dark' } }}
+    theme={{ ...defaultLightTheme, palette: { mode: 'light' } }}
     {...layoutProps}
     disableTelemetry={true}
   >

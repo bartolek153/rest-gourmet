@@ -9,7 +9,7 @@ const CustomAppBar = () => {
         theme.breakpoints.up('sm')
     );
     return (
-        <AppBar color="secondary" toolbar={<AppBarToolbar />}>
+        <AppBar color="primary" toolbar={<AppBarToolbar />}>
             <TitlePortal />
             {/* {isLargeEnough && <img src={Logo} alt="Your SVG" />} */}
             {isLargeEnough && <Logo />}
