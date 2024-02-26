@@ -18,6 +18,9 @@ public class GetEmployeesAttendanceOverviewQueryHandler : IRequestHandler<GetEmp
 
     public async Task<ErrorOr<List<EmployeeAttendanceOverviewDto>>> Handle(GetEmployeesAttendanceOverviewQuery request, CancellationToken cancellationToken)
     {
+        if (request.From > request.To)
+            request.From = request.To;
+
         return await _employeeRepository.GetEmployeeAttendanceOverviewAsync(request.From, request.To);
     }
 }

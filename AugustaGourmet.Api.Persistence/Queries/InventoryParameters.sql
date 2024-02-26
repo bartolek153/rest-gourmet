@@ -43,3 +43,63 @@ Left join TCAD_BASE_INVENTARIO b
 	on a.Product_Id = b.CODIGO_PRODUTOId
 		and a.Supplier_Id = b.CODIGO_FORNECEDORId
 where b.CODIGO_PRODUTO_FORNECEDOR is null
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--insert into PartnerProducts
+--select distinct tab.*
+--from (
+--	select a.SupplierProductId, a.SupplierProductDescription, a.Product_Id, a.Supplier_Id
+--	from PartnerProducts a
+
+--	UNION
+
+--	select distinct x.CODIGO_PRODUTO_FORNECEDOR, y.DescricaoProduto, x.CODIGO_PRODUTOId, x.CODIGO_FORNECEDORId
+--	from TCAD_BASE_INVENTARIO x
+--	left join TCAD_NOTA_FISCAL_LINHA y on x.CODIGO_PRODUTO_FORNECEDOR = y.CodigoProduto
+--	where x.CODIGO_PRODUTO_FORNECEDOR is not null
+--) tab
+--left join PartnerProducts c on 
+--	c.Product_Id = tab.Product_Id 
+--		and c.Supplier_Id = tab.Supplier_Id 
+--		and c.SupplierProductId = tab.SupplierProductId 
+--		and c.SupplierProductDescription = tab.SupplierProductDescription
+--where tab.SupplierProductId not in ('17589', '5432', '56335', 'SPO-FRU7704-CAT115318-588033', 'SPO-FRU1-CAT107269-163197', 'SPO-FRU1-CAT107269-74164')
+--	and c.Id is null
+
+
+
+insert into TCAD_BASE_INVENTARIO
+select distinct tab.Supplier_Id, tab.Product_Id, 1, 0,0,0,1,1, null
+from (
+	select a.SupplierProductId, a.SupplierProductDescription, a.Product_Id, a.Supplier_Id
+	from PartnerProducts a
+
+	UNION
+
+	select distinct x.CODIGO_PRODUTO_FORNECEDOR, y.DescricaoProduto, x.CODIGO_PRODUTOId, x.CODIGO_FORNECEDORId
+	from TCAD_BASE_INVENTARIO x
+	left join TCAD_NOTA_FISCAL_LINHA y on x.CODIGO_PRODUTO_FORNECEDOR = y.CodigoProduto
+	where x.CODIGO_PRODUTO_FORNECEDOR is not null
+) tab
+left join TCAD_BASE_INVENTARIO c on 
+	c.CODIGO_PRODUTOId = tab.Product_Id 
+		and c.CODIGO_FORNECEDORId = tab.Supplier_Id 
+		and c.CODIGO_PRODUTOId = tab.Product_Id
+where tab.SupplierProductId not in ('17589', '5432', '56335', 'SPO-FRU7704-CAT115318-588033', 'SPO-FRU1-CAT107269-163197', 'SPO-FRU1-CAT107269-74164')
+	and c.CODIGO_PRODUTOId is null

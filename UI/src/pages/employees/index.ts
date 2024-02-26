@@ -7,4 +7,5 @@ export default {
   edit: EmployeeEdit,
   create: EmployeeCreate,
   icon: EmployeeIcon,
+  link: '/employees',
 };

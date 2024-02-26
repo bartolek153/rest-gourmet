@@ -1,3 +1,4 @@
+using AugustaGourmet.Api.Application.Features.EmployeesAttendance.GetEmployeesAttendanceDetails;
 using AugustaGourmet.Api.Application.Features.EmployeesAttendance.GetEmployeesAttendanceOverview;
 using AugustaGourmet.Api.WebAPI.Extensions;
 
@@ -20,15 +21,24 @@ public class EmployeesAttendanceController : ApiController
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetEmployeeAttendanceOverview(DateTime? from, DateTime? to)
+    public async Task<IActionResult> GetEmployeeAttendanceOverview(DateTime from, DateTime to)
     {
-        DateTime from1 = from ?? DateTime.Now.Date;
-        DateTime to2 = to ?? DateTime.Now.Date;
-
         // TODO: Remove this line when not needed
         Response.AddPaginationHeader(1, 1, 1);
 
-        var result = await _mediator.Send(new GetEmployeesAttendanceOverviewQuery(from1, to2));
+        var result = await _mediator.Send(new GetEmployeesAttendanceOverviewQuery(from, to));
+        return result.Match(Ok, Problem);
+    }
+
+    [HttpGet("{employeeId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetEmployeeAttendanceDetails(int employeeId, DateTime? from, DateTime? to)
+    {
+        DateTime from1 = from ?? new DateTime(2024, 2, 1);
+        DateTime to2 = to ?? new DateTime(2024, 2, 25);
+
+        var result = await _mediator.Send(new GetEmployeesAttendanceDetailsQuery(employeeId, from1, to2));
         return result.Match(Ok, Problem);
     }
 }

@@ -12,60 +12,149 @@ public class EmployeeRepository : GenericRepository<Employee>, IEmployeeReposito
 {
     public EmployeeRepository(ApplicationContext context) : base(context)
     {
-        // // logs
-        // _context.Database.Log = Console.WriteLine;
     }
 
     public async Task<List<EmployeeAttendanceOverviewDto>> GetEmployeeAttendanceOverviewAsync(DateTime from, DateTime to)
     {
-        return await _context.Employees
-            .Where(f => f.Status == (int)Status.Active)
+        int ndays = 1 + Convert.ToInt32((to - from).TotalDays);
+        int nsaturdays = (ndays + Convert.ToInt32(from.DayOfWeek)) / 7;
+        int nsundays = (ndays + Convert.ToInt32(from.DayOfWeek) + 6) / 7;
+        int wDays = ndays - 2 * nsaturdays
+           - (from.DayOfWeek == DayOfWeek.Sunday ? 1 : 0)
+           + (to.DayOfWeek == DayOfWeek.Saturday ? 1 : 0);
+
+        var periodIncidents = _context.EmployeeIncidentLogs
+            .Where(att =>
+                att.FromDate <= to &&
+                att.ToDate >= from)
+            .Select(row => new
+            {
+                row.EmployeeId,
+                NumberOfSundays = (((row.ToDate >= to ? to : row.ToDate) - (row.FromDate <= from ? from : row.FromDate)).Days + 6) / 7,
+                NumberOfDays = ((row.ToDate >= to ? to : row.ToDate) - (row.FromDate <= from ? from : row.FromDate)).Days + 1
+            }).ToList();
+
+        var results = await _context.Employees
+            .Where(f => f.Status == (int)Statuses.Active)
+            .AsNoTracking()
             .Select(f => new EmployeeAttendanceOverviewDto
             {
-                // test = DbFunctions.CreateTime(f.StartTime.Hour, f.StartTime.Minute, 0),
                 Id = f.Id,
                 Name = f.Name,
-                TimeIn = f.StartTime,
-                TimeOut = f.EndTime,
-                WorksSaturdays = f.WorksSaturdays == 1 ? true : false,
+                TimeIn = f.StartTime.ToString("HH:mm"),
+                TimeOut = f.EndTime.ToString("HH:mm"),
+                WorksSaturdays = f.WorksSaturdays == 1,
 
-                // Absences = _context.EmployeeAttendances
-                //     .Where(att =>
-                //         att.EmployeeId == f.Id &&
-                //         att.Date >= from &&
-                //         att.Date <= to)
-                //     .GroupBy(att => att.Date)
-                //     .Count(group => !group.Any()),
+                WorkedDays = _context.EmployeeAttendances
+                    .Where(att =>
+                        att.EmployeeId == f.Id &&
+                        att.Date >= from &&
+                        att.Date <= to)
+                    .Count(),
 
-                // LateArrivalCount = _context.EmployeeAttendances
-                //     .Where(att =>
-                //         att.EmployeeId == f.Id &&
-                //         att.Date >= from &&
-                //         att.Date <= to &&
-                //         DbFunctions.CreateTime(
-                //             att.Date.Hour,
-                //             att.Date.Minute,
-                //             0) > DbFunctions.CreateTime(f.StartTime.Hour,
-                //                                         f.StartTime.Minute,
-                //                                         0))
-                    // .Count(),
+                LateArrivalCount = _context.EmployeeAttendances
+                    .Where(att =>
+                        att.EmployeeId == f.Id &&
+                        att.Date >= from &&
+                        att.Date <= to &&
+                        att.TimeIn.TimeOfDay > f.StartTime.TimeOfDay)
+                    .Count(),
 
-                // LateMinutes = _context.EmployeeAttendances
-                //     .Where(att =>
-                //         att.EmployeeId == f.Id &&
-                //         att.Date >= from &&
-                //         att.Date <= to)
-                //     .Sum(late => (int)(late.Date.TimeOfDay.TotalMinutes - TimeSpan.FromHours(8).TotalMinutes)),
+                LateMinutes = _context.EmployeeAttendances
+                    .Include(att => att.Employee)
+                    .Where(att =>
+                        att.EmployeeId == f.Id &&
+                        att.Date >= from &&
+                        att.Date <= to &&
+                        att.TimeIn.TimeOfDay > att.Employee.StartTime.TimeOfDay)
+                    .Sum(r => EF.Functions.DateDiffMinute(r.TimeIn.TimeOfDay, r.Employee.StartTime.TimeOfDay)),
 
-                // OvertimeMinutes = _context.EmployeeAttendances
-                //     .Where(att =>
-                //         att.EmployeeId == f.Id &&
-                //         att.Date >= from &&
-                //         att.Date <= to)
-                //     .Sum(batida => (int)(TimeSpan.FromHours(18).TotalMinutes - batida.DataHoraBatida.TimeOfDay.TotalMinutes)),
+                OvertimeMinutes = _context.EmployeeAttendances
+                    .Where(att =>
+                        att.EmployeeId == f.Id &&
+                        att.Date >= from &&
+                        att.Date <= to &&
+                        att.TimeOut!.Value.TimeOfDay > f.EndTime.TimeOfDay)
+                    .Sum(r => EF.Functions.DateDiffMinute(r.Employee.EndTime.TimeOfDay, r.TimeOut!.Value.TimeOfDay)),
             })
             .OrderBy(f => f.Name)
-            .AsNoTracking()
             .ToListAsync();
+
+        foreach (var result in results)
+        {
+            result.IncidentDays = periodIncidents
+                .Where(e => e.EmployeeId == result.Id)
+                .Sum(e => e.NumberOfDays - e.NumberOfSundays);
+
+            result.MandatedWorkDays = wDays + (result.WorksSaturdays ? nsaturdays : 0) - result.IncidentDays;
+        }
+
+        return results;
+    }
+
+    public async Task<EmployeeAttendanceDetailsDto> GetEmployeeAttendanceDetailsAsync(int employeeId, DateTime from, DateTime to)
+    {
+        var employee = await GetByIdAsync(employeeId);
+
+        var attendances = await _context.EmployeeAttendances
+            .Where(att =>
+                att.EmployeeId == employeeId &&
+                att.Date >= from &&
+                att.Date <= to)
+            .Select(att => new WorkingDaysDto
+            {
+                Date = att.Date,
+                // ShortWeekDay = att.Date.DayOfWeek.ToString().Substring(0, 3),
+                TimeIn = att.TimeIn.ToString("HH:mm"),
+                TimeOut = att.TimeOut.HasValue ? att.TimeOut.Value.ToString("HH:mm") : "",
+                LateMinutes = att.TimeIn.TimeOfDay > employee.StartTime.TimeOfDay ? EF.Functions.DateDiffMinute(att.TimeIn.TimeOfDay, employee.StartTime.TimeOfDay) : 0,
+                OvertimeMinutes = att.TimeOut.HasValue ? (att.TimeOut!.Value.TimeOfDay > employee.EndTime.TimeOfDay ? EF.Functions.DateDiffMinute(employee.EndTime.TimeOfDay, att.TimeOut!.Value.TimeOfDay) : 0) : 0,
+            })
+            .ToListAsync();
+
+        var incidents = await _context.EmployeeIncidentLogs
+            .Include(i => i.Reason)
+            .Where(att =>
+                att.EmployeeId == employeeId &&
+                att.FromDate <= to &&
+                att.ToDate >= from)
+            .Select(att => new
+            {
+                att.FromDate,
+                att.ToDate,
+                IncidentReason = att.Reason.Description
+            })
+            .ToListAsync()
+            .ContinueWith(t => t.Result.SelectMany(att =>
+            {
+                var days = new List<WorkingDaysDto>();
+                for (var date = att.FromDate; date <= att.ToDate; date = date.AddDays(1))
+                {
+                    days.Add(new WorkingDaysDto
+                    {
+                        Date = date,
+                        IncidentReason = att.IncidentReason
+                    });
+                }
+                return days;
+            }));
+
+        attendances = attendances.Union(incidents).ToList();
+
+        return new EmployeeAttendanceDetailsDto
+        {
+            Id = employeeId,
+            EmployeeInfo = new EmployeeInfoDto
+            {
+                Name = employee.Name,
+                StartTime = employee.StartTime.ToString("HH:mm"),
+                EndTime = employee.EndTime.ToString("HH:mm"),
+                MaxOvertimeHoursAllowed = employee.MaxOvertimeHoursAllowed.Hour,
+                WorksSaturdays = employee.WorksSaturdays == 1,
+                // SaturdayStartTime = f.SaturdayStartTime!.Value.TimeOfDay,
+                // SaturdayEndTime = f.SaturdayEndTime!.Value.TimeOfDay
+            },
+            WorkingDays = attendances
+        };
     }
 }

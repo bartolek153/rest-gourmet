@@ -6,4 +6,5 @@ namespace AugustaGourmet.Api.Application.Contracts.Persistence;
 public interface IEmployeeRepository : IGenericRepository<Employee>
 {
     Task<List<EmployeeAttendanceOverviewDto>> GetEmployeeAttendanceOverviewAsync(DateTime from, DateTime to);
+    Task<EmployeeAttendanceDetailsDto> GetEmployeeAttendanceDetailsAsync(int employeeId, DateTime from, DateTime to);
 }
