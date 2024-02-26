@@ -14,13 +14,10 @@ import ReceiptProductMapping from "../pages/receipts/ReceiptProductsMapping";
 import employeesAttendance from "../pages/employeesAttendance";
 
 import layoutProps from "../layout";
+import suppliers from "../pages/suppliers";
 
 // icons
-// - products: grocery
-// - inventory: shelf
-// - suppliers: truck
 // - employees: Assignment Ind
-// - attendance: schedule
 // - company: store
 
 // const lightTheme = defaultTheme;
@@ -30,17 +27,18 @@ const App = () => (
   <Admin
     dataProvider={dataProvider}
     i18nProvider={i18nProvider}
-    // theme={lightTheme}
-    // darkTheme={darkTheme}
+    darkTheme={{ palette: { mode: 'dark' } }}
     {...layoutProps}
     disableTelemetry={true}
   >
-    <Resource name="products" options={{ label: "Produtos" }} {...products} />
+    <Resource name="products" options={{ label: "Produtos" }} {...products.products} />
     <Resource name="receipts" options={{ label: "Notas Fiscais" }} {...receipts} >
       <Route path=":id/mapping" element={<ReceiptProductMapping />} />
     </Resource>
     <Resource name="inventory/parameters" options={{ label: "Parâmetros de Inventário" }} {...inventory.parameters} />
     <Resource name="employees/attendance" options={{ label: "Ponto do Funcionário" }} {...employeesAttendance} />
+    <Resource name="suppliers" options={{ label: "Fornecedores" }} {...suppliers} />
+    <Resource name="products/categories" options={{ label: "Categorias" }} {...products.categories} />
   </Admin>
 );
 

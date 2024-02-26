@@ -10,9 +10,9 @@ import {
 } from "react-admin";
 
 const productFilters = [
-  <TextInput source="q" label="Produto" alwaysOn />,
+  <TextInput source="q" label="Descrição" alwaysOn />,
   <ReferenceInput source="groupId" reference="products/groups" label="Grupo">
-    <AutocompleteInput optionText="description" label="Grupo" />
+    <AutocompleteInput optionText="description" label="Grupo" sx={{ width: 300 }} />
   </ReferenceInput>,
 ];
 

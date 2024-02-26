@@ -1,10 +1,7 @@
-import ProductIcon from '@mui/icons-material/LocalGroceryStoreTwoTone';
-import ProductList from "./ProductList";
-import { ProductEdit, ProductCreate } from "./ProductForm";
+import categories from "./categories";
+import products from "./products";
 
 export default {
-  list: ProductList,
-  edit: ProductEdit,
-  create: ProductCreate,
-  icon: ProductIcon,
-};
+    products: products,
+    categories: categories
+}
