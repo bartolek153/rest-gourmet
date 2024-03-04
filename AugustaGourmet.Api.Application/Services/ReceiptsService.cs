@@ -64,19 +64,44 @@ public class ReceiptService : IReceiptService
         // filter emails that are from suppliers and have a xml attachment
         emails = emails
             .Where(e =>
-                (suppliersMails.Any(sup => sup.EmailAddress == e.From) ||
-                 suppliersMails.Any(sup => e.Cc != null && e.Cc.Contains(sup.EmailAddress))) &&
+                (suppliersMails.Any(sup =>
+                    {
+                        if (sup.EmailAddress.Contains("@")) // Se for um email completo
+                            return sup.EmailAddress.Equals(e.From);
+                        else // Se for um domínio
+                            return e.From.EndsWith($"@{sup.EmailAddress}");
+                    }) ||
+                 suppliersMails.Any(sup =>
+                    {
+                        if (sup.EmailAddress.Contains("@")) // Se for um email completo
+                            return e.Cc != null && e.Cc.Contains(sup.EmailAddress);
+                        else // Se for um domínio
+                            return e.Cc != null && e.Cc.Any(cc => cc.EndsWith($"@{sup.EmailAddress}"));
+                    })) &&
                 e.Attachments != null &&
                 e.Attachments.Any(att => att!.Name!.Contains(".xml")))
             .ToList();
+
 
         // get the xml attachment from the email, deserialize it and add it to the list
         foreach (EmailMessage email in emails)
         {
             try
             {
-                var suppMail = suppliersMails.SingleOrDefault(s => s.EmailAddress == email.From)
-                                ?? suppliersMails.SingleOrDefault(s => email.Cc!.Contains(s.EmailAddress));
+                var suppMail = suppliersMails.SingleOrDefault(s =>
+                {
+                    if (s.EmailAddress.Contains("@")) // Se for um email completo
+                        return s.EmailAddress.Equals(email.From);
+                    else // Se for um domínio
+                        return email.From.EndsWith($"@{s.EmailAddress}");
+                })
+                ?? suppliersMails.SingleOrDefault(s =>
+                {
+                    if (s.EmailAddress.Contains("@")) // Se for um email completo
+                        return email.Cc != null && email.Cc.Contains(s.EmailAddress);
+                    else // Se for um domínio
+                        return email.Cc != null && email.Cc.Any(cc => cc.EndsWith($"@{s.EmailAddress}"));
+                });
 
                 if (suppMail is null)
                     continue;
@@ -146,6 +171,11 @@ public class ReceiptService : IReceiptService
             await _telegramMessageSender.SendMessageToAdminAsync(localErrors);
 
         return nfeList.Count;
+    }
+
+    public async Task<ErrorOr<int>> IntegrateReceiptsFromEmailAsync()
+    {
+        return await IntegrateReceiptsFromEmailAsync(DateTime.Now.AddDays(-7));
     }
 
     private Receipt ConvertNfeProcToReceipt(NfeProc xml, int supplierId)

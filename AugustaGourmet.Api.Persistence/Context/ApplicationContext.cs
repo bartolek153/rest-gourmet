@@ -32,15 +32,14 @@ public sealed class ApplicationContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<InventoryParameter>()
-            .Ignore(ip => ip.Id)
-            .HasKey(ip => new { ip.CompanyId, ip.SupplierId, ip.InventoryProductId });
+        modelBuilder.Entity<InventoryParameter>(builder =>
+        {
+            builder
+                .Ignore(ip => ip.Id)
+                .HasKey(ip => new { ip.CompanyId, ip.SupplierId, ip.InventoryProductId });
+        });
 
-        // TODO: Create following indexes
-        // - clustered unique:
-        //   * InventoryParameter: CompanyId, SupplierId, InventoryProductId
-        //
-        // - Non-Unique
+        // TODO: Create indexes
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

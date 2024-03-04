@@ -33,6 +33,13 @@ const exporter = rows => {
   downloadXLSX(rowsForExport, headers, `ponto-detalhe`);
 };
 
+const rowStyle = (record, index) => {
+  if (record.incidentReason) return { backgroundColor: "#FFC7C7" };
+  if (record.lateMinutes === 0) return { backgroundColor: "#B8FFD9" };
+  if (record.LateMinutes <= 5) return { backgroundColor: "#FFF9C7" };
+  return { backgroundColor: "#FFC7C7" };
+};
+
 const EmployeeAttendanceShow = () => {
   return (
     <Show
@@ -51,7 +58,7 @@ const EmployeeAttendanceShow = () => {
         {/* <ExportButton exporter={exporter} id={id} /> */}
 
         <ArrayField source="workingDays" label="Registros" >
-          <Datagrid bulkActionButtons={false}>
+          <Datagrid bulkActionButtons={false} rowSx={rowStyle}>
             <DateField source="date" label="Data" />
             <TextField source="timeIn" label="Entrada" />
             <TextField source="timeOut" label="Saída" />

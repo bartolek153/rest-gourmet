@@ -23,7 +23,7 @@ public class SupplierRepository : GenericRepository<Supplier>, ISupplierReposito
             .Select(s => new SupplierReceiptMail
             {
                 SupplierId = s.Id,
-                EmailAddress = s.FiscalEmail
+                EmailAddress = s.FiscalEmail!
             })
             .AsNoTracking()
             .ToListAsync();

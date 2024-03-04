@@ -18,6 +18,6 @@ public class ImportReceiptsFromEmailCommandHandler : IRequestHandler<ImportRecei
     public async Task<ErrorOr<int>> Handle(ImportReceiptsFromEmailCommand request, CancellationToken cancellationToken)
     {
         // Get the last 10 days emails
-        return await _receiptsService.IntegrateReceiptsFromEmailAsync(DateTime.Now.AddDays(-7));
+        return await _receiptsService.IntegrateReceiptsFromEmailAsync(request.FromDate);
     }
 }

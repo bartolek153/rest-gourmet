@@ -15,9 +15,14 @@ public class EchoController : ControllerBase
     }
 
     [HttpGet("/echo")]
-    public IActionResult Echo(string? message = null) => Ok(message ?? "Hello, World!");
+    public IActionResult Echo(string? message = null) =>
+        Ok(message ?? "Hello, World!");
 
     [HttpGet("/echo/telegram")]
     public async Task<IActionResult> EchoTelegram(string? message = null) =>
         Ok(await _textMessageSender.SendMessageToAdminAsync(message ?? "Hello, World!"));
+
+    [HttpGet("/echo/date")]
+    public IActionResult EchoDate(int year, int month, int day) =>
+        Ok(new DateTime(year, month, day));
 }

@@ -73,8 +73,8 @@ public class MapReceiptProductsCommandHandler : IRequestHandler<MapReceiptProduc
                     return Errors.Products.Conflicts.DuplicateProductWithDescription(map.PartnerProductDescription);
 
                 Product createdProduct = CreateDefaultProduct(line);
-                CreateDefaultPartnerProduct(receipt.SupplierId, line, createdProduct, null);
-                CreateDefaultInventoryParameter(receipt.SupplierId, createdProduct, null);
+                CreateDefaultPartnerProduct(receipt.SupplierId, line, createdProduct);
+                CreateDefaultInventoryParameter(receipt.SupplierId, createdProduct);
             }
             else if (map.InventoryProductId.HasValue)  // map receipt product to inventory product
             {
@@ -87,10 +87,10 @@ public class MapReceiptProductsCommandHandler : IRequestHandler<MapReceiptProduc
                     _partnerProductRepository.Update(existingPnProductMap);
                 }
                 else if (existingPnProductMap is null)
-                    CreateDefaultPartnerProduct(receipt.SupplierId, line, null, map.InventoryProductId);
+                    CreateDefaultPartnerProduct(receipt.SupplierId, line, map.InventoryProductId.Value);
 
                 if (!anyInvParameter)
-                    CreateDefaultInventoryParameter(receipt.SupplierId, null, map.InventoryProductId);
+                    CreateDefaultInventoryParameter(receipt.SupplierId, map.InventoryProductId.Value);
             }
             else // unmap receipt product from inventory product
             {
@@ -106,7 +106,7 @@ public class MapReceiptProductsCommandHandler : IRequestHandler<MapReceiptProduc
         return Unit.Value;
     }
 
-    private void CreateDefaultPartnerProduct(int supplierId, ReceiptLine line, Product? createdProduct, int? productId)
+    private void CreateDefaultPartnerProduct(int supplierId, ReceiptLine line, Product createdProduct)
     {
         _partnerProductRepository.Create(new PartnerProduct
         {
@@ -114,6 +114,16 @@ public class MapReceiptProductsCommandHandler : IRequestHandler<MapReceiptProduc
             PartnerProductId = line.ProductId,
             PartnerProductDescription = line.ProductDescription,
             InventoryProduct = createdProduct,
+        });
+    }
+
+    private void CreateDefaultPartnerProduct(int supplierId, ReceiptLine line, int productId)
+    {
+        _partnerProductRepository.Create(new PartnerProduct
+        {
+            PartnerId = supplierId,
+            PartnerProductId = line.ProductId,
+            PartnerProductDescription = line.ProductDescription,
             InventoryProductId = productId
         });
     }
@@ -133,13 +143,29 @@ public class MapReceiptProductsCommandHandler : IRequestHandler<MapReceiptProduc
         });
     }
 
-    private void CreateDefaultInventoryParameter(int supplierId, Product? createdProduct, int? productId)
+    private void CreateDefaultInventoryParameter(int supplierId, int productId)
     {
         _inventoryParameterRepository.Create(new InventoryParameter
         {
             CompanyId = 1,
             SupplierId = supplierId,
-            InventoryProductId = productId ?? 0,
+            InventoryProductId = productId,
+            MinStockQuantity = 0,
+            MinStockUnitId = 1,
+            MaxStockQuantity = 0,
+            MaxStockUnitId = 1,
+            CountIsMandatory = 0,
+        });
+    }
+
+    private void CreateDefaultInventoryParameter(int supplierId, Product createdProduct)
+    {
+        _inventoryParameterRepository.Create(new InventoryParameter
+        {
+            CompanyId = 1,
+            SupplierId = supplierId,
+            InventoryProduct = createdProduct,
+            // InventoryProductId = productId ?? 0,
             MinStockQuantity = 0,
             MinStockUnitId = 1,
             MaxStockQuantity = 0,

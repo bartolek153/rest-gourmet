@@ -4,19 +4,21 @@
 
 ## Usage
 
-## TODO
+## TODO 
+
+## Refactor TODO
 
 * Tools
   * Migrate from .NET Framework 4.6 to .NET Core 8 ✔️
   * Migrate from EF6 to EF Core ✔️
+ 
   * Implement JWT ❌
-* Code Refactor
   * Change database objects naming conventions ❌
   * Review database data types schemas (nullable, datetimes, inheritances, ...) ❌
   * Make use of database schemas ❌
   * Add tests ❌
   * Add company code in all tables (new BaseEntity prop.) ❌
-  * Add enumerated types ❌
+  * Add enumerated types ✔️
   * Implement auditable entities ❌
   * Substitute integer boolean values by bool type ❌
   * Add Multi-environment development + production (database, branches, ...) ✔️
@@ -34,10 +36,9 @@
   * Query necessary fields only ❌
   * Parametrize data and options ❌
   * Add multiple inheritance for paged queries (IRequest `<T>,`IPagedQuery)
-* Business Rules
-* Code Documentations
+
   * Generate API docs ❌
-* CI/CD
+    
   * Implement Github Actions pipelines ✔️
   * Use tagging ❌
   * Dockerize ❌

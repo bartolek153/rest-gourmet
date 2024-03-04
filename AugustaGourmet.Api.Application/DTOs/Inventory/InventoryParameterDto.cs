@@ -2,7 +2,7 @@ namespace AugustaGourmet.Api.Application.DTOs.Inventory;
 
 public class InventoryParameterDto
 {
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
     public string Product { get; set; } = string.Empty;
     public string Supplier { get; set; } = string.Empty;
     public double MinStockQuantity { get; set; }

@@ -6,4 +6,10 @@ namespace AugustaGourmet.Api.Application.Features.Receipts.ImportReceiptsFromEma
 
 public class ImportReceiptsFromEmailCommand : IRequest<ErrorOr<int>>
 {
+    public DateTime FromDate { get; set; }
+
+    public ImportReceiptsFromEmailCommand(DateTime fromDate)
+    {
+        FromDate = fromDate;
+    }
 }
