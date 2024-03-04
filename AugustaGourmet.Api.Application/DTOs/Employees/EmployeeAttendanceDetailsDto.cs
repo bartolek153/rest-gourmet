@@ -27,11 +27,4 @@ public class WorkingDaysDto
     public int LateMinutes { get; set; }
     public int OvertimeMinutes { get; set; }
     public string IncidentReason { get; set; } = string.Empty;
-    public string ConditionalFormatHex { 
-        get {
-            if (LateMinutes == 0) return "#00FF00";
-            if (LateMinutes <= 5) return "#FFFF00";
-            return "#FF0000";
-        } 
-    }
 }

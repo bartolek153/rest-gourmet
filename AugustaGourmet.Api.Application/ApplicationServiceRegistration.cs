@@ -26,6 +26,7 @@ public static class ApplicationServiceRegistration
 
         services.AddScoped<IReceiptService, ReceiptService>();
         services.AddScoped<IProductService, ProductService>();
+        services.AddScoped<IEmployeeService, EmployeeService>();
 
         return services;
     }

@@ -3,8 +3,6 @@
 [Table("TCAD_CONTROLE_FUNCIONARIO")]
 public class EmployeeAttendance : BaseEntity
 {
-    [ForeignKey("EmployeeId")]
-    public Employee Employee { get; set; } = null!;
     [Column("FUNCIONARIO_Id")]
     public int EmployeeId { get; set; }
 
@@ -31,4 +29,10 @@ public class EmployeeAttendance : BaseEntity
 
     [Column("DESCRICAO_ABONO")]
     public string? Note { get; set; } = string.Empty;
+
+    [Column("ALERTA_ATRASO")]
+    public bool? SentLateAlert { get; set; }
+
+    [ForeignKey("EmployeeId")]
+    public Employee Employee { get; set; } = null!;
 }

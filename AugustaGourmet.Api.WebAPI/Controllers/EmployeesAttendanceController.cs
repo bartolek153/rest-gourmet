@@ -1,3 +1,4 @@
+using AugustaGourmet.Api.Application.Contracts.Services;
 using AugustaGourmet.Api.Application.Features.EmployeesAttendance.GetEmployeesAttendanceDetails;
 using AugustaGourmet.Api.Application.Features.EmployeesAttendance.GetEmployeesAttendanceOverview;
 using AugustaGourmet.Api.WebAPI.Extensions;
@@ -12,10 +13,12 @@ namespace AugustaGourmet.Api.WebAPI.Controllers;
 public class EmployeesAttendanceController : ApiController
 {
     private readonly ISender _mediator;
+    private readonly IEmployeeService _employeeService;
 
-    public EmployeesAttendanceController(IMediator mediator)
+    public EmployeesAttendanceController(IMediator mediator, IEmployeeService employeeService)
     {
         _mediator = mediator;
+        _employeeService = employeeService;
     }
 
     [HttpGet]
@@ -35,10 +38,19 @@ public class EmployeesAttendanceController : ApiController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetEmployeeAttendanceDetails(int employeeId, DateTime? from, DateTime? to)
     {
-        DateTime from1 = from ?? new DateTime(2024, 2, 1);
-        DateTime to2 = to ?? new DateTime(2024, 2, 25);
+        from ??= new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+        to ??= new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
 
-        var result = await _mediator.Send(new GetEmployeesAttendanceDetailsQuery(employeeId, from1, to2));
+        var result = await _mediator.Send(new GetEmployeesAttendanceDetailsQuery(employeeId, from.Value, to.Value));
         return result.Match(Ok, Problem);
+    }
+
+    [HttpGet("late")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetLateEmployees()
+    {
+        return Ok(await _employeeService.SendLateEmployeesAsync());
+        // var result = await _mediator.Send(new GetLateEmployeesQuery());
+        // return result.Match(Ok, Problem);
     }
 }

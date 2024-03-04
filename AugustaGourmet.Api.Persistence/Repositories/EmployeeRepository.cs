@@ -97,6 +97,7 @@ public class EmployeeRepository : GenericRepository<Employee>, IEmployeeReposito
         var employee = await GetByIdAsync(employeeId);
 
         var attendances = await _context.EmployeeAttendances
+            .Include(att => att.Employee)
             .Where(att =>
                 att.EmployeeId == employeeId &&
                 att.Date >= from &&
@@ -107,8 +108,8 @@ public class EmployeeRepository : GenericRepository<Employee>, IEmployeeReposito
                 // ShortWeekDay = att.Date.DayOfWeek.ToString().Substring(0, 3),
                 TimeIn = att.TimeIn.ToString("HH:mm"),
                 TimeOut = att.TimeOut.HasValue ? att.TimeOut.Value.ToString("HH:mm") : "",
-                LateMinutes = att.TimeIn.TimeOfDay > employee.StartTime.TimeOfDay ? EF.Functions.DateDiffMinute(att.TimeIn.TimeOfDay, employee.StartTime.TimeOfDay) : 0,
-                OvertimeMinutes = att.TimeOut.HasValue ? (att.TimeOut!.Value.TimeOfDay > employee.EndTime.TimeOfDay ? EF.Functions.DateDiffMinute(employee.EndTime.TimeOfDay, att.TimeOut!.Value.TimeOfDay) : 0) : 0,
+                LateMinutes = att.TimeIn.TimeOfDay > att.Employee.StartTime.TimeOfDay ? EF.Functions.DateDiffMinute(att.TimeIn.TimeOfDay, att.Employee.StartTime.TimeOfDay) : 0,
+                OvertimeMinutes = att.TimeOut.HasValue ? (att.TimeOut!.Value.TimeOfDay > att.Employee.EndTime.TimeOfDay ? EF.Functions.DateDiffMinute(att.Employee.EndTime.TimeOfDay, att.TimeOut!.Value.TimeOfDay) : 0) : 0,
             })
             .ToListAsync();
 
@@ -157,4 +158,39 @@ public class EmployeeRepository : GenericRepository<Employee>, IEmployeeReposito
             WorkingDays = attendances
         };
     }
+
+    public async Task<List<LateEmployeeInfoDto>> GetLateEmployeesAsync()
+    {
+        // first, search for employees that are more than 5 minutes late (empty rows in the database)
+        var lateEmployees = _context.Employees
+            .Where(emp => emp.Status == (int)Statuses.Active &&
+                !_context.EmployeeAttendances.Any(att =>
+                    att.EmployeeId == emp.Id &&
+                    att.Date.Date == DateTime.Today))
+            .Select(emp => new LateEmployeeInfoDto
+            {
+                Name = emp.Name,
+                TotalMinutesLate = EF.Functions.DateDiffMinute(emp.StartTime.TimeOfDay, DateTime.Now.TimeOfDay)
+            })
+            .AsNoTracking()
+            .ToList();
+
+        // in a second query, search employees that arrived late and send alert with the time they arrived
+        var lateArrivals = await _context.EmployeeAttendances
+            .Include(att => att.Employee)
+            .Where(att =>
+                att.Date == DateTime.Today &&
+                att.Employee.Status == (int)Statuses.Active &&
+                att.TimeIn.TimeOfDay > att.Employee.StartTime.TimeOfDay)
+            .Select(att => new LateEmployeeInfoDto
+            {
+                Name = att.Employee.Name,
+                TimeIn = att.TimeIn.ToString("HH:mm")
+            })
+            .AsNoTracking()
+            .ToListAsync();
+
+        return lateArrivals = lateArrivals.Union(lateEmployees).ToList();
+    }
+
 }
