@@ -4,24 +4,36 @@
 
 ## Usage
 
+### Starting REST API
+
+```bash
+dotnet run --project AugustaGourmet.Api.WebAPI
+```
+
+### Starting UI
+
+```bash
+cd UI
+yarn
+yarn dev
+```
+
 ## TODO 
 
-## Refactor TODO
-
-* Tools
+* Refactor Pendings
   * Migrate from .NET Framework 4.6 to .NET Core 8 ✔️
   * Migrate from EF6 to EF Core ✔️
- 
   * Implement JWT ❌
   * Change database objects naming conventions ❌
-  * Review database data types schemas (nullable, datetimes, inheritances, ...) ❌
-  * Make use of database schemas ❌
+  * Review db data types (nullable, datetimes, inheritances, ...) ❌
+  * Make use of db schemas ❌
   * Add tests ❌
   * Add company code in all tables (new BaseEntity prop.) ❌
   * Add enumerated types ✔️
   * Implement auditable entities ❌
   * Substitute integer boolean values by bool type ❌
-  * Add Multi-environment development + production (database, branches, ...) ✔️
+  * Add multi-environment development + production (database, branches, ...) ✔️
+  * Implement multi-tenancy (rows per company) ❌
   * Add some method of storing configuration + credentials ✔️
   * Add logging and messaging with Telegram ✔️
   * Add database indexes with EF ❌
@@ -32,17 +44,22 @@
   * Add caching ❌
   * Implement Polly (error handling policy lib) ❌
   * Decouple email reader/sender to be server agnostic ❌
-  * Implement Cancellation tokens ❌
+  * Implement cancellation tokens ❌
   * Query necessary fields only ❌
   * Parametrize data and options ❌
   * Add multiple inheritance for paged queries (IRequest `<T>,`IPagedQuery)
-
+  * Implement UI Tree Layout (https://marmelab.com/react-admin-demo/#/invoices) ❌
+  * Implement UI Side Detail Layout (https://marmelab.com/react-admin-demo/#/reviews/80) ❌
+  * Implement UI Flex Form Layouts (https://marmelab.com/react-admin-demo/#/customers/26) ❌
+  * Add color markup on sidebar menu current screen/location ❌
+  * Add client-side valiation ❌
   * Generate API docs ❌
-    
   * Implement Github Actions pipelines ✔️
+  * Add dependabot ❌
   * Use tagging ❌
   * Dockerize ❌
 
 ## Known errors
 
-* On form error, show the error again after multiple clicks on save button (or use helperText) -> ReceiptProductsMapping.tsx
+* UI
+ * ReceiptProductsMapping.tsx -> on form error, it doesn't allow sending a request again
