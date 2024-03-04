@@ -58,9 +58,11 @@ public class ReceiptsController : ApiController
     [HttpPost("import")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> ImportReceipts()
+    public async Task<IActionResult> ImportReceipts(DateTime? fromDate)
     {
-        var result = await _mediator.Send(new ImportReceiptsFromEmailCommand());
+        fromDate ??= DateTime.Now.AddDays(-7);
+
+        var result = await _mediator.Send(new ImportReceiptsFromEmailCommand(fromDate.Value));
         return result.Match(result => Ok(result), Problem);
     }
 
