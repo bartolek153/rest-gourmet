@@ -12,7 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AugustaGourmet.Api.Application\AugustaGourmet.Api.Application.csproj" />
+    <ProjectReference
+      Include="..\AugustaGourmet.Api.Application\AugustaGourmet.Api.Application.csproj" />
   </ItemGroup>
 
 </Project>

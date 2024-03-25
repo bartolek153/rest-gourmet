@@ -1,8 +1,11 @@
+﻿using AugustaGourmet.Api.Application.Authentication;
+using AugustaGourmet.Api.Application.Contracts.Authentication;
 using AugustaGourmet.Api.Application.Contracts.Emails;
 using AugustaGourmet.Api.Application.Contracts.Logging;
 using AugustaGourmet.Api.Application.Contracts.TextMessage;
 using AugustaGourmet.Api.Application.Emails;
 using AugustaGourmet.Api.Application.TextMessages;
+using AugustaGourmet.Api.Infrastructure.Authentication;
 using AugustaGourmet.Api.Infrastructure.Emails;
 using AugustaGourmet.Api.Infrastructure.Logging;
 using AugustaGourmet.Api.Infrastructure.TextMessages;
@@ -39,6 +42,11 @@ public static class InfrastructureServiceRegistration
         });
         services.Configure<WhatsappSettings>(configuration.GetSection(WhatsappSettings.SectionName));
 
+        // Authentication
+        services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+        services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
+
+        // Logging
         services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
 
         return services;
