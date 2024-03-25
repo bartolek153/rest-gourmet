@@ -6,8 +6,11 @@ public static partial class Errors
 {
     public static class Inventory
     {
-        public static Error ExistingMapping => Error.Conflict(
-            code: "Inventory.ExistingMapping",
-            description: "Já existe um mapeamento para este produto.");
+        public static class Conflicts
+        {
+            public static Error ExistingMapping => Error.Conflict(
+                code: "Inventory.ExistingMapping",
+                description: "Já existe um mapeamento para este produto.");
+        }
     }
 }

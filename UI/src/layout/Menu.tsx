@@ -17,6 +17,7 @@ import inventory from '../pages/inventory';
 import suppliers from '../pages/suppliers';
 import employeesAttendance from '../pages/employeesAttendance';
 import employees from '../pages/employees';
+import users from '../pages/users';
 
 type MenuName = 'menuProducts' | 'menuInventory';
 
@@ -118,6 +119,14 @@ const CustomMenu = ({ dense = false }: MenuProps) => {
                     dense={dense}
                 />
             </SubMenu>
+
+            <MenuItemLink
+                to={users.link}
+                state={{ _scrollToTop: true }}
+                primaryText={"Usuários"}
+                leftIcon={<users.icon />}
+                dense={dense}
+            />
         </Box>
     );
 };

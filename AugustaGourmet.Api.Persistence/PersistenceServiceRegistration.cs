@@ -31,6 +31,7 @@ public static class PersistenceServiceRegistration
         services.AddScoped<IUnitMeasureRepository, UnitMeasureRepository>();
         services.AddScoped<ICompanyRepository, CompanyRepository>();
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+        services.AddScoped<IEmployeeIncidentRepository, EmployeeIncidentRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
 
         return services;

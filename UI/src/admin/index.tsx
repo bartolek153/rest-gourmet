@@ -16,6 +16,8 @@ import employeesAttendance from "../pages/employeesAttendance";
 import layoutProps from "../layout";
 import suppliers from "../pages/suppliers";
 
+import users from "../pages/users";
+
 // icons
 // - employees: Assignment Ind
 // - company: store
@@ -37,6 +39,7 @@ const App = () => (
     <Resource name="employees/attendance" options={{ label: "Ponto do Funcionário" }} {...employeesAttendance} />
     <Resource name="suppliers" options={{ label: "Fornecedores" }} {...suppliers} />
     <Resource name="products/categories" options={{ label: "Categorias" }} {...products.categories} />
+    <Resource name="users" options={{ label: "Usuários" }} {...users} />
   </Admin>
 );
 
