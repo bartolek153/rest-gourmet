@@ -18,7 +18,8 @@ public class EchoController : ControllerBase
     }
 
     [HttpGet("/echo")]
-    public IActionResult Echo(string? message = null) => Ok(message ?? "Hello, World!");
+    public IActionResult Echo(string? message = null) =>
+        Ok(message ?? "Hello, World!");
 
     [HttpGet("/echo/telegram")]
     public async Task<IActionResult> EchoTelegram(string? message = null) =>
