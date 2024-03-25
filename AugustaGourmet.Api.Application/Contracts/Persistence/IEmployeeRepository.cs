@@ -7,5 +7,6 @@ public interface IEmployeeRepository : IGenericRepository<Employee>
 {
     Task<List<EmployeeAttendanceOverviewDto>> GetEmployeeAttendanceOverviewAsync(DateTime from, DateTime to);
     Task<EmployeeAttendanceDetailsDto> GetEmployeeAttendanceDetailsAsync(int employeeId, DateTime from, DateTime to);
-    Task<List<LateEmployeeInfoDto>> GetLateEmployeesAsync();
+    Task<List<LateEmployeeInfoDto>> GetLateEmployeesAsync(DateTime date, int minutesLate);
+    Task LogSentLateAlertAsync(int[] employeeId);
 }

@@ -9,9 +9,6 @@ namespace AugustaGourmet.Api.Application.Features.ProductGroups.CreateProductGro
         {
             RuleFor(pg => pg.Description)
                 .NotEmpty().WithMessage(Constants.Messages.DescriptionIsRequired);
-
-            RuleFor(pg => pg.CompanyId)
-                .GreaterThan(0).WithMessage(Constants.Messages.InvalidCompanyId);
         }
     }
 }

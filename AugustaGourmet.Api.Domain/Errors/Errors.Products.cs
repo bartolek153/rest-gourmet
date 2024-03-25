@@ -6,7 +6,6 @@ public static partial class Errors
 {
     public static class Products
     {
-
         public static class Conflicts
         {
             public static Error DuplicateProduct => Error.Conflict(

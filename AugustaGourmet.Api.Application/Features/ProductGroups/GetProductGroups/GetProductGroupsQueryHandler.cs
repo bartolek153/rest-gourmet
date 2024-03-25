@@ -1,3 +1,4 @@
+using AugustaGourmet.Api.Application.Contracts.Common;
 using AugustaGourmet.Api.Application.Contracts.Persistence;
 using AugustaGourmet.Api.Application.DTOs.Products;
 
@@ -7,7 +8,7 @@ using MediatR;
 
 namespace AugustaGourmet.Api.Application.Features.ProductGroups.GetProductGroups;
 
-public class GetProductGroupsQueryHandler : IRequestHandler<GetProductGroupsQuery, List<ProductGroupDto>>
+public class GetProductGroupsQueryHandler : IRequestHandler<GetProductGroupsQuery, PagedList<ProductGroupDto>>
 {
     private readonly IProductGroupRepository _productGroupRepository;
     private readonly IMapper _mapper;
@@ -18,15 +19,20 @@ public class GetProductGroupsQueryHandler : IRequestHandler<GetProductGroupsQuer
         _mapper = mapper;
     }
 
-    public async Task<List<ProductGroupDto>> Handle(GetProductGroupsQuery request, CancellationToken cancellationToken)
+    public async Task<PagedList<ProductGroupDto>> Handle(GetProductGroupsQuery request, CancellationToken cancellationToken)
     {
         var productGroups = await _productGroupRepository.GetAllWithPaginationAsync(
-            p => string.IsNullOrEmpty(request.Description) || p.Description.ToLower().Contains(request.Description),
-            i => i.OrderBy(i => i.Description),
-            1,
-            100
+            filter: p => string.IsNullOrEmpty(request.Description) || p.Description.ToLower().Contains(request.Description),
+            orderBy: i => i.OrderBy(i => i.Description),
+            startPage: request.Page,
+            perPage: request.PageSize
         );
 
-        return _mapper.Map<List<ProductGroupDto>>(productGroups.Items);
+        return new PagedList<ProductGroupDto>(
+            _mapper.Map<List<ProductGroupDto>>(productGroups.Items),
+            productGroups.TotalCount,
+            productGroups.Page,
+            productGroups.PageSize
+        );
     }
 }

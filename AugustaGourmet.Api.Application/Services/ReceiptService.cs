@@ -20,13 +20,13 @@ public class ReceiptService : IReceiptService
     private readonly IReceiptRepository _receiptRepository;
     private readonly IEmailReader _emailReader;
     private readonly IAppLogger<ReceiptService> _logger;
-    private readonly ITextMessageSender _telegramMessageSender;
+    private readonly ITelegramMessageSender _telegramMessageSender;
     private readonly IUnitOfWork _unitOfWork;
 
     public ReceiptService(ISupplierRepository supplierRepository,
                            IEmailReader emailReader,
                            IAppLogger<ReceiptService> logger,
-                           ITextMessageSender telegramMessageSender,
+                           ITelegramMessageSender telegramMessageSender,
                            IReceiptRepository receiptRepository,
                            IUnitOfWork unitOfWork)
     {
@@ -40,6 +40,8 @@ public class ReceiptService : IReceiptService
 
     public async Task<ErrorOr<int>> IntegrateReceiptsFromEmailAsync(DateTime fromDate)
     {
+        // TODO: add known errors to Errors.Receipts
+
         // get supplier emails that can be searched for in the email inbox
         var suppliersMails = await _supplierRepository.GetSuppliersReceiptMailsAsync();
 
@@ -66,16 +68,16 @@ public class ReceiptService : IReceiptService
             .Where(e =>
                 (suppliersMails.Any(sup =>
                     {
-                        if (sup.EmailAddress.Contains("@")) // Se for um email completo
+                        if (sup.EmailAddress.Contains("@")) // complete email
                             return sup.EmailAddress.Equals(e.From);
-                        else // Se for um domínio
+                        else // domain only
                             return e.From.EndsWith($"@{sup.EmailAddress}");
                     }) ||
                  suppliersMails.Any(sup =>
                     {
-                        if (sup.EmailAddress.Contains("@")) // Se for um email completo
+                        if (sup.EmailAddress.Contains("@")) // complete email
                             return e.Cc != null && e.Cc.Contains(sup.EmailAddress);
-                        else // Se for um domínio
+                        else // domain only
                             return e.Cc != null && e.Cc.Any(cc => cc.EndsWith($"@{sup.EmailAddress}"));
                     })) &&
                 e.Attachments != null &&
@@ -135,7 +137,7 @@ public class ReceiptService : IReceiptService
         }
 
         if (nfeList.Count == 0)
-            return Error.NotFound("No valid NFe found in emails.");
+            return 0;
 
         // get the list of NFe that are not in the database
         var unimportedNfeIds = await _receiptRepository.ReceiptRangeExistsAsync(
@@ -146,7 +148,7 @@ public class ReceiptService : IReceiptService
             .ToList();
 
         if (nfeList.Count == 0)
-            return Error.NotFound("No new NFe found in emails.");
+            return 0;
 
         // add to database
         try
@@ -168,7 +170,10 @@ public class ReceiptService : IReceiptService
         }
 
         if (!string.IsNullOrEmpty(localErrors))
+        {
             await _telegramMessageSender.SendMessageToAdminAsync(localErrors);
+            return Error.Failure("Error processing emails.");
+        }
 
         return nfeList.Count;
     }

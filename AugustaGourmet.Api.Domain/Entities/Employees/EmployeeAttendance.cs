@@ -30,9 +30,6 @@ public class EmployeeAttendance : BaseEntity
     [Column("DESCRICAO_ABONO")]
     public string? Note { get; set; } = string.Empty;
 
-    [Column("ALERTA_ATRASO")]
-    public bool? SentLateAlert { get; set; }
-
     [ForeignKey("EmployeeId")]
     public Employee Employee { get; set; } = null!;
 }

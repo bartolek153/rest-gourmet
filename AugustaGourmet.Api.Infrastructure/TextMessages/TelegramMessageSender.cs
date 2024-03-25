@@ -8,7 +8,7 @@ using Telegram.Bot;
 
 namespace AugustaGourmet.Api.Infrastructure.TextMessages;
 
-public class TelegramMessageSender : ITextMessageSender
+public class TelegramMessageSender : ITelegramMessageSender
 {
     private readonly TelegramBotClient _botClient;
     private readonly TelegramSettings _settings;

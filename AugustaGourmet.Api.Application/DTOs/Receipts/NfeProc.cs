@@ -35,7 +35,7 @@ public class InfNFe
     public Destinatario Destinatario { get; set; } = null!;
 
     [XmlElement("cobr")]
-    public Cobranca Cobranca { get; set; } = null!;
+    public Cobranca Cobranca { get; set; } = new();
 
     [XmlElement("total")]  // some receipts use pag instead of cobr
     public Total Total { get; set; } = null!;
@@ -95,7 +95,7 @@ public class Endereco
 public class Cobranca
 {
     [XmlElement("fat")]
-    public Fatura Fatura { get; set; } = null!;
+    public Fatura Fatura { get; set; } = new();
 }
 
 public class Fatura

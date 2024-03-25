@@ -7,11 +7,14 @@ namespace AugustaGourmet.Api.WebAPI.Controllers;
 [Route("api")]
 public class EchoController : ControllerBase
 {
-    private readonly ITextMessageSender _textMessageSender;
+    private readonly ITelegramMessageSender _telegramMessageSender;
+    private readonly IWhatsappMessageSender _whatsappMessageSender;
 
-    public EchoController(ITextMessageSender textMessageSender)
+    public EchoController(ITelegramMessageSender telegramMessageSender,
+                          IWhatsappMessageSender whatsappMessageSender)
     {
-        _textMessageSender = textMessageSender;
+        _telegramMessageSender = telegramMessageSender;
+        _whatsappMessageSender = whatsappMessageSender;
     }
 
     [HttpGet("/echo")]
@@ -20,9 +23,12 @@ public class EchoController : ControllerBase
 
     [HttpGet("/echo/telegram")]
     public async Task<IActionResult> EchoTelegram(string? message = null) =>
-        Ok(await _textMessageSender.SendMessageToAdminAsync(message ?? "Hello, World!"));
+        Ok(await _telegramMessageSender.SendMessageToAdminAsync(message ?? "Hello, World!"));
+
+    [HttpGet("/echo/whatsapp")]
+    public async Task<IActionResult> EchoWhatsapp(string? message = null) =>
+        Ok(await _whatsappMessageSender.SendMessageToAdminAsync(message ?? "Hello, World!"));
 
     [HttpGet("/echo/date")]
-    public IActionResult EchoDate(int year, int month, int day) =>
-        Ok(new DateTime(year, month, day));
+    public IActionResult EchoDate() => Ok(DateTime.Now);
 }

@@ -16,10 +16,10 @@ public class ApiController : ControllerBase
         if (errors.Count == 0)
             return Problem();
 
-        if (errors.All(e => e.Type == ErrorType.Validation))
-        {
-            return ProblemValidation(errors);
-        }
+        // if (errors.All(e => e.Type == ErrorType.Validation))
+        // {
+        //     return ProblemValidation(errors);
+        // }
 
         HttpContext.Items[HttpContextItemKeys.Errors] = errors;
 
@@ -41,9 +41,10 @@ public class ApiController : ControllerBase
     {
         var statusCode = error.Type switch
         {
-            ErrorType.Conflict => StatusCodes.Status409Conflict,
-            ErrorType.NotFound => StatusCodes.Status404NotFound,
             ErrorType.Validation => StatusCodes.Status400BadRequest,
+            ErrorType.Unauthorized => StatusCodes.Status401Unauthorized,
+            ErrorType.NotFound => StatusCodes.Status404NotFound,
+            ErrorType.Conflict => StatusCodes.Status409Conflict,
             _ => StatusCodes.Status500InternalServerError
         };
 

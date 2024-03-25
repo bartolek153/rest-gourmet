@@ -22,16 +22,16 @@ public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQuery, Paged
     public async Task<PagedList<EmployeeDto>> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
     {
         var employees = await _employeeRepository.GetAllWithPaginationAsync(
-            e => string.IsNullOrWhiteSpace(request.Name) || e.Name.Contains(request.Name),
-            e => e.OrderBy(e => e.Name),
-            request.Page,
-            request.PageSize
+            filter: e => string.IsNullOrWhiteSpace(request.Name) || e.Name.Contains(request.Name),
+            orderBy: e => e.OrderBy(e => e.Name),
+            startPage: request.Page,
+            perPage: request.PageSize
         );
 
         return new PagedList<EmployeeDto>(
             _mapper.Map<List<EmployeeDto>>(employees.Items),
             employees.TotalCount,
-            request.Page,
-            request.PageSize);
+            employees.Page,
+            employees.PageSize);
     }
 }

@@ -8,10 +8,7 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
     {
         RuleFor(p => p.Description)
             .NotEmpty().WithMessage(Constants.Messages.DescriptionIsRequired)
-            .MaximumLength(60).WithMessage(Constants.Messages.DescriptionLengthExceeded);
-
-        RuleFor(p => p.CompanyId)
-            .GreaterThan(0).WithMessage(Constants.Messages.InvalidCompanyId);
+            .MaximumLength(60).WithMessage(string.Format(Constants.Messages.ValueShouldNotExceed, "descrição", 60));
 
         RuleFor(p => p.ProductUnitId)
             .GreaterThan(0).WithMessage(Constants.Messages.InvalidUnitMeasureId);

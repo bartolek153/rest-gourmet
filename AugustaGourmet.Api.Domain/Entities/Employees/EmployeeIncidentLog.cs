@@ -14,9 +14,13 @@ public class EmployeeIncidentLog : BaseEntity
 
     [Column("MOTIVO_OCORRENCIA_Id")]
     public int ReasonId { get; set; }
-    [ForeignKey("ReasonId")]
-    public EmployeeIncidentReason Reason { get; set; } = null!;
 
     [Column("Observacao")]
     public string? Note { get; set; } = string.Empty;
+
+    [ForeignKey("EmployeeId")]
+    public Employee? Employee { get; set; } = null!;
+
+    [ForeignKey("ReasonId")]
+    public EmployeeIncidentReason Reason { get; set; } = null!;
 }

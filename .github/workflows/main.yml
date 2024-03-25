@@ -46,6 +46,13 @@ jobs:
           EmailSettings.UsernamePassword: ${{ secrets.GMAIL_IMAP_USER_PWD }}
           TelegramSettings.Token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TelegramSettings.AdminChatId: ${{ secrets.TELEGRAM_ADMIN_CHATID }}
+          WhatsappSettings.AccessToken: ${{ secrets.WHATSAPP_TOKEN }}
+          WhatsappSettings.PhoneNumber: ${{ secrets.WHATSAPP_PHONE_NUMBER }}
+          WhatsappSettings.BusinessAccountId: ${{ secrets.WHATSAPP_ACCOUNT }}
+          JwtSettings.Secret: ${{ secrets.JWT_SECRET }}
+          JwtSettings.Issuer: ${{ secrets.JWT_ISSUER }}
+          JwtSettings.Audience: ${{ secrets.JWT_AUDIENCE }}
+          JwtSettings.ExpiryInMinutes: ${{ secrets.JWT_EXPIRY_MINUTES }}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4

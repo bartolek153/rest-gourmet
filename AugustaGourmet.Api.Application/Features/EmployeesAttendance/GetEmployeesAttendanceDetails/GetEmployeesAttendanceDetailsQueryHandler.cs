@@ -19,7 +19,6 @@ public class GetEmployeesAttendanceDetailsQueryHandler : IRequestHandler<GetEmpl
     public async Task<ErrorOr<EmployeeAttendanceDetailsDto>> Handle(GetEmployeesAttendanceDetailsQuery request, CancellationToken cancellationToken)
     {
         // TODO: check if the employee exists
-
         return await _employeeRepository.GetEmployeeAttendanceDetailsAsync(request.Employee, request.From, request.To);
     }
 }

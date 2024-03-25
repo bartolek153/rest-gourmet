@@ -8,6 +8,7 @@ using AugustaGourmet.Api.WebAPI.Extensions;
 
 using MediatR;
 
+using Microsoft.AspNetCore.Http.Timeouts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AugustaGourmet.Api.WebAPI.Controllers;
@@ -58,6 +59,7 @@ public class ReceiptsController : ApiController
     [HttpPost("import")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [RequestTimeout(900)]
     public async Task<IActionResult> ImportReceipts(DateTime? fromDate)
     {
         fromDate ??= DateTime.Now.AddDays(-7);

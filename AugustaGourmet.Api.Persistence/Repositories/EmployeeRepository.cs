@@ -1,5 +1,6 @@
 using AugustaGourmet.Api.Application.Contracts.Persistence;
 using AugustaGourmet.Api.Application.DTOs.Employees;
+using AugustaGourmet.Api.Domain.Entities.Alerts;
 using AugustaGourmet.Api.Domain.Entities.Employees;
 using AugustaGourmet.Api.Domain.Enums;
 using AugustaGourmet.Api.Persistence.Context;
@@ -159,38 +160,60 @@ public class EmployeeRepository : GenericRepository<Employee>, IEmployeeReposito
         };
     }
 
-    public async Task<List<LateEmployeeInfoDto>> GetLateEmployeesAsync()
+    public async Task<List<LateEmployeeInfoDto>> GetLateEmployeesAsync(DateTime date, int minutesLate)
     {
-        // first, search for employees that are more than 5 minutes late (empty rows in the database)
-        var lateEmployees = _context.Employees
-            .Where(emp => emp.Status == (int)Statuses.Active &&
-                !_context.EmployeeAttendances.Any(att =>
-                    att.EmployeeId == emp.Id &&
-                    att.Date.Date == DateTime.Today))
-            .Select(emp => new LateEmployeeInfoDto
-            {
-                Name = emp.Name,
-                TotalMinutesLate = EF.Functions.DateDiffMinute(emp.StartTime.TimeOfDay, DateTime.Now.TimeOfDay)
-            })
-            .AsNoTracking()
-            .ToList();
+        if (date.DayOfWeek == DayOfWeek.Saturday)
+            return await _context.Employees.Where(emp =>
+                    emp.Status == (int)Statuses.Active &&
+                    emp.WorksSaturdays == 1 &&
+                    EF.Functions.DateDiffMinute(emp.SaturdayStartTime!.Value.TimeOfDay, date.TimeOfDay) > minutesLate &&
+                    !_context.EmployeeAttendances.Any(att =>
+                        att.EmployeeId == emp.Id &&
+                        att.Date.Date == date.Date) &&
+                    !_context.EmployeeAlerts.Any(al =>
+                        al.EmployeeId == emp.Id &&
+                        al.TypeId == (int)AlertTypes.EmployeeLate &&
+                        al.Date.Date == date.Date)
+                    )
+                    .Select(info => new LateEmployeeInfoDto
+                    {
+                        EmployeeId = info.Id,
+                        Name = info.Name,
+                        TotalMinutesLate = EF.Functions.DateDiffMinute(info.SaturdayStartTime!.Value.TimeOfDay, date.TimeOfDay)
+                    })
+                    .AsNoTracking()
+                    .ToListAsync();
 
-        // in a second query, search employees that arrived late and send alert with the time they arrived
-        var lateArrivals = await _context.EmployeeAttendances
-            .Include(att => att.Employee)
-            .Where(att =>
-                att.Date == DateTime.Today &&
-                att.Employee.Status == (int)Statuses.Active &&
-                att.TimeIn.TimeOfDay > att.Employee.StartTime.TimeOfDay)
-            .Select(att => new LateEmployeeInfoDto
-            {
-                Name = att.Employee.Name,
-                TimeIn = att.TimeIn.ToString("HH:mm")
-            })
-            .AsNoTracking()
-            .ToListAsync();
-
-        return lateArrivals = lateArrivals.Union(lateEmployees).ToList();
+        else return await _context.Employees.Where(emp =>
+            emp.Status == (int)Statuses.Active &&
+            EF.Functions.DateDiffMinute(emp.StartTime.TimeOfDay, date.TimeOfDay) > minutesLate &&
+            !_context.EmployeeAttendances.Any(att =>
+                att.EmployeeId == emp.Id &&
+                att.Date.Date == date.Date) &&
+            !_context.EmployeeAlerts.Any(al =>
+                al.EmployeeId == emp.Id &&
+                al.TypeId == (int)AlertTypes.EmployeeLate &&
+                al.Date.Date == date.Date)
+            )
+        .Select(info => new LateEmployeeInfoDto
+        {
+            EmployeeId = info.Id,
+            Name = info.Name,
+            TotalMinutesLate = EF.Functions.DateDiffMinute(info.StartTime.TimeOfDay, date.TimeOfDay)
+        })
+        .AsNoTracking()
+        .ToListAsync();
     }
 
+    public async Task LogSentLateAlertAsync(int[] employeeIds)
+    {
+        var alerts = employeeIds.Select(id => new EmployeeAlert
+        {
+            EmployeeId = id,
+            TypeId = (int)AlertTypes.EmployeeLate,
+            Date = DateTime.Today
+        });
+
+        await _context.EmployeeAlerts.AddRangeAsync(alerts);
+    }
 }

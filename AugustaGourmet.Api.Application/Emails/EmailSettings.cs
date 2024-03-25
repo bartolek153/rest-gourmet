@@ -2,6 +2,8 @@
 
 public class EmailSettings
 {
+    public const string SectionName = "EmailSettings";
+
     public string ImapServer { get; set; } = string.Empty;
     public int ImapPort { get; set; } = 993;
     public string SmtpServer { get; set; } = string.Empty;
