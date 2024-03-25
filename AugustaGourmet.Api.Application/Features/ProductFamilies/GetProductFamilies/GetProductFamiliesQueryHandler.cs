@@ -20,6 +20,7 @@ public class GetProductFamiliesQueryHandler : IRequestHandler<GetProductFamilies
 
     public async Task<List<ProductFamilyDto>> Handle(GetProductFamiliesQuery request, CancellationToken cancellationToken)
     {
+        // TODO: add pagination
         var productFamilies = await _productFamilyRepository.GetAllAsync();
 
         return _mapper.Map<List<ProductFamilyDto>>(productFamilies);

@@ -8,8 +8,5 @@ public class CreateProductCategoryCommandValidator : AbstractValidator<CreatePro
     {
         RuleFor(pc => pc.Description)
             .NotEmpty().WithMessage(Constants.Messages.DescriptionIsRequired);
-
-        RuleFor(pc => pc.CompanyId)
-            .GreaterThan(0).WithMessage(Constants.Messages.InvalidCompanyId);
     }
 }

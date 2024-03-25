@@ -23,10 +23,10 @@ namespace AugustaGourmet.Api.WebAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<List<ProductGroupDto>> Get(string? q = null)
+        public async Task<IReadOnlyList<ProductGroupDto>> Get(string? q = null, int page = 1, int perPage = 10)
         {
-            var categories = await _mediator.Send(new GetProductGroupsQuery(q));
-            return categories;
+            var categories = await _mediator.Send(new GetProductGroupsQuery(q, page, perPage));
+            return categories.Items;
         }
 
         [HttpGet("{id}")]

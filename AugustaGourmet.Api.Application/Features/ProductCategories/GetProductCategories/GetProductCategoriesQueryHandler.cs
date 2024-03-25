@@ -22,16 +22,16 @@ public class GetProductCategoriesQueryHandler : IRequestHandler<GetProductCatego
     public async Task<PagedList<ProductCategoryDto>> Handle(GetProductCategoriesQuery request, CancellationToken cancellationToken)
     {
         var productCategories = await _productCategoryRepository.GetAllWithPaginationAsync(
-            x => string.IsNullOrEmpty(request.Description) || x.Description.Contains(request.Description),
-            x => x.OrderBy(y => y.Description),
-            request.Page,
-            request.PageSize
+            filter: x => string.IsNullOrEmpty(request.Description) || x.Description.Contains(request.Description),
+            orderBy: x => x.OrderBy(y => y.Description),
+            startPage: request.Page,
+            perPage: request.PageSize
         );
 
         return new PagedList<ProductCategoryDto>(
             _mapper.Map<List<ProductCategoryDto>>(productCategories.Items),
             productCategories.TotalCount,
-            request.Page,
-            request.PageSize);
+            productCategories.Page,
+            productCategories.PageSize);
     }
 }

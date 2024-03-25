@@ -7,12 +7,9 @@ namespace AugustaGourmet.Api.Application.Features.Products.UpdateProduct
     {
         public UpdateProductCommandValidator()
         {
-            RuleFor(p => p.Id)
-                .GreaterThan(0).WithMessage(Constants.Messages.IdMustBeGreaterThanZero);
-
             RuleFor(p => p.Description)
                 .NotEmpty().WithMessage(Constants.Messages.DescriptionIsRequired)
-                .MaximumLength(60).WithMessage(Constants.Messages.DescriptionLengthExceeded);
+                .MaximumLength(60).WithMessage(string.Format(Constants.Messages.ValueShouldNotExceed, "descrição", 60));
 
             RuleFor(p => p.CompanyId)
                 .GreaterThan(0).WithMessage(Constants.Messages.InvalidCompanyId);

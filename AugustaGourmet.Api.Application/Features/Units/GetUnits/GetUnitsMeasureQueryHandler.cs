@@ -22,15 +22,15 @@ public class GetUnitsMeasureQueryHandler : IRequestHandler<GetUnitsMeasureQuery,
     public async Task<PagedList<UnitMeasureDto>> Handle(GetUnitsMeasureQuery request, CancellationToken cancellationToken)
     {
         var units = await _unitMeasureRepository.GetAllWithPaginationAsync(
-            u => string.IsNullOrEmpty(request.Description) || u.Description.ToLower().Contains(request.Description),
-            u => u.OrderBy(u => u.Description),
-            request.Page,
-            request.PageSize);
+            filter: u => string.IsNullOrEmpty(request.Description) || u.Description.ToLower().Contains(request.Description),
+            orderBy: u => u.OrderBy(u => u.Description),
+            startPage: request.Page,
+            perPage: request.PageSize);
 
         return new PagedList<UnitMeasureDto>(
             _mapper.Map<List<UnitMeasureDto>>(units.Items),
             units.TotalCount,
-            request.Page,
-            request.PageSize);
+            units.Page,
+            units.PageSize);
     }
 }

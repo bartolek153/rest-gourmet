@@ -28,7 +28,7 @@ public class LoggerAdapter<T> : IAppLogger<T>
     {
         _logger.LogError(
             $"Message: {message}\n" +
-            "Error: {ex.Message}\n" +
+            $"Error: {ex.Message}\n" +
             (ex.InnerException?.Message != null ? $"Inner Details: {ex.InnerException?.Message}\n" : "") +
             $"Source: {ex.Source}\n"
         );

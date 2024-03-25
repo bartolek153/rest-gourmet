@@ -32,10 +32,10 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         var product = _mapper.Map<Product>(request);
 
         // Save to database
-        _productRepository.Create(product);
+        var result = _productRepository.Create(product);
         await _unitOfWork.CommitAsync();
 
         // Return the ID of the new product
-        return product.Id;
+        return result.Id;
     }
 }

@@ -24,7 +24,7 @@ public class EmployeesAttendanceController : ApiController
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetEmployeeAttendanceOverview(DateTime from, DateTime to)
+    public async Task<IActionResult> Get(DateTime from, DateTime to)
     {
         // TODO: Remove this line when not needed
         Response.AddPaginationHeader(1, 1, 1);
@@ -36,7 +36,7 @@ public class EmployeesAttendanceController : ApiController
     [HttpGet("{employeeId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetEmployeeAttendanceDetails(int employeeId, DateTime? from, DateTime? to)
+    public async Task<IActionResult> Get(int employeeId, DateTime? from, DateTime? to)
     {
         from ??= new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
         to ??= new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
@@ -45,12 +45,11 @@ public class EmployeesAttendanceController : ApiController
         return result.Match(Ok, Problem);
     }
 
-    [HttpGet("late")]
+    [HttpPost("late")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetLateEmployees()
     {
-        return Ok(await _employeeService.SendLateEmployeesAsync());
-        // var result = await _mediator.Send(new GetLateEmployeesQuery());
-        // return result.Match(Ok, Problem);
+        var result = await _employeeService.SendLateEmployeesReportAsync();
+        return result.Match(res => Ok(res), Problem);
     }
 }

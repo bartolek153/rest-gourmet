@@ -7,16 +7,8 @@ public class UpdateProductGroupCommandValidator : AbstractValidator<UpdateProduc
 {
     public UpdateProductGroupCommandValidator()
     {
-        RuleFor(p => p.Id)
-            .GreaterThan(0)
-            .WithMessage(Constants.Messages.InvalidCompanyId);
-
         RuleFor(p => p.Description)
             .NotEmpty()
             .WithMessage(Constants.Messages.DescriptionIsRequired);
-
-        RuleFor(p => p.CompanyId)
-            .GreaterThan(0)
-            .WithMessage(Constants.Messages.InvalidCompanyId);
     }
 }
