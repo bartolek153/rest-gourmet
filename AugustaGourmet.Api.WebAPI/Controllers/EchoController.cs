@@ -24,9 +24,9 @@ public class EchoController : ControllerBase
     public async Task<IActionResult> EchoTelegram(string? message = null) =>
         Ok(await _telegramMessageSender.SendMessageToAdminAsync(message ?? "Hello, World!"));
 
-    // [HttpGet("/echo/whatsapp")]
-    // public async Task<IActionResult> EchoWhatsapp(string? message = null) =>
-    //     Ok(await _whatsappMessageSender.SendMessageToAdminAsync(message ?? "Hello, World!"));
+    [HttpGet("/echo/whatsapp")]
+    public async Task<IActionResult> EchoWhatsapp(string? message = null) =>
+        Ok(await _whatsappMessageSender.SendMessageToAdminAsync(message ?? "Hello, World!"));
 
     [HttpGet("/echo/date")]
     public IActionResult EchoDate() => Ok(DateTime.Now);
