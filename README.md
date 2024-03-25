@@ -18,11 +18,12 @@ yarn
 yarn dev
 ```
 
-## TODO 
+## TODO
 
 * Refactor Pendings
   * Migrate from .NET Framework 4.6 to .NET Core 8 ✔️
   * Migrate from EF6 to EF Core ✔️
+  * Implement IDateTimeProvider ❌
   * Implement JWT ❌
   * Change database objects naming conventions ❌
   * Review db data types (nullable, datetimes, inheritances, ...) ❌
@@ -48,9 +49,10 @@ yarn dev
   * Query necessary fields only ❌
   * Parametrize data and options ❌
   * Add multiple inheritance for paged queries (IRequest `<T>,`IPagedQuery)
-  * Implement UI Tree Layout (https://marmelab.com/react-admin-demo/#/invoices) ❌
-  * Implement UI Side Detail Layout (https://marmelab.com/react-admin-demo/#/reviews/80) ❌
-  * Implement UI Flex Form Layouts (https://marmelab.com/react-admin-demo/#/customers/26) ❌
+  * Implement UI Tree Layout (<https://marmelab.com/react-admin-demo/#/invoices>) ❌
+  * Implement UI Side Detail Layout (<https://marmelab.com/react-admin-demo/#/reviews/80>) ❌
+  * Implement UI Flex Form Layouts (<https://marmelab.com/react-admin-demo/#/customers/26>) ❌
+  * Implement UI Dialog (<https://marmelab.com/blog/2018/08/27/react-admin-tutorials-custom-forms-related-records.html>)
   * Add color markup on sidebar menu current screen/location ❌
   * Add client-side valiation ❌
   * Generate API docs ❌
@@ -62,4 +64,4 @@ yarn dev
 ## Known errors
 
 * UI
- * ReceiptProductsMapping.tsx -> on form error, it doesn't allow sending a request again
+* ReceiptProductsMapping.tsx -> on form error, it doesn't allow sending a request again
