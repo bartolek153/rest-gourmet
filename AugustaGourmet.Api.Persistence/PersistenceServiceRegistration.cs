@@ -1,4 +1,4 @@
-﻿using AugustaGourmet.Api.Application.Contracts.Persistence;
+using AugustaGourmet.Api.Application.Contracts.Persistence;
 using AugustaGourmet.Api.Persistence.Context;
 using AugustaGourmet.Api.Persistence.Repositories;
 
@@ -31,6 +31,7 @@ public static class PersistenceServiceRegistration
         services.AddScoped<IUnitMeasureRepository, UnitMeasureRepository>();
         services.AddScoped<ICompanyRepository, CompanyRepository>();
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }

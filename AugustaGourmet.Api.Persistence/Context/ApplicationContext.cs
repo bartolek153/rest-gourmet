@@ -1,10 +1,11 @@
-﻿using AugustaGourmet.Api.Domain.Common;
+using AugustaGourmet.Api.Domain.Common;
 using AugustaGourmet.Api.Domain.Entities.Companies;
 using AugustaGourmet.Api.Domain.Entities.Employees;
 using AugustaGourmet.Api.Domain.Entities.Fiscal.Receiptment;
 using AugustaGourmet.Api.Domain.Entities.InventoryHandling;
 using AugustaGourmet.Api.Domain.Entities.Products;
 using AugustaGourmet.Api.Domain.Entities.Units;
+using AugustaGourmet.Api.Domain.Entities.Users;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -29,6 +30,7 @@ public sealed class ApplicationContext : DbContext
     public DbSet<Employee> Employees { get; set; }
     public DbSet<EmployeeAttendance> EmployeeAttendances { get; set; }
     public DbSet<EmployeeIncidentLog> EmployeeIncidentLogs { get; set; }
+    public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -38,6 +40,8 @@ public sealed class ApplicationContext : DbContext
                 .Ignore(ip => ip.Id)
                 .HasKey(ip => new { ip.CompanyId, ip.SupplierId, ip.InventoryProductId });
         });
+
+        modelBuilder.Entity<User>().Property(u => u.Id).HasConversion<long>();
 
         // TODO: Create indexes
     }
