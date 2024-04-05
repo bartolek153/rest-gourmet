@@ -16,7 +16,6 @@
 4. [ Documentation ](#Documentation)
 5. [ TODO ](#todo)
 
-<a name="features"></a>
 ## Features
 
 <div align='center'>
@@ -45,6 +44,10 @@
 
 ## Installation
 
+```bash
+docker run -d --name rest-gourmet ghcr.io/bartolek153/rest-gourmet
+```
+
 ## Running in development
 
 ### Starting REST API on [http://localhost:5274](http://localhost:5274)
@@ -70,7 +73,6 @@ func host start
 
 ## Documentation
 
-<a href="todo"></a>
 ## TODO
 
 * Features
@@ -113,6 +115,7 @@ func host start
 
 ## Technologies used
 
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
 ![TS](https://img.shields.io/badge/ts--node-3178C6?style=for-the-badge&logo=ts-node&logoColor=white)
 ![.NET](https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
