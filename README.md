@@ -10,6 +10,13 @@
   The project consists of a RESTful API backend for managing restaurant data and a user-friendly UI frontend for interacting with the system.
 </p>
 
+1. [ Features ](#features)
+2. [ Installation ](#Installation)
+3. [ Running in development ](#rundev)
+4. [ Documentation ](#Documentation)
+5. [ TODO ](#todo)
+
+<a name="features"></a>
 ## Features
 
 <div align='center'>
@@ -63,6 +70,7 @@ func host start
 
 ## Documentation
 
+<a href="todo"></a>
 ## TODO
 
 * Features
