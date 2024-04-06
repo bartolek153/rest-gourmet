@@ -7,13 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference
-      Include="..\AugustaGourmet.Api.Application\AugustaGourmet.Api.Application.csproj" />
+    <ProjectReference Include="..\AugustaGourmet.Api.Application\AugustaGourmet.Api.Application.csproj" />
   </ItemGroup>
 
 </Project>
