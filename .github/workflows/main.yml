@@ -47,8 +47,10 @@ jobs:
           TelegramSettings.Token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TelegramSettings.AdminChatId: ${{ secrets.TELEGRAM_ADMIN_CHATID }}
           WhatsappSettings.AccessToken: ${{ secrets.WHATSAPP_TOKEN }}
-          WhatsappSettings.PhoneNumber: ${{ secrets.WHATSAPP_PHONE_NUMBER }}
+          WhatsappSettings.PhoneNumberId: ${{ secrets.WHATSAPP_PHONE_NUMBER }}
           WhatsappSettings.BusinessAccountId: ${{ secrets.WHATSAPP_ACCOUNT }}
+          WhatsappSettings.BusinessId: ${{ secrets.WHATSAPP_BUSINESS_ID }}
+          WhatsappSettings.AdminPhoneNumber: ${{ secrets.WHATSAPP_ADMIN_PHONE_NUMBER }}
           JwtSettings.Secret: ${{ secrets.JWT_SECRET }}
           JwtSettings.Issuer: ${{ secrets.JWT_ISSUER }}
           JwtSettings.Audience: ${{ secrets.JWT_AUDIENCE }}

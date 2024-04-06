@@ -8,7 +8,5 @@ public class WhatsappSettings
     public string PhoneNumberId { get; set; } = string.Empty;
     public string BusinessAccountId { get; set; } = string.Empty;
     public string BusinessId { get; set; } = string.Empty;
-
     public string AdminPhoneNumber { get; set; } = string.Empty;
-    public string AlternativePhoneNumber { get; set; } = string.Empty;
 }
