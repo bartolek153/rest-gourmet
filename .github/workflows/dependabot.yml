@@ -4,7 +4,10 @@
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 # https://containers.dev/guide/dependabot
 
+name: Dependabot
+
 version: 2
+
 updates:
   - package-ecosystem: nuget
     directory: "/"
