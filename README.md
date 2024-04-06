@@ -16,27 +16,23 @@
 4. [Documentation](#documentation)
 5. [TODO](#todo)
 
-## Features
+## Features (under development)
 
 <div align='center'>
-  <img src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
-  <img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white" />
-  <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" />
+  <img alt="whatsapp" src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
+  <img alt="telegram" src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white" />
+  <img alt="gmail" src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" />
 
   </br>
-  <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white" />
-  <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white" />
+  <img alt="jwt" src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white" />
 
   </br></br>
 </div>
 
-* CRUD Operations: Easily create, read, update, and delete restaurant details such as menus, orders, customer information, and more.
-* User Authentication:.
-* Employees Attendance Control: .
-* User Management: .
-* Inventory Control: .
-* Activity Tracking: .
-
+* CRUD Operations
+* User Management
+* Employees Attendance and Activities Control
+* Inventory Tracking
 * Brazillian NFe Receipts Management
 
 <div align='center'>
@@ -65,7 +61,7 @@ yarn
 yarn dev
 ```
 
-### Launching Azure Functions
+### Launching Azure Functions locally
 
 ```bash
 cd Functions
@@ -106,8 +102,13 @@ func host start
 * Add client-side valiation ❌
 * Setup authorization and Swagger authentication ❌
 * Dockerize ❌
+* Rebase commit history (conventional commit messages) ❌
 
 ## Credits/Acknowledgements
+
+### Commit Convention
+
+* [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
 
 ### Code Suggestions
 
@@ -124,3 +125,4 @@ func host start
 ![.NET](https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
 ![MSSQL](https://img.shields.io/badge/Microsoft_SQL_Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white)
 ![Functions](https://img.shields.io/badge/Azure_Functions-0062AD?style=for-the-badge&logo=azure-functions&logoColor=white)
+![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white)
