@@ -6,6 +6,8 @@ import { Route } from 'react-router-dom';
 
 import products from "../pages/products";
 
+import holidays from "../pages/holidays";
+
 import inventory from "../pages/inventory";
 
 import receipts from "../pages/receipts";
@@ -18,9 +20,6 @@ import suppliers from "../pages/suppliers";
 
 import users from "../pages/users";
 
-// icons
-// - employees: Assignment Ind
-// - company: store
 
 const App = () => (
   <Admin
@@ -40,6 +39,7 @@ const App = () => (
     <Resource name="suppliers" options={{ label: "Fornecedores" }} {...suppliers} />
     <Resource name="products/categories" options={{ label: "Categorias" }} {...products.categories} />
     <Resource name="users" options={{ label: "Usuários" }} {...users} />
+    <Resource name="holidays" options={{ label: "Feriados" }} {...holidays} />
   </Admin>
 );
 

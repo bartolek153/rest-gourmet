@@ -93,10 +93,14 @@ export const dataProvider: DataProvider = {
         })),
 
     deleteMany: (resource, params) => {
-        const query = {
-            filter: JSON.stringify({ id: params.ids }),
-        };
-        return httpClient(`${apiUrl}/${resource}?${stringify(query)}`, {
+        // const query = {
+        //     filter: JSON.stringify({ id: params.ids }),
+        // };
+
+        const queryString = params.ids.map(value => `id=${value}`).join('&');
+        const url = `${apiUrl}/${resource}?${queryString}`;
+
+        return httpClient(url, {
             method: 'DELETE',
         }).then(({ json }) => ({ data: json }));
     }
