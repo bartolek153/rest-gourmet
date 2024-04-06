@@ -1,5 +1,5 @@
 module.exports = {
-    branches: 'development',  // TODO: Change to 'main' when ready to release
+    branches: 'main',  // TODO: Change to 'main' when ready to release
     plugins: [
         '@semantic-release/commit-analyzer', 
         '@semantic-release/release-notes-generator', 
