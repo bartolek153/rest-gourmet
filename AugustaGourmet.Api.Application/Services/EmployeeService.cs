@@ -16,13 +16,15 @@ public class EmployeeService : IEmployeeService
     private readonly IWhatsappMessageSender _whatsappMessageSender;
     private readonly ITelegramMessageSender _telegramMessageSender;
     private readonly IUserRepository _userRepository;
+    private readonly IHolidayRepository _holidayRepository;
 
     public EmployeeService(IEmployeeRepository employeeRepository,
                            IWhatsappMessageSender whatsappMessageSender,
                            IUnitOfWork unitOfWork,
                            IEmployeeIncidentRepository employeeIncidentRepository,
                            ITelegramMessageSender telegramMessageSender,
-                           IUserRepository userRepository)
+                           IUserRepository userRepository,
+                           IHolidayRepository holidayRepository)
     {
         _employeeRepository = employeeRepository;
         _whatsappMessageSender = whatsappMessageSender;
@@ -30,6 +32,7 @@ public class EmployeeService : IEmployeeService
         _employeeIncidentRepository = employeeIncidentRepository;
         _telegramMessageSender = telegramMessageSender;
         _userRepository = userRepository;
+        _holidayRepository = holidayRepository;
     }
 
     public async Task<ErrorOr<bool>> SendLateEmployeesReportAsync()
@@ -37,7 +40,7 @@ public class EmployeeService : IEmployeeService
         DateTime date = DateTime.Now;
 
         // Check if today is Sunday
-        if (date.DayOfWeek == DayOfWeek.Sunday)
+        if (date.DayOfWeek == DayOfWeek.Sunday || await _holidayRepository.IsHolidayAsync(date))
             return false;
 
         // Gather employees
