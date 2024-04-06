@@ -33,6 +33,7 @@ public static class PersistenceServiceRegistration
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         services.AddScoped<IEmployeeIncidentRepository, EmployeeIncidentRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IHolidayRepository, HolidayRepository>();
 
         return services;
     }

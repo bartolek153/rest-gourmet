@@ -8,6 +8,7 @@ public static partial class Constants
         public const string InvalidValue = "O valor informado para o campo {0} é inválido.";
         public const string RequiredField = "O campo {0} é obrigatório.";
 
+        public const string DateIsRequired = "O campo data é obrigatório.";
         public const string DescriptionLengthExceeded = "O campo descrição deve ter no máximo 60 caracteres.";
         public const string DescriptionIsRequired = "O campo descrição é obrigatório.";
         public const string EmailIsRequired = "O campo e-mail é obrigatório.";

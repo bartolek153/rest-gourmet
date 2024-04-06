@@ -4,6 +4,7 @@ using AugustaGourmet.Api.Domain.Entities.Companies;
 using AugustaGourmet.Api.Domain.Entities.Employees;
 using AugustaGourmet.Api.Domain.Entities.Fiscal.Receiptment;
 using AugustaGourmet.Api.Domain.Entities.InventoryHandling;
+using AugustaGourmet.Api.Domain.Entities.General;
 using AugustaGourmet.Api.Domain.Entities.Products;
 using AugustaGourmet.Api.Domain.Entities.Units;
 using AugustaGourmet.Api.Domain.Entities.Users;
@@ -34,6 +35,7 @@ public sealed class ApplicationContext : DbContext
     public DbSet<AlertType> AlertTypes { get; set; }
     public DbSet<EmployeeAlert> EmployeeAlerts { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Holiday> Holidays { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

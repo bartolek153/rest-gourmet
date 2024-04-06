@@ -1,6 +1,6 @@
 ﻿using AugustaGourmet.Api.Domain.Entities.Companies;
 
-namespace AugustaGourmet.Api.Domain.Entities.Others;
+namespace AugustaGourmet.Api.Domain.Entities.General;
 
 [Table("TCAD_LOCAL")]
 public class Local : BaseEntity

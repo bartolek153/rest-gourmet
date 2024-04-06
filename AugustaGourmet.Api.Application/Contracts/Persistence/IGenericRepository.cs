@@ -10,6 +10,7 @@ public interface IGenericRepository<T> where T : BaseEntity
     T Create(T entity);
     void CreateRange(IEnumerable<T> entities);
     void Delete(T entity);
+    void DeleteRange(IEnumerable<T> entities);
     Task<IReadOnlyList<T>> GetAllAsync();
     Task<T> GetByIdAsync(int id);
     Task<T> GetByIdAsync(int id, string includeProperties = "");

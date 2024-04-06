@@ -1,4 +1,4 @@
-﻿namespace AugustaGourmet.Api.Domain.Entities.Others
+﻿namespace AugustaGourmet.Api.Domain.Entities.General
 {
     public class TCAD_DIA_SEMANA
     {

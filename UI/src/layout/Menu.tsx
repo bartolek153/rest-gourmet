@@ -18,6 +18,7 @@ import suppliers from '../pages/suppliers';
 import employeesAttendance from '../pages/employeesAttendance';
 import employees from '../pages/employees';
 import users from '../pages/users';
+import holidays from '../pages/holidays';
 
 type MenuName = 'menuProducts' | 'menuInventory';
 
@@ -116,6 +117,14 @@ const CustomMenu = ({ dense = false }: MenuProps) => {
                     state={{ _scrollToTop: true }}
                     primaryText={"Ponto"}
                     leftIcon={<employeesAttendance.icon />}
+                    dense={dense}
+                />
+
+                <MenuItemLink
+                    to={holidays.link}
+                    state={{ _scrollToTop: true }}
+                    primaryText={"Feriados"}
+                    leftIcon={<holidays.icon />}
                     dense={dense}
                 />
             </SubMenu>

@@ -1,5 +1,5 @@
 ﻿using AugustaGourmet.Api.Domain.Entities.Employees;
-using AugustaGourmet.Api.Domain.Entities.Others;
+using AugustaGourmet.Api.Domain.Entities.General;
 using AugustaGourmet.Api.Domain.Enums;
 
 namespace AugustaGourmet.Api.Domain.Entities.Activities;

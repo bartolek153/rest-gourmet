@@ -66,7 +66,7 @@ yarn
 yarn dev
 ```
 
-### Launching Azure Functions
+### Launching Azure Functions locally
 
 ```bash
 cd Functions
@@ -108,7 +108,13 @@ func host start
 * Setup authorization and Swagger authentication ❌
 * Dockerize ❌
 
+* Rebase commit history (conventional commit messages) ❌
+
 ## Credits/Acknowledgements
+
+### Commit Convention
+
+* [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
 
 ### Code Suggestions
 
@@ -124,4 +130,6 @@ func host start
 ![TS](https://img.shields.io/badge/ts--node-3178C6?style=for-the-badge&logo=ts-node&logoColor=white)
 ![.NET](https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
 ![MSSQL](https://img.shields.io/badge/Microsoft_SQL_Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white)
+
 ![Functions](https://img.shields.io/badge/Azure_Functions-0062AD?style=for-the-badge&logo=azure-functions&logoColor=white)
+![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white)

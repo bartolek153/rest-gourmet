@@ -36,6 +36,11 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         _context.Set<T>().Remove(entity);
     }
 
+    public void DeleteRange(IEnumerable<T> entities)
+    {
+        _context.Set<T>().RemoveRange(entities);
+    }
+
     public virtual async Task<IReadOnlyList<T>> GetAllAsync()
     {
         return await _context.Set<T>()

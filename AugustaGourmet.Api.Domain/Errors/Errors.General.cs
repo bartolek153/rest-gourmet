@@ -15,4 +15,8 @@ public static partial class Errors
     public static Error InvalidPhoneNumber => Error.Validation(
         code: "General.InvalidPhoneNumber",
         description: "Número de telefone inválido.");
+
+    public static Error NotUniqueDate => Error.Validation(
+        code: "General.NotUniqueDate",
+        description: "Já existe um registro ocupando a data informada.");
 }
