@@ -1,4 +1,4 @@
-name: build and publish app to azure
+name: Build and publish app to Azure
 
 env:
   AZURE_WEBAPP_PACKAGE_PATH: "."
@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
   pull_request:
     branches:
-      - "main"
+      - main
 
 jobs:
   dotnet:

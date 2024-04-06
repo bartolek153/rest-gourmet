@@ -6,7 +6,13 @@
 
 version: 2
 updates:
- - package-ecosystem: "devcontainers"
-   directory: "/"
-   schedule:
-     interval: weekly
+  - package-ecosystem: nuget
+    directory: "/"
+    open-pull-requests-limit: 30
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: npm
+    directory: "/UI"
+    schedule:
+      interval: weekly
