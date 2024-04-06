@@ -49,10 +49,10 @@ yarn dev
   * Query necessary fields only ❌
   * Parametrize data and options ❌
   * Add multiple inheritance for paged queries (IRequest `<T>,`IPagedQuery)
-  * Implement UI Tree Layout (<https://marmelab.com/react-admin-demo/#/invoices>) ❌
-  * Implement UI Side Detail Layout (<https://marmelab.com/react-admin-demo/#/reviews/80>) ❌
-  * Implement UI Flex Form Layouts (<https://marmelab.com/react-admin-demo/#/customers/26>) ❌
-  * Implement UI Dialog (<https://marmelab.com/blog/2018/08/27/react-admin-tutorials-custom-forms-related-records.html>)
+  * Implement UI Tree Layout ([https://marmelab.com/react-admin-demo/#/invoices](https://marmelab.com/react-admin-demo/#/invoices)) ❌
+  * Implement UI Side Detail Layout ([https://marmelab.com/react-admin-demo/#/reviews/80](https://marmelab.com/react-admin-demo/#/reviews/80)) ❌
+  * Implement UI Flex Form Layouts ([https://marmelab.com/react-admin-demo/#/customers/26](https://marmelab.com/react-admin-demo/#/customers/26)) ❌
+  * Implement UI Dialog ([https://marmelab.com/blog/2018/08/27/react-admin-tutorials-custom-forms-related-records.html](https://marmelab.com/blog/2018/08/27/react-admin-tutorials-custom-forms-related-records.html))
   * Add color markup on sidebar menu current screen/location ❌
   * Add client-side valiation ❌
   * Generate API docs ❌
@@ -60,6 +60,7 @@ yarn dev
   * Add dependabot ❌
   * Use tagging ❌
   * Dockerize ❌
+  * Update React-Admin to v5
 
 ## Known errors
 
