@@ -1,5 +1,5 @@
 ﻿using AugustaGourmet.Api.Domain.Entities.Companies;
-using AugustaGourmet.Api.Domain.Entities.Others;
+using AugustaGourmet.Api.Domain.Entities.General;
 
 namespace WebAPI.Models
 {

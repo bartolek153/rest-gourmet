@@ -1,7 +1,7 @@
 ﻿using AugustaGourmet.Api.Domain.Entities.Companies;
 using AugustaGourmet.Api.Domain.Entities.Employees;
 using AugustaGourmet.Api.Domain.Entities.InventoryHandling;
-using AugustaGourmet.Api.Domain.Entities.Others;
+using AugustaGourmet.Api.Domain.Entities.General;
 
 namespace WebAPI.Models
 {
