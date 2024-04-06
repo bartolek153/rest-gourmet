@@ -1,7 +1,7 @@
 name: Release
 
 on:
-  workflow_dispatch: # TODO: change trigger on pull request merge to main
+  push: # TODO: change trigger on pull request merge to main
     branches:
       - development
 
