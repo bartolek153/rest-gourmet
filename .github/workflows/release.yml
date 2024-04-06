@@ -1,9 +1,9 @@
 name: Release
 
 on:
-  push: # TODO: change trigger on pull request merge to main
+  pull_request: # TODO: change trigger on pull request merge to main
     branches:
-      - development
+      - main
 
 permissions:
   contents: read # for checkout
