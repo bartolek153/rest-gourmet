@@ -1,13 +1,16 @@
 name: Build Docker image
 
 env:
-  ENV ASPNETCORE_ENVIRONMENT: Production
+  ASPNETCORE_ENVIRONMENT: Production
   REGISTRY: ghcr.io
 
 on:
   push: # TODO: remove later
     tags:
       - "v*"
+  release:
+    types:
+      - created
 
 jobs:
   docker:
