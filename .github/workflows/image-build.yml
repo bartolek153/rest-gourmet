@@ -5,12 +5,9 @@ env:
   REGISTRY: ghcr.io
 
 on:
-  workflow_dispatch:
   push: # TODO: remove later
-    branches:
-      - development
-  release:
-    types: [created]
+    tags:
+      - "v*"
 
 jobs:
   docker:
@@ -57,7 +54,6 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
-            type=sha
 
       - name: Build and Push container images
         uses: docker/build-push-action@v5
