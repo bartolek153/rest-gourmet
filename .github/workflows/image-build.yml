@@ -10,7 +10,7 @@ on:
       - "v*"
   release:
     types:
-      - created
+      - published
 
 jobs:
   docker:
