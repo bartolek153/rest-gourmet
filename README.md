@@ -4,39 +4,39 @@
 </h1>
 
 [![Last Release](https://img.shields.io/github/v/release/bartolek153/rest-gourmet?logo=github&label=latest&style=flat-square)](https://github.com/bartolek153/rest-gourmet/releases)
-[![Build](https://img.shields.io/github/actions/workflow/status/bartolek153/rest-gourmet/main.yml?branch=main&logo=github&style=flat-square)](https://nightly.link/bartolek153/rest-gourmet/workflows/pipeline/master)
+[![Build](https://img.shields.io/github/actions/workflow/status/bartolek153/rest-gourmet/image-build.yml?branch=main&logo=github&style=flat-square)](https://nightly.link/bartolek153/rest-gourmet/workflows/pipeline/master)
 
-<p >
-  REST Gourmet is a comprehensive restaurant management application designed to streamline the operations of restaurants, cafes, and food establishments.
-  The project consists of a RESTful API backend for managing restaurant data and a user-friendly UI frontend for interacting with the system.
-</p>
+REST Gourmet is a comprehensive restaurant management application designed to streamline the operations of restaurants, cafes, and food establishments.
+The project consists of a RESTful API backend for managing restaurant data and a user-friendly UI frontend for interacting with the system.
 
-1. [Features](#features)
+1. [Features](#Features)
 2. [Installation](#installation)
 3. [Running in development](#rundev)
 4. [Documentation](#documentation)
 5. [TODO](#todo)
 
-## Features
+## Features (WIP)
 
 <div align='center'>
+  </br>
   <img src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
   <img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white" />
   <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" />
 
   </br>
   <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white" />
-  <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white" />
-
   </br></br>
 </div>
 
-* CRUD Operations: Easily create, read, update, and delete restaurant details such as menus, orders, customer information, and more.
-* User Authentication:.
-* Employees Attendance Control: .
-* User Management: .
-* Inventory Control: .
-* Activity Tracking: .
+* CRUD Operations
+* User Management (with authentication)
+* Employees Attendance and Activities Control
+* User Management
+* Inventory Tracking
+* Integration with external services:
+  * WhatsApp
+  * Telegram
+  * Gmail
 
 * Brazillian NFe Receipts Management
 
@@ -47,7 +47,7 @@
 ## Installation
 
 ```bash
-docker run -d --name rest-gourmet ghcr.io/bartolek153/rest-gourmet
+docker run -d --name rest-gourmet ghcr.io/bartolek153/bartolek153/rest-gourmet:latest
 ```
 
 ## Running in development
@@ -57,6 +57,8 @@ docker run -d --name rest-gourmet ghcr.io/bartolek153/rest-gourmet
 ```bash
 dotnet run --project AugustaGourmet.Api.WebAPI
 ```
+
+ > *Note: before running the API, make sure to update the `appsettings.Development.json` secrets values*.
 
 ### Starting UI on [http://localhost:5173/](http://localhost:5173/)
 
@@ -85,8 +87,11 @@ func host start
   * Add unit tests
   * Decouple email reader and sender to be server agnostic
   * Update React-Admin to v5
+  * Include Functions on docker image
 * Bug Fixes
   * Fix UI forms not letting submit again after 400 response
+* CI/CD
+  * Add image signing
 
 ## Refactor History
 
@@ -106,7 +111,7 @@ func host start
 * Add new caching strategies ❌
 * Add client-side valiation ❌
 * Setup authorization and Swagger authentication ❌
-* Dockerize ❌
+* Dockerize ✔
 
 * Rebase commit history (conventional commit messages) ❌
 
