@@ -5,6 +5,7 @@ appsettings.Development.json
 __azurite_*.json
 __blobstorage__/
 __queuestorage__/
+.mono/
 
 
 ## .NET
