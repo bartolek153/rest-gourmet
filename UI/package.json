@@ -15,7 +15,7 @@
     "ra-data-simple-rest": "^4.16.15",
     "ra-language-pt-br": "^1.3.6",
     "react": "^18.2.0",
-    "react-admin": "^4.16.15",
+    "react-admin": "^5.0.1",
     "react-dom": "^18.2.0",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.1/xlsx-0.20.1.tgz"
   },
